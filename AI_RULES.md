@@ -29,4 +29,8 @@ Este documento dita as regras estritas de arquitetura e design que qualquer Agen
 - Se você adicionar um botão novo, janela ou aviso no sistema, **NÃO FAÇA HARDCODE** de strings em `app.py`.
 - Adicione a chave correspondente em `src/locales/en.json` e `src/locales/pt.json` e acesse via `self._("sua_chave")`.
 
+## 6. Evolução Viva das Regras (Mandatório)
+- Se o usuário pedir para adicionar um novo comportamento arquitetural, preferência de design, ou regra de negócio geral, **VOCÊ DEVE ATUALIZAR ESTE ARQUIVO (`AI_RULES.md`) IMEDIATAMENTE**.
+- Este arquivo deve refletir exatamente o que o usuário quer do projeto. Seja proativo e anote os novos desejos do usuário aqui para que as futuras sessões saibam o que fazer.
+
 > Siga estas regras rigorosamente para manter a escalabilidade, estabilidade e profissionalismo desta base de código.
