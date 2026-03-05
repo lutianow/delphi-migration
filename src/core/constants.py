@@ -16,7 +16,8 @@ UNIT_SCOPES = {
     'System': ['SysUtils', 'Classes', 'Variants', 'Math', 'StrUtils', 'TypInfo', 'SyncObjs', 'Generics\.Collections', 'Generics\.Defaults', 'IOUtils'],
     'Vcl': ['Forms', 'Controls', 'Graphics', 'Dialogs', 'StdCtrls', 'ExtCtrls', 'ComCtrls', 'Menus', 'Buttons', 'Grids', 'ActnList'],
     'Winapi': ['Windows', 'Messages', 'ShellAPI', 'ActiveX', 'CommCtrl'],
-    'Data': ['DB', 'DBClient', 'FMTBcd', 'SqlExpr']
+    'Data': ['DB', 'DBClient', 'FMTBcd', 'SqlExpr'],
+    'VclTee': ['TeeProcs', 'TeEngine', 'Chart', 'DBChart', 'Series']
 }
 
 # --- ADVANCED FASE 3 RULES ---
