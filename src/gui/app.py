@@ -328,47 +328,44 @@ class DelphiMigratorApp(ctk.CTk):
         self.header_label_2 = ctk.CTkLabel(self.frame_step2, text=self._("step_2", default="2. Filters & Exceptions"), font=ctk.CTkFont(family="Inter", size=36, weight="bold"), text_color=COLOR_PRIMARY)
         self.header_label_2.grid(row=0, column=0, columnspan=2, sticky="w", pady=(0, 40))
 
+        # Load Default Ignores if empty
+        if not self.app_settings.get("ignore_filters"):
+            self.ignore_filters_list = ["*.~pas", "*.~dfm", "*.dcu", "*.identcache", "*.local", "*.stat", "__history/"]
+        else:
+            self.ignore_filters_list = list(self.app_settings.get("ignore_filters", []))
+            
+        self.include_filters_list = list(self.app_settings.get("include_filters", []))
+
         # --- INCLUDE LIST ---
         self.lbl_inc = ctk.CTkLabel(self.frame_step2, text=self._("lbl_include_only", default="Include ONLY these files"), font=ctk.CTkFont(weight="bold", size=15), text_color=COLOR_PRIMARY)
         self.lbl_inc.grid(row=1, column=0, sticky="w", pady=(0, 5))
         
-        self.lst_include = ctk.CTkTextbox(self.frame_step2, width=300, height=120, fg_color=BG_INPUT, text_color="#FFFFFF", border_width=1, border_color="#333344")
-        self.lst_include.grid(row=2, column=0, sticky="nsew", padx=(0, 10))
+        self.scroll_include = ctk.CTkScrollableFrame(self.frame_step2, width=300, height=120, fg_color=BG_INPUT, border_width=1, border_color="#333344")
+        self.scroll_include.grid(row=2, column=0, sticky="nsew", padx=(0, 10))
         
         # Include Toolbar
         inc_toolbar = ctk.CTkFrame(self.frame_step2, fg_color="transparent")
         inc_toolbar.grid(row=3, column=0, sticky="ew", pady=(5, 20))
         
-        self.btn_add_inc = ctk.CTkButton(inc_toolbar, text=self._("btn_add", default="Add"), width=80, fg_color=CARD_1, hover_color="#8080FF", command=lambda: self._add_filter_gui(self.lst_include))
+        self.btn_add_inc = ctk.CTkButton(inc_toolbar, text=self._("btn_add", default="Add"), width=80, fg_color=CARD_1, hover_color="#8080FF", command=lambda: self._add_filter_gui(self.include_filters_list, self.scroll_include))
         self.btn_add_inc.pack(side="left", padx=(0, 5))
-        self.btn_rem_inc = ctk.CTkButton(inc_toolbar, text=self._("btn_remove", default="Remove"), width=80, fg_color="#3A3A4A", hover_color="#2A2A35", command=lambda: self._rem_filter_gui(self.lst_include))
-        self.btn_rem_inc.pack(side="left")
 
         # --- IGNORE LIST ---
         self.lbl_exc = ctk.CTkLabel(self.frame_step2, text=self._("lbl_ignore", default="Ignore these files"), font=ctk.CTkFont(weight="bold", size=15), text_color=COLOR_PRIMARY)
         self.lbl_exc.grid(row=1, column=1, sticky="w", pady=(0, 5))
         
-        self.lst_ignore = ctk.CTkTextbox(self.frame_step2, width=300, height=120, fg_color=BG_INPUT, text_color="#FFFFFF", border_width=1, border_color="#333344")
-        self.lst_ignore.grid(row=2, column=1, sticky="nsew", padx=(10, 0))
+        self.scroll_ignore = ctk.CTkScrollableFrame(self.frame_step2, width=300, height=120, fg_color=BG_INPUT, border_width=1, border_color="#333344")
+        self.scroll_ignore.grid(row=2, column=1, sticky="nsew", padx=(10, 0))
         
         # Ignore Toolbar
         exc_toolbar = ctk.CTkFrame(self.frame_step2, fg_color="transparent")
         exc_toolbar.grid(row=3, column=1, sticky="ew", pady=(5, 20), padx=(10, 0))
         
-        self.btn_add_exc = ctk.CTkButton(exc_toolbar, text=self._("btn_add", default="Add"), width=80, fg_color=CARD_1, hover_color="#8080FF", command=lambda: self._add_filter_gui(self.lst_ignore))
+        self.btn_add_exc = ctk.CTkButton(exc_toolbar, text=self._("btn_add", default="Add"), width=80, fg_color=CARD_1, hover_color="#8080FF", command=lambda: self._add_filter_gui(self.ignore_filters_list, self.scroll_ignore))
         self.btn_add_exc.pack(side="left", padx=(0, 5))
-        self.btn_rem_exc = ctk.CTkButton(exc_toolbar, text=self._("btn_remove", default="Remove"), width=80, fg_color="#3A3A4A", hover_color="#2A2A35", command=lambda: self._rem_filter_gui(self.lst_ignore))
-        self.btn_rem_exc.pack(side="left")
-
-        # Load Default Ignores if empty
-        if not self.app_settings.get("ignore_filters"):
-            default_ignores = ["*.~pas", "*.~dfm", "*.dcu", "*.identcache", "*.local", "*.stat", "__history/"]
-            self.lst_ignore.insert("1.0", "\n".join(default_ignores) + "\n")
-        else:
-            self.lst_ignore.insert("1.0", "\n".join(self.app_settings.get("ignore_filters", [])) + "\n")
-            
-        if self.app_settings.get("include_filters"):
-            self.lst_include.insert("1.0", "\n".join(self.app_settings.get("include_filters", [])) + "\n")
+        
+        self._render_filter_list(self.include_filters_list, self.scroll_include)
+        self._render_filter_list(self.ignore_filters_list, self.scroll_ignore)
 
         # Step Navigation Row (Bottom)
         self.step_nav2 = ctk.CTkFrame(self.frame_step2, fg_color="transparent")
@@ -380,21 +377,38 @@ class DelphiMigratorApp(ctk.CTk):
         self.btn_next2 = ctk.CTkButton(self.step_nav2, text=self._("btn_next", default="Next Step"), command=lambda: self.show_step(3), font=ctk.CTkFont(size=14, weight="bold"), fg_color=CARD_1, hover_color="#8080FF", height=40)
         self.btn_next2.pack(side="right")
 
-    def _add_filter_gui(self, textbox):
+    def _render_filter_list(self, data_list, scroll_frame):
+        for widget in scroll_frame.winfo_children():
+            widget.destroy()
+            
+        for idx, item in enumerate(data_list):
+            item_frame = ctk.CTkFrame(scroll_frame, fg_color="transparent")
+            item_frame.pack(fill="x", pady=(2, 0))
+            
+            lbl = ctk.CTkLabel(item_frame, text=item, text_color="#FFFFFF", anchor="w", font=ctk.CTkFont(size=12))
+            lbl.pack(side="left", padx=5)
+            
+            btn_del = ctk.CTkButton(item_frame, text="X", width=24, height=24, fg_color="transparent", hover_color="#D94343", text_color="#A4A4B5", command=lambda l=data_list, f=scroll_frame, i=idx: self._rem_filter_gui(l, f, i))
+            btn_del.pack(side="right", padx=5)
+            
+            # Divider line below the item
+            divider = ctk.CTkFrame(scroll_frame, height=1, fg_color="#333344")
+            divider.pack(fill="x", pady=(2, 2))
+
+    def _add_filter_gui(self, data_list, scroll_frame):
         dialog = ctk.CTkInputDialog(text=self._("msg_add_filter", default="Type the wildcard pattern:"), title=self._("title_add_filter", default="Add"))
         new_val = dialog.get_input()
         if new_val and new_val.strip():
-            textbox.insert("end", new_val.strip() + "\n")
-            self.save_settings()
+            val = new_val.strip()
+            if val not in data_list:
+                data_list.append(val)
+                self._render_filter_list(data_list, scroll_frame)
+                self.save_settings()
 
-    def _rem_filter_gui(self, textbox):
-        content = textbox.get("1.0", "end-1c").strip()
-        lines = content.split('\n')
-        if lines and lines[-1]:
-            lines.pop()
-            textbox.delete("1.0", "end")
-            if lines:
-                textbox.insert("1.0", "\n".join(lines) + "\n")
+    def _rem_filter_gui(self, data_list, scroll_frame, index):
+        if 0 <= index < len(data_list):
+            data_list.pop(index)
+            self._render_filter_list(data_list, scroll_frame)
             self.save_settings()
 
     def _create_step3_options(self): # Formerly _create_step2_options
@@ -568,13 +582,13 @@ class DelphiMigratorApp(ctk.CTk):
         self.log_thread_safe("\n=== BOOTING MIGRATION ENGINE ===")
         
         config = {
-            'utf8': self.var_utf8.get(),
-            'bde': self.var_bde.get(),
-            'scopes': self.var_scopes.get(),
-            'advanced': self.var_advanced.get(),
+            'utf8': getattr(self, 'var_utf8', ctk.BooleanVar(value=True)).get(),
+            'bde': getattr(self, 'var_bde', ctk.BooleanVar(value=True)).get(),
+            'scopes': getattr(self, 'var_scopes', ctk.BooleanVar(value=True)).get(),
+            'advanced': getattr(self, 'var_advanced', ctk.BooleanVar(value=True)).get(),
             'precompile': getattr(self, 'var_precompile', ctk.BooleanVar(value=False)).get(),
-            "include_filters": [f for f in self.lst_include.get("1.0", "end-1c").split("\n") if f.strip()],
-            "ignore_filters": [f for f in self.lst_ignore.get("1.0", "end-1c").split("\n") if f.strip()]
+            "include_filters": getattr(self, "include_filters_list", []),
+            "ignore_filters": getattr(self, "ignore_filters_list", [])
         }
 
         threading.Thread(target=self._run_engine, args=(src, dst, config), daemon=True).start()
@@ -614,11 +628,13 @@ class DelphiMigratorApp(ctk.CTk):
                 'op_mode': safe_mode,
                 'source_dir': self.source_dir.get(),
                 'dest_dir': self.dest_dir.get(),
-                'utf8': self.var_utf8.get(),
-                'bde': self.var_bde.get(),
-                'scopes': self.var_scopes.get(),
+                'utf8': getattr(self, 'var_utf8', ctk.BooleanVar(value=True)).get(),
+                'bde': getattr(self, 'var_bde', ctk.BooleanVar(value=True)).get(),
+                'scopes': getattr(self, 'var_scopes', ctk.BooleanVar(value=True)).get(),
                 'advanced': getattr(self, 'var_advanced', ctk.BooleanVar(value=True)).get(),
-                'precompile': getattr(self, 'var_precompile', ctk.BooleanVar(value=False)).get()
+                'precompile': getattr(self, 'var_precompile', ctk.BooleanVar(value=False)).get(),
+                'include_filters': getattr(self, "include_filters_list", []),
+                'ignore_filters': getattr(self, "ignore_filters_list", [])
             }
             with open(self.config_file, 'w', encoding='utf-8') as f:
                 json.dump(config, f, indent=4)
