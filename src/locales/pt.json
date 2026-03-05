@@ -25,5 +25,6 @@
     "msg_bad_source": "A pasta de origem não existe.",
     "tag_notice": "Aviso",
     "tag_error": "Erro",
+    "lbl_console": "Saída de Execução (Verbose)",
     "lbl_lang_select": "Idioma do Sistema:"
 }

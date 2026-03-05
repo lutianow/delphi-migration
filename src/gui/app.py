@@ -28,7 +28,7 @@ class DelphiMigratorApp(ctk.CTk):
         self._ = self.i18n._
 
         self.title(self._("app_title"))
-        self.geometry("1150x720")
+        self.geometry("1180x880")
         self.resizable(False, False)
         self.configure(fg_color=BG_MAIN)
 
@@ -84,6 +84,11 @@ class DelphiMigratorApp(ctk.CTk):
         self.chk_bde.configure(text=self._("chk_bde"))
         self.chk_scopes.configure(text=self._("chk_scopes"))
         self.chk_advanced.configure(text=self._("chk_advanced"))
+        
+        try:
+            self.lbl_console.configure(text=self._("lbl_console"))
+        except AttributeError:
+            pass # Failsafe during init
         
         if self.btn_start.cget("state") == "normal":
             self.btn_start.configure(text=self._("btn_start_ready"))
@@ -217,14 +222,22 @@ class DelphiMigratorApp(ctk.CTk):
         self.chk_advanced = ctk.CTkCheckBox(self.options_frame, text=self._("chk_advanced"), variable=self.var_advanced, **kwargs)
         self.chk_advanced.pack(anchor="w", pady=10)
 
-        # Start Button & Log
-        self.right_col_frame = ctk.CTkFrame(self.dashboard_frame, fg_color="transparent")
-        self.right_col_frame.grid(row=3, column=1, sticky="nsew", padx=(25, 0))
+        # Start Button
+        self.action_frame = ctk.CTkFrame(self.dashboard_frame, fg_color="transparent")
+        self.action_frame.grid(row=3, column=1, sticky="nsew", padx=(25, 0), pady=(0, 10))
 
-        self.btn_start = ctk.CTkButton(self.right_col_frame, text=self._("btn_start_ready"), command=self.start_migration, font=ctk.CTkFont(size=16, weight="bold"), fg_color=COLOR_PRIMARY, text_color=BG_MAIN, hover_color="#E5E5E5", corner_radius=28, height=52)
-        self.btn_start.pack(fill="x", pady=(0, 20))
+        self.btn_start = ctk.CTkButton(self.action_frame, text=self._("btn_start_ready"), command=self.start_migration, font=ctk.CTkFont(size=18, weight="bold"), fg_color=COLOR_PRIMARY, text_color=BG_MAIN, hover_color="#E5E5E5", corner_radius=28, height=60)
+        self.btn_start.pack(fill="x", expand=True, side="bottom", pady=(0, 20))
 
-        self.log_textbox = ctk.CTkTextbox(self.right_col_frame, fg_color=BG_INPUT, text_color=COLOR_SECONDARY, corner_radius=20, font=ctk.CTkFont(family="Consolas", size=12), border_width=1, border_color="#2A2A35")
+        # Full-Width Verbose Console Section
+        self.console_frame = ctk.CTkFrame(self.dashboard_frame, fg_color="transparent")
+        self.console_frame.grid(row=4, column=0, columnspan=2, sticky="nsew", pady=(10, 0))
+        self.dashboard_frame.grid_rowconfigure(4, weight=1) # Allow console to expand vertically
+
+        self.lbl_console = ctk.CTkLabel(self.console_frame, text="Execution Output (Verbose)", font=ctk.CTkFont(family="Inter", size=16, weight="bold"), text_color=COLOR_SECONDARY)
+        self.lbl_console.pack(anchor="w", pady=(0, 10))
+
+        self.log_textbox = ctk.CTkTextbox(self.console_frame, fg_color="#101014", text_color="#A4A4B5", corner_radius=12, font=ctk.CTkFont(family="Consolas", size=13), border_width=2, border_color="#2A2A35")
         self.log_textbox.pack(fill="both", expand=True)
         self.log_textbox.insert("end", self._("log_ready") + "\n")
         self.log_textbox.configure(state="disabled")

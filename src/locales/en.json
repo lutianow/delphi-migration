@@ -25,5 +25,6 @@
     "msg_bad_source": "Source folder not found.",
     "tag_notice": "Notice",
     "tag_error": "Error",
+    "lbl_console": "Execution Output (Verbose)",
     "lbl_lang_select": "Select Language:"
 }
