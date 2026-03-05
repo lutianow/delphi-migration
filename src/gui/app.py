@@ -434,10 +434,11 @@ class DelphiMigratorApp(ctk.CTk):
         self.step_nav3 = ctk.CTkFrame(self.frame_step3, fg_color="transparent")
         self.step_nav3.grid(row=4, column=0, sticky="sew", pady=(20, 0))
         
+        self.btn_prev3 = ctk.CTkButton(self.step_nav3, text=self._("btn_prev", default="Previous Step"), command=lambda: self.show_step(2), font=ctk.CTkFont(size=14, weight="bold"), fg_color="transparent", border_width=1, border_color=COLOR_SECONDARY, text_color=COLOR_SECONDARY, hover_color=BG_INPUT, height=40)
+        self.btn_prev3.pack(side="left")
+        
         self.btn_next3 = ctk.CTkButton(self.step_nav3, text=self._("btn_next", default="Next Step"), command=lambda: self.show_step(4), font=ctk.CTkFont(size=14, weight="bold"), fg_color=CARD_1, hover_color="#8080FF", height=40)
         self.btn_next3.pack(side="right")
-        self.btn_prev3 = ctk.CTkButton(self.step_nav3, text=self._("btn_prev", default="Previous Step"), command=lambda: self.show_step(2), font=ctk.CTkFont(size=14, weight="bold"), fg_color="transparent", border_width=1, border_color=COLOR_SECONDARY, text_color=COLOR_SECONDARY, hover_color=BG_INPUT, height=40)
-        self.btn_prev3.pack(side="right", padx=(0, 15))
 
     def _create_step4_execution(self): # Formerly _create_step3_execution
         self.frame_step4 = ctk.CTkFrame(self.container_frame, fg_color="transparent")
@@ -457,9 +458,6 @@ class DelphiMigratorApp(ctk.CTk):
         kwargs = {"text_color": COLOR_SECONDARY, "fg_color": "#101014", "font": ctk.CTkFont(size=14), "border_width": 2, "border_color": "#2A2A35", "checkbox_width": 24, "checkbox_height": 24, "hover_color": "#2A2A35"}
         self.chk_precompile = ctk.CTkCheckBox(self.action_frame, text=self._("chk_precompile"), variable=self.var_precompile, **kwargs)
         self.chk_precompile.pack(side="left")
-
-        self.btn_start = ctk.CTkButton(self.action_frame, text=self._("btn_start_ready"), command=self.start_migration, font=ctk.CTkFont(size=16, weight="bold"), fg_color=COLOR_PRIMARY, text_color=BG_MAIN, hover_color="#E5E5E5", corner_radius=16, height=45, width=200)
-        self.btn_start.pack(side="right")
 
         # Console Section
         self.console_frame = ctk.CTkFrame(self.frame_step4, fg_color="transparent")
@@ -481,6 +479,9 @@ class DelphiMigratorApp(ctk.CTk):
         
         self.btn_prev4 = ctk.CTkButton(self.step_nav4, text=self._("btn_prev", default="Previous Step"), command=lambda: self.show_step(3), font=ctk.CTkFont(size=14, weight="bold"), fg_color="transparent", border_width=1, border_color=COLOR_SECONDARY, text_color=COLOR_SECONDARY, hover_color=BG_INPUT, height=40)
         self.btn_prev4.pack(side="left")
+        
+        self.btn_start = ctk.CTkButton(self.step_nav4, text=self._("btn_start_ready"), command=self.start_migration, font=ctk.CTkFont(size=16, weight="bold"), fg_color=COLOR_PRIMARY, text_color=BG_MAIN, hover_color="#E5E5E5", corner_radius=16, height=40, width=200)
+        self.btn_start.pack(side="right")
         
         # Save Triggers
         self.var_precompile.trace_add("write", lambda *_: self.save_settings())
