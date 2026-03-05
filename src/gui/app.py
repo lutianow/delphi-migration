@@ -80,6 +80,9 @@ class DelphiMigratorApp(ctk.CTk):
         self.lbl_dst_sub.configure(text=self._("card_dst_sub"))
         self.btn_dest.configure(text=self._("btn_browse"))
         self.lbl_options.configure(text=self._("lbl_options"))
+        self.lbl_mode.configure(text=self._("mode_lbl"))
+        self.radio_extract.configure(text=self._("mode_extract"))
+        self.radio_inplace.configure(text=self._("mode_inplace"))
         self.chk_utf8.configure(text=self._("chk_utf8"))
         self.chk_bde.configure(text=self._("chk_bde"))
         self.chk_scopes.configure(text=self._("chk_scopes"))
@@ -192,6 +195,23 @@ class DelphiMigratorApp(ctk.CTk):
         self.options_frame = ctk.CTkFrame(self.dashboard_frame, fg_color="transparent")
         self.options_frame.grid(row=3, column=0, sticky="nsew", pady=(0, 10))
 
+        # Operation Mode
+        self.var_mode = ctk.StringVar(value=self.app_settings.get("op_mode", "extract"))
+        self.var_mode.trace_add("write", lambda *args: self._toggle_destination_card())
+
+        self.lbl_mode = ctk.CTkLabel(self.options_frame, text=self._("mode_lbl"), font=ctk.CTkFont(weight="bold", size=15), text_color=COLOR_PRIMARY)
+        self.lbl_mode.pack(anchor="w", pady=(0, 5))
+        
+        radio_frame = ctk.CTkFrame(self.options_frame, fg_color="transparent")
+        radio_frame.pack(anchor="w", pady=(0, 20))
+
+        self.radio_extract = ctk.CTkRadioButton(radio_frame, text=self._("mode_extract"), variable=self.var_mode, value="extract", fg_color=CARD_2, text_color=COLOR_SECONDARY)
+        self.radio_extract.pack(side="left", padx=(0, 20))
+
+        self.radio_inplace = ctk.CTkRadioButton(radio_frame, text=self._("mode_inplace"), variable=self.var_mode, value="inplace", fg_color=CARD_1, text_color=COLOR_SECONDARY)
+        self.radio_inplace.pack(side="left")
+
+        # Checkboxes
         self.var_utf8 = ctk.BooleanVar(value=self.app_settings.get("utf8", True))
         self.var_bde = ctk.BooleanVar(value=self.app_settings.get("bde", True))
         self.var_scopes = ctk.BooleanVar(value=self.app_settings.get("scopes", True))
@@ -200,6 +220,7 @@ class DelphiMigratorApp(ctk.CTk):
         # Auto-save triggers
         self.source_dir.trace_add("write", lambda *args: self.save_settings())
         self.dest_dir.trace_add("write", lambda *args: self.save_settings())
+        self.var_mode.trace_add("write", lambda *args: self.save_settings())
         self.var_utf8.trace_add("write", lambda *args: self.save_settings())
         self.var_bde.trace_add("write", lambda *args: self.save_settings())
         self.var_scopes.trace_add("write", lambda *args: self.save_settings())
@@ -241,6 +262,18 @@ class DelphiMigratorApp(ctk.CTk):
         self.log_textbox.pack(fill="both", expand=True)
         self.log_textbox.insert("end", self._("log_ready") + "\n")
         self.log_textbox.configure(state="disabled")
+        
+        # Initialize UI state logic
+        self._toggle_destination_card()
+
+    def _toggle_destination_card(self):
+        try:
+            if self.var_mode.get() == "inplace":
+                self.card_dest.grid_remove()
+            else:
+                self.card_dest.grid()
+        except AttributeError:
+            pass
 
     def _create_settings_frame(self):
         self.settings_frame = ctk.CTkFrame(self.container_frame, fg_color="transparent")
@@ -289,13 +322,14 @@ class DelphiMigratorApp(ctk.CTk):
 
     def start_migration(self):
         src = self.source_dir.get().strip()
-        dst = self.dest_dir.get().strip()
+        op_mode = self.var_mode.get()
+        dst = src if op_mode == "inplace" else self.dest_dir.get().strip()
 
-        if not src or not dst:
+        if not src or (op_mode == "extract" and not dst):
             messagebox.showwarning(self._("tag_notice"), self._("msg_select_folders"))
             return
 
-        if src == dst:
+        if op_mode == "extract" and src == dst:
             messagebox.showwarning(self._("tag_notice"), self._("msg_same_folders"))
             return
 
@@ -339,6 +373,7 @@ class DelphiMigratorApp(ctk.CTk):
         try:
             config = {
                 'lang': self.i18n.lang,
+                'op_mode': getattr(self, 'var_mode', ctk.StringVar(value='extract')).get(),
                 'source_dir': self.source_dir.get(),
                 'dest_dir': self.dest_dir.get(),
                 'utf8': self.var_utf8.get(),

@@ -23,7 +23,12 @@ class DelphiMigratorEngine:
     def start_migration(self):
         try:
             self.log(">> Iniciando motor de migração...")
-            safe_copy_tree(self.src, self.dst, self.log)
+            
+            if self.src != self.dst:
+                self.log(f">> Extração Segura Ativada. Copiando para: {self.dst}")
+                safe_copy_tree(self.src, self.dst, self.log)
+            else:
+                self.log(f">> Modo In-Place Ativado. Analisando e modificando DIRETAMENTE em: {self.src}")
             
             self.log(">> Analisando e processando arquivos (.pas, .dfm, .dpr)...")
             
