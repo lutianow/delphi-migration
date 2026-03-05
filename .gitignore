@@ -1,27 +1,37 @@
+# Build and distribution folders
+build/
+dist/
+
+# PyInstaller files
+*.spec
+
+# Python cache and compiled files
 __pycache__/
 *.py[cod]
 *$py.class
 
-# Environments
-.env
-.venv
-env/
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Virtual environments
 venv/
-ENV/
-env.bak/
-venv.bak/
+env/
+.env
 
-# PyInstaller
-build/
-dist/
-*.spec
-
-# IDEs
+# IDE and Editor files
 .vscode/
 .idea/
 *.swp
 *.swo
 
-# OS generated files
-.DS_Store
-Thumbs.db
+# Shortcuts and temp scripts
+make_shortcut.py
+*.vbs
+*.lnk
+migrador_delphi.py
