@@ -4,6 +4,7 @@ import customtkinter as ctk
 from tkinter import filedialog, messagebox
 import os
 import threading
+from PIL import Image
 from src.core.migrator_engine import DelphiMigratorEngine
 from src.core.i18n import I18N
 
@@ -183,9 +184,27 @@ class DelphiMigratorApp(ctk.CTk):
         self.sidebar_frame.grid_rowconfigure(5, weight=1)
         self.sidebar_frame.grid_propagate(False)
 
-        # Brand Logo
-        self.logo_label = ctk.CTkLabel(self.sidebar_frame, text=self._("logo_title"), font=ctk.CTkFont(family="Inter", size=24, weight="bold"), text_color=COLOR_PRIMARY)
-        self.logo_label.grid(row=0, column=0, padx=25, pady=(40, 50), sticky="w")
+        # Brand Logo (Image + Text)
+        self.logo_frame = ctk.CTkFrame(self.sidebar_frame, fg_color="transparent")
+        self.logo_frame.grid(row=0, column=0, padx=25, pady=(40, 50), sticky="w")
+        
+        try:
+            import sys
+            if hasattr(sys, '_MEIPASS'):
+                logo_path = os.path.join(sys._MEIPASS, 'src', 'assets', 'logo_transparent.png')
+            else:
+                logo_path = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), 'assets', 'logo_transparent.png')
+                
+            logo_img = ctk.CTkImage(light_image=Image.open(logo_path),
+                                    dark_image=Image.open(logo_path),
+                                    size=(32, 32))
+            self.logo_icon = ctk.CTkLabel(self.logo_frame, image=logo_img, text="")
+            self.logo_icon.pack(side="left", padx=(0, 10))
+        except Exception:
+            pass
+
+        self.logo_label = ctk.CTkLabel(self.logo_frame, text=self._("logo_title"), font=ctk.CTkFont(family="Inter", size=24, weight="bold"), text_color=COLOR_PRIMARY)
+        self.logo_label.pack(side="left")
 
         # Step-by-Step Navigation Menu
         self.lbl_menu = ctk.CTkLabel(self.sidebar_frame, text=self._("lbl_menu"), font=ctk.CTkFont(family="Inter", size=12, weight="bold"), text_color=COLOR_SECONDARY)
