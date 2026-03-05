@@ -383,17 +383,20 @@ class DelphiMigratorApp(ctk.CTk):
             
         for idx, item in enumerate(data_list):
             item_frame = ctk.CTkFrame(scroll_frame, fg_color="transparent")
-            item_frame.pack(fill="x", pady=(2, 0))
+            item_frame.pack(fill="x", pady=0)
             
             lbl = ctk.CTkLabel(item_frame, text=item, text_color="#FFFFFF", anchor="w", font=ctk.CTkFont(size=12))
-            lbl.pack(side="left", padx=5)
+            lbl.pack(side="left", padx=(5, 0), pady=4)
             
             btn_del = ctk.CTkButton(item_frame, text="X", width=24, height=24, fg_color="transparent", hover_color="#D94343", text_color="#A4A4B5", command=lambda l=data_list, f=scroll_frame, i=idx: self._rem_filter_gui(l, f, i))
-            btn_del.pack(side="right", padx=5)
+            btn_del.pack(side="right", padx=(5, 5))
+            
+            btn_edit = ctk.CTkButton(item_frame, text="✎", width=24, height=24, fg_color="transparent", hover_color="#5555AA", text_color="#A4A4B5", command=lambda l=data_list, f=scroll_frame, i=idx: self._edit_filter_gui(l, f, i))
+            btn_edit.pack(side="right", padx=(5, 0))
             
             # Divider line below the item
-            divider = ctk.CTkFrame(scroll_frame, height=1, fg_color="#333344")
-            divider.pack(fill="x", pady=(2, 2))
+            divider = ctk.CTkFrame(scroll_frame, height=1, fg_color="#4A4A5A")
+            divider.pack(fill="x", pady=(0, 2))
 
     def _add_filter_gui(self, data_list, scroll_frame):
         dialog = ctk.CTkInputDialog(text=self._("msg_add_filter", default="Type the wildcard pattern:"), title=self._("title_add_filter", default="Add"))
@@ -404,6 +407,19 @@ class DelphiMigratorApp(ctk.CTk):
                 data_list.append(val)
                 self._render_filter_list(data_list, scroll_frame)
                 self.save_settings()
+
+    def _edit_filter_gui(self, data_list, scroll_frame, index):
+        if 0 <= index < len(data_list):
+            old_val = data_list[index]
+            dialog = ctk.CTkInputDialog(text=self._("msg_add_filter", default="Type the wildcard pattern:"), title=self._("title_edit_filter", default="Edit Filter"))
+            # Pre-fill isn't natively supported in CTkInputDialog cleanly without hacks, so user will be asked to re-type or we hope they know what they are editing. Let's try to pass the text to it if it supports it, else standard.
+            new_val = dialog.get_input()
+            if new_val and new_val.strip() and new_val.strip() != old_val:
+                val = new_val.strip()
+                if val not in data_list:
+                    data_list[index] = val
+                    self._render_filter_list(data_list, scroll_frame)
+                    self.save_settings()
 
     def _rem_filter_gui(self, data_list, scroll_frame, index):
         if 0 <= index < len(data_list):
