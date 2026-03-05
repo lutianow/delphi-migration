@@ -12,7 +12,11 @@ Este documento dita as regras estritas de arquitetura e design que qualquer Agen
 ## 2. Interface Visual (CustomTkinter)
 - O projeto usa `customtkinter` (CTK) para garantir uma UI moderna (estilo Dribbble).
 - **NÃO** importe `tkinter` padrão (`tk.Button`, `tk.Frame`). Use sempre os equivalentes em `ctk` (`ctk.CTkButton`, etc.).
-- Não quebre o Layout do "Console Verbose" no fundo do Dashboard. Ele deve permanecer full-width (`columnspan=2`) na linha 4.
+- **Regras Práticas de Design UI (Definidas pelo Usuário):**
+  - Mantenha o design compacto: Menos espaços vazios mortos. Cards de Origem e Destino devem ficar empilhados verticalmente (um em cima do outro) e não lado a lado se possível, para economizar largura.
+  - Utilize `CTkOptionMenu` (Combobox) ao invés de `CTkRadioButton` quando criar opções longas exclusivas para minimizar poluição visual.
+  - Mantenha Checkboxes esteticamente uniformes (ex: todos devem usar cor primária neutra na marcação) a menos que lidem com remoção física de disco.
+- Não quebre o Layout do "Console Verbose" no fundo do Dashboard. Ele deve permanecer full-width (`columnspan=2`) na linha 4, e receber a maior área útil expansível possível.
 
 ## 3. Lógica do Motor de Migração (Engine)
 - O motor não deve "travar" a UI (Interface do Usuário). Todas as chamadas do motor a partir de `app.py` devem acontecer em uma Thread separada (`threading.Thread`).

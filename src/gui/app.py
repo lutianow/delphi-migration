@@ -81,8 +81,13 @@ class DelphiMigratorApp(ctk.CTk):
         self.btn_dest.configure(text=self._("btn_browse"))
         self.lbl_options.configure(text=self._("lbl_options"))
         self.lbl_mode.configure(text=self._("mode_lbl"))
-        self.radio_extract.configure(text=self._("mode_extract"))
-        self.radio_inplace.configure(text=self._("mode_inplace"))
+        
+        self.combo_mode.configure(values=[self._("mode_extract"), self._("mode_inplace")])
+        if self.var_mode.get() == "inplace":
+            self.combo_mode.set(self._("mode_inplace"))
+        else:
+            self.combo_mode.set(self._("mode_extract"))
+            
         self.chk_utf8.configure(text=self._("chk_utf8"))
         self.chk_bde.configure(text=self._("chk_bde"))
         self.chk_scopes.configure(text=self._("chk_scopes"))
@@ -156,61 +161,64 @@ class DelphiMigratorApp(ctk.CTk):
         self.header_label = ctk.CTkLabel(self.header_frame, text=self._("header_title"), font=ctk.CTkFont(family="Inter", size=36, weight="bold"), text_color=COLOR_PRIMARY)
         self.header_label.grid(row=0, column=0, sticky="w")
 
-        # Horizontal Cards Row
+        # Vertical Stacked Cards Row (Source on top, Dest below)
+        self.dashboard_frame.grid_columnconfigure(0, weight=1) # Allow cards to stretch horizontally
+        
         # Card 1: Source
-        self.card_source = ctk.CTkFrame(self.dashboard_frame, fg_color=CARD_1, corner_radius=28, height=210)
-        self.card_source.grid(row=1, column=0, sticky="nsew", padx=(0, 12))
+        self.card_source = ctk.CTkFrame(self.dashboard_frame, fg_color=CARD_1, corner_radius=16, height=130)
+        self.card_source.grid(row=1, column=0, columnspan=2, sticky="ew", pady=(0, 15))
         self.card_source.grid_propagate(False)
 
-        self.lbl_src_title = ctk.CTkLabel(self.card_source, text=self._("card_src_title"), font=ctk.CTkFont(size=22, weight="bold"), text_color="#FFFFFF")
-        self.lbl_src_title.pack(anchor="w", padx=30, pady=(30, 5))
-        self.lbl_src_sub = ctk.CTkLabel(self.card_source, text=self._("card_src_sub"), font=ctk.CTkFont(size=14), text_color="#E0E0FF")
-        self.lbl_src_sub.pack(anchor="w", padx=30, pady=(0, 25))
+        self.lbl_src_title = ctk.CTkLabel(self.card_source, text=self._("card_src_title"), font=ctk.CTkFont(size=18, weight="bold"), text_color="#FFFFFF")
+        self.lbl_src_title.grid(row=0, column=0, sticky="w", padx=20, pady=(15, 5))
+        
+        self.lbl_src_sub = ctk.CTkLabel(self.card_source, text=self._("card_src_sub"), font=ctk.CTkFont(size=12), text_color="#E0E0FF")
+        self.lbl_src_sub.grid(row=1, column=0, sticky="w", padx=20, pady=(0, 10))
 
-        ent_source = ctk.CTkEntry(self.card_source, textvariable=self.source_dir, fg_color="#4343D9", border_width=0, text_color="#FFFFFF", height=40, corner_radius=12)
-        ent_source.pack(fill="x", padx=30, pady=(0, 12))
+        ent_source = ctk.CTkEntry(self.card_source, textvariable=self.source_dir, fg_color="#4343D9", border_width=0, text_color="#FFFFFF", height=36, corner_radius=8)
+        ent_source.grid(row=2, column=0, sticky="ew", padx=(20, 10), pady=(0, 15))
+        self.card_source.grid_columnconfigure(0, weight=1)
 
-        self.btn_source = ctk.CTkButton(self.card_source, text=self._("btn_browse"), command=self.browse_source, fg_color="#FFFFFF", text_color=CARD_1, hover_color="#E0E0FF", font=ctk.CTkFont(weight="bold", size=13), corner_radius=12, height=36)
-        self.btn_source.pack(anchor="w", padx=30)
+        self.btn_source = ctk.CTkButton(self.card_source, text=self._("btn_browse"), command=self.browse_source, fg_color="#FFFFFF", text_color=CARD_1, hover_color="#E0E0FF", font=ctk.CTkFont(weight="bold", size=13), corner_radius=8, height=36, width=100)
+        self.btn_source.grid(row=2, column=1, sticky="w", padx=(0, 20), pady=(0, 15))
 
         # Card 2: Destination
-        self.card_dest = ctk.CTkFrame(self.dashboard_frame, fg_color=CARD_2, corner_radius=28, height=210)
-        self.card_dest.grid(row=1, column=1, sticky="nsew", padx=(12, 0))
+        self.card_dest = ctk.CTkFrame(self.dashboard_frame, fg_color=CARD_2, corner_radius=16, height=130)
+        self.card_dest.grid(row=2, column=0, columnspan=2, sticky="ew", pady=(0, 15))
         self.card_dest.grid_propagate(False)
 
-        self.lbl_dst_title = ctk.CTkLabel(self.card_dest, text=self._("card_dst_title"), font=ctk.CTkFont(size=22, weight="bold"), text_color="#FFFFFF")
-        self.lbl_dst_title.pack(anchor="w", padx=30, pady=(30, 5))
-        self.lbl_dst_sub = ctk.CTkLabel(self.card_dest, text=self._("card_dst_sub"), font=ctk.CTkFont(size=14), text_color="#FFE0D0")
-        self.lbl_dst_sub.pack(anchor="w", padx=30, pady=(0, 25))
+        self.lbl_dst_title = ctk.CTkLabel(self.card_dest, text=self._("card_dst_title"), font=ctk.CTkFont(size=18, weight="bold"), text_color="#FFFFFF")
+        self.lbl_dst_title.grid(row=0, column=0, sticky="w", padx=20, pady=(15, 5))
+        
+        self.lbl_dst_sub = ctk.CTkLabel(self.card_dest, text=self._("card_dst_sub"), font=ctk.CTkFont(size=12), text_color="#FFE0D0")
+        self.lbl_dst_sub.grid(row=1, column=0, sticky="w", padx=20, pady=(0, 10))
 
-        ent_dest = ctk.CTkEntry(self.card_dest, textvariable=self.dest_dir, fg_color="#D97A53", border_width=0, text_color="#FFFFFF", height=40, corner_radius=12)
-        ent_dest.pack(fill="x", padx=30, pady=(0, 12))
+        ent_dest = ctk.CTkEntry(self.card_dest, textvariable=self.dest_dir, fg_color="#D97A53", border_width=0, text_color="#FFFFFF", height=36, corner_radius=8)
+        ent_dest.grid(row=2, column=0, sticky="ew", padx=(20, 10), pady=(0, 15))
+        self.card_dest.grid_columnconfigure(0, weight=1)
 
-        self.btn_dest = ctk.CTkButton(self.card_dest, text=self._("btn_browse"), command=self.browse_dest, fg_color="#FFFFFF", text_color=CARD_2, hover_color="#FFE0D0", font=ctk.CTkFont(weight="bold", size=13), corner_radius=12, height=36)
-        self.btn_dest.pack(anchor="w", padx=30)
+        self.btn_dest = ctk.CTkButton(self.card_dest, text=self._("btn_browse"), command=self.browse_dest, fg_color="#FFFFFF", text_color=CARD_2, hover_color="#FFE0D0", font=ctk.CTkFont(weight="bold", size=13), corner_radius=8, height=36, width=100)
+        self.btn_dest.grid(row=2, column=1, sticky="w", padx=(0, 20), pady=(0, 15))
 
         # Options Section
         self.lbl_options = ctk.CTkLabel(self.dashboard_frame, text=self._("lbl_options"), font=ctk.CTkFont(family="Inter", size=20, weight="bold"), text_color=COLOR_PRIMARY)
-        self.lbl_options.grid(row=2, column=0, columnspan=2, sticky="w", pady=(50, 20))
+        self.lbl_options.grid(row=3, column=0, columnspan=2, sticky="w", pady=(15, 10))
 
         self.options_frame = ctk.CTkFrame(self.dashboard_frame, fg_color="transparent")
-        self.options_frame.grid(row=3, column=0, sticky="nsew", pady=(0, 10))
+        self.options_frame.grid(row=4, column=0, sticky="nsew", pady=(0, 10))
 
         # Operation Mode
         self.var_mode = ctk.StringVar(value=self.app_settings.get("op_mode", "extract"))
         self.var_mode.trace_add("write", lambda *args: self._toggle_destination_card())
 
-        self.lbl_mode = ctk.CTkLabel(self.options_frame, text=self._("mode_lbl"), font=ctk.CTkFont(weight="bold", size=15), text_color=COLOR_PRIMARY)
-        self.lbl_mode.pack(anchor="w", pady=(0, 5))
+        mode_frame = ctk.CTkFrame(self.options_frame, fg_color="transparent")
+        mode_frame.pack(anchor="w", pady=(0, 15))
         
-        radio_frame = ctk.CTkFrame(self.options_frame, fg_color="transparent")
-        radio_frame.pack(anchor="w", pady=(0, 20))
-
-        self.radio_extract = ctk.CTkRadioButton(radio_frame, text=self._("mode_extract"), variable=self.var_mode, value="extract", fg_color=CARD_2, text_color=COLOR_SECONDARY)
-        self.radio_extract.pack(side="left", padx=(0, 20))
-
-        self.radio_inplace = ctk.CTkRadioButton(radio_frame, text=self._("mode_inplace"), variable=self.var_mode, value="inplace", fg_color=CARD_1, text_color=COLOR_SECONDARY)
-        self.radio_inplace.pack(side="left")
+        self.lbl_mode = ctk.CTkLabel(mode_frame, text=self._("mode_lbl"), font=ctk.CTkFont(weight="bold", size=15), text_color=COLOR_PRIMARY)
+        self.lbl_mode.pack(side="left", padx=(0, 10))
+        
+        self.combo_mode = ctk.CTkOptionMenu(mode_frame, variable=self.var_mode, values=[self._("mode_extract"), self._("mode_inplace")], fg_color=BG_INPUT, button_color="#2A2A35", text_color=COLOR_PRIMARY, width=280)
+        self.combo_mode.pack(side="left")
 
         # Checkboxes
         self.var_utf8 = ctk.BooleanVar(value=self.app_settings.get("utf8", True))
@@ -231,37 +239,33 @@ class DelphiMigratorApp(ctk.CTk):
 
         chk_font = ctk.CTkFont(size=14) # Increased font size
         
-        # We give checkboxes a little more width, hover colors, and border widths
-        kwargs = {"text_color": COLOR_SECONDARY, "fg_color": CARD_1, "font": chk_font, "border_width": 2, "checkbox_width": 24, "checkbox_height": 24, "hover_color": "#8080FF"}
+        # We unify checkboxes as requested to a neutral console-style color
+        kwargs = {"text_color": COLOR_SECONDARY, "fg_color": "#101014", "font": chk_font, "border_width": 2, "border_color": "#2A2A35", "checkbox_width": 24, "checkbox_height": 24, "hover_color": "#2A2A35"}
         
         self.chk_utf8 = ctk.CTkCheckBox(self.options_frame, text=self._("chk_utf8"), variable=self.var_utf8, **kwargs)
-        self.chk_utf8.pack(anchor="w", pady=10)
+        self.chk_utf8.pack(anchor="w", pady=(0, 10))
         self.chk_bde = ctk.CTkCheckBox(self.options_frame, text=self._("chk_bde"), variable=self.var_bde, **kwargs)
-        self.chk_bde.pack(anchor="w", pady=10)
+        self.chk_bde.pack(anchor="w", pady=(0, 10))
         self.chk_scopes = ctk.CTkCheckBox(self.options_frame, text=self._("chk_scopes"), variable=self.var_scopes, **kwargs)
-        self.chk_scopes.pack(anchor="w", pady=10)
+        self.chk_scopes.pack(anchor="w", pady=(0, 10))
         
-        kwargs["fg_color"] = CARD_2
-        kwargs["hover_color"] = "#FFB080"
         self.chk_advanced = ctk.CTkCheckBox(self.options_frame, text=self._("chk_advanced"), variable=self.var_advanced, **kwargs)
-        self.chk_advanced.pack(anchor="w", pady=10)
+        self.chk_advanced.pack(anchor="w", pady=(0, 10))
         
-        kwargs["fg_color"] = "#D94343"  # Red UI Color for heavy impact action
-        kwargs["hover_color"] = "#FF8080"
         self.chk_precompile = ctk.CTkCheckBox(self.options_frame, text=self._("chk_precompile"), variable=self.var_precompile, **kwargs)
-        self.chk_precompile.pack(anchor="w", pady=10)
+        self.chk_precompile.pack(anchor="w", pady=(0, 10))
 
-        # Start Button
+        # Start Button (Adjusted row alignment and reduced height)
         self.action_frame = ctk.CTkFrame(self.dashboard_frame, fg_color="transparent")
-        self.action_frame.grid(row=3, column=1, sticky="nsew", padx=(25, 0), pady=(0, 10))
+        self.action_frame.grid(row=4, column=1, sticky="nsew", padx=(25, 0), pady=(0, 10))
 
-        self.btn_start = ctk.CTkButton(self.action_frame, text=self._("btn_start_ready"), command=self.start_migration, font=ctk.CTkFont(size=18, weight="bold"), fg_color=COLOR_PRIMARY, text_color=BG_MAIN, hover_color="#E5E5E5", corner_radius=28, height=60)
-        self.btn_start.pack(fill="x", expand=True, side="bottom", pady=(0, 20))
+        self.btn_start = ctk.CTkButton(self.action_frame, text=self._("btn_start_ready"), command=self.start_migration, font=ctk.CTkFont(size=16, weight="bold"), fg_color=COLOR_PRIMARY, text_color=BG_MAIN, hover_color="#E5E5E5", corner_radius=16, height=45)
+        self.btn_start.pack(fill="x", side="bottom", pady=(0, 20))
 
         # Full-Width Verbose Console Section
         self.console_frame = ctk.CTkFrame(self.dashboard_frame, fg_color="transparent")
-        self.console_frame.grid(row=4, column=0, columnspan=2, sticky="nsew", pady=(10, 0))
-        self.dashboard_frame.grid_rowconfigure(4, weight=1) # Allow console to expand vertically
+        self.console_frame.grid(row=5, column=0, columnspan=2, sticky="nsew", pady=(5, 0))
+        self.dashboard_frame.grid_rowconfigure(5, weight=1) # Allow console to expand vertically
 
         self.lbl_console = ctk.CTkLabel(self.console_frame, text="Execution Output (Verbose)", font=ctk.CTkFont(family="Inter", size=16, weight="bold"), text_color=COLOR_SECONDARY)
         self.lbl_console.pack(anchor="w", pady=(0, 10))
@@ -276,7 +280,8 @@ class DelphiMigratorApp(ctk.CTk):
 
     def _toggle_destination_card(self):
         try:
-            if self.var_mode.get() == "inplace":
+            val = self.var_mode.get()
+            if val == "inplace" or val == self._("mode_inplace"):
                 self.card_dest.grid_remove()
             else:
                 self.card_dest.grid()
@@ -331,13 +336,19 @@ class DelphiMigratorApp(ctk.CTk):
     def start_migration(self):
         src = self.source_dir.get().strip()
         op_mode = self.var_mode.get()
-        dst = src if op_mode == "inplace" else self.dest_dir.get().strip()
+        # Accommodate combo box localized label values or pure values
+        if op_mode == "inplace" or op_mode == self._("mode_inplace"):
+            dst = src
+            extracted_mode = "inplace"
+        else:
+            dst = self.dest_dir.get().strip()
+            extracted_mode = "extract"
 
-        if not src or (op_mode == "extract" and not dst):
+        if not src or (extracted_mode == "extract" and not dst):
             messagebox.showwarning(self._("tag_notice"), self._("msg_select_folders"))
             return
 
-        if op_mode == "extract" and src == dst:
+        if extracted_mode == "extract" and src == dst:
             messagebox.showwarning(self._("tag_notice"), self._("msg_same_folders"))
             return
 
@@ -380,9 +391,17 @@ class DelphiMigratorApp(ctk.CTk):
     def save_settings(self):
         import json
         try:
+            raw_mode = getattr(self, 'var_mode', ctk.StringVar(value='extract')).get()
+            if raw_mode == self._("mode_inplace"):
+                safe_mode = "inplace"
+            elif raw_mode == self._("mode_extract"):
+                safe_mode = "extract"
+            else:
+                safe_mode = raw_mode
+
             config = {
                 'lang': self.i18n.lang,
-                'op_mode': getattr(self, 'var_mode', ctk.StringVar(value='extract')).get(),
+                'op_mode': safe_mode,
                 'source_dir': self.source_dir.get(),
                 'dest_dir': self.dest_dir.get(),
                 'utf8': self.var_utf8.get(),
