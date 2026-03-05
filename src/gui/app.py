@@ -66,8 +66,9 @@ class DelphiMigratorApp(ctk.CTk):
         self.container_frame.grid_rowconfigure(0, weight=1)
 
         self._create_step1_paths()
-        self._create_step2_options()
-        self._create_step3_execution()
+        self._create_step2_filters()
+        self._create_step3_options()
+        self._create_step4_execution()
         self._create_settings_frame()
         
         self.show_step(1)
@@ -87,8 +88,9 @@ class DelphiMigratorApp(ctk.CTk):
         self.logo_label.configure(text=self._("logo_title"))
         self.lbl_menu.configure(text=self._("lbl_menu"))
         self.btn_step1.configure(text=self._("step_1", default="1. Select Folders"))
-        self.btn_step2.configure(text=self._("step_2", default="2. Migration Rules"))
-        self.btn_step3.configure(text=self._("step_3", default="3. Execution & Output"))
+        self.btn_step2.configure(text=self._("step_2", default="2. Filters & Exceptions"))
+        self.btn_step3.configure(text=self._("step_3", default="3. Migration Rules"))
+        self.btn_step4.configure(text=self._("step_4", default="4. Execution & Output"))
         self.lbl_user_title.configure(text=self._("user_title"))
         self.lbl_user_sub.configure(text=self._("user_sub"))
         
@@ -109,33 +111,47 @@ class DelphiMigratorApp(ctk.CTk):
             self.combo_mode.set(self._("mode_extract"))
             
         self.btn_next1.configure(text=self._("btn_next", default="Next Step"))
+        
+        # Step 2: Filters
+        try: # Failsafe during init
+            self.header_label_2.configure(text=self._("step_2", default="2. Filters & Exceptions"))
+            self.lbl_inc.configure(text=self._("lbl_include_only", default="Include ONLY these files"))
+            self.lbl_exc.configure(text=self._("lbl_ignore", default="Ignore these files"))
+            self.btn_add_inc.configure(text=self._("btn_add", default="Add"))
+            self.btn_rem_inc.configure(text=self._("btn_remove", default="Remove"))
+            self.btn_add_exc.configure(text=self._("btn_add", default="Add"))
+            self.btn_rem_exc.configure(text=self._("btn_remove", default="Remove"))
+            self.btn_prev2.configure(text=self._("btn_prev", default="Previous Step"))
+            self.btn_next2.configure(text=self._("btn_next", default="Next Step"))
+        except AttributeError:
+            pass
 
-        # Step 2: Options
-        self.header_label_2.configure(text=self._("step_2", default="2. Migration Rules"))
+        # Step 3: Migration Rules (formerly Step 2: Options)
+        self.header_label_3.configure(text=self._("step_3", default="3. Migration Rules"))
         self.lbl_options.configure(text=self._("lbl_options"))
         self.chk_utf8.configure(text=self._("chk_utf8"))
         self.chk_bde.configure(text=self._("chk_bde"))
         self.chk_scopes.configure(text=self._("chk_scopes"))
         self.chk_advanced.configure(text=self._("chk_advanced"))
         
-        self.btn_prev2.configure(text=self._("btn_prev", default="Previous Step"))
-        self.btn_next2.configure(text=self._("btn_next", default="Next Step"))
+        self.btn_prev3.configure(text=self._("btn_prev", default="Previous Step"))
+        self.btn_next3.configure(text=self._("btn_next", default="Next Step"))
         
-        # Step 3: Execution
-        self.header_label_3.configure(text=self._("step_3", default="3. Execution & Output"))
+        # Step 4: Execution (formerly Step 3: Execution)
+        self.header_label_4.configure(text=self._("step_4", default="4. Execution & Output"))
         self.chk_precompile.configure(text=self._("chk_precompile"))
         
-        try:
+        try: # Failsafe during init
             self.lbl_console.configure(text=self._("lbl_console"))
         except AttributeError:
-            pass # Failsafe during init
+            pass 
         
         if self.btn_start.cget("state") == "normal":
             self.btn_start.configure(text=self._("btn_start_ready"))
         else:
             self.btn_start.configure(text=self._("btn_start_busy"))
             
-        self.btn_prev3.configure(text=self._("btn_prev", default="Previous Step"))
+        self.btn_prev4.configure(text=self._("btn_prev", default="Previous Step"))
             
         # Settings
         self.lbl_settings_title.configure(text=self._("nav_settings").strip())
@@ -152,12 +168,14 @@ class DelphiMigratorApp(ctk.CTk):
     def show_step(self, step_number):
         self.settings_frame.grid_forget()
         self.frame_step1.grid_forget()
-        self.frame_step2.grid_forget()
-        self.frame_step3.grid_forget()
+        self.frame_step2.grid_forget() # New step 2
+        self.frame_step3.grid_forget() # Old step 2, now step 3
+        self.frame_step4.grid_forget() # Old step 3, now step 4
         
         self.btn_step1.configure(fg_color="transparent", text_color=COLOR_SECONDARY)
         self.btn_step2.configure(fg_color="transparent", text_color=COLOR_SECONDARY)
         self.btn_step3.configure(fg_color="transparent", text_color=COLOR_SECONDARY)
+        self.btn_step4.configure(fg_color="transparent", text_color=COLOR_SECONDARY)
 
         if step_number == 1:
             self.frame_step1.grid(row=0, column=0, sticky="nsew")
@@ -168,17 +186,21 @@ class DelphiMigratorApp(ctk.CTk):
         elif step_number == 3:
             self.frame_step3.grid(row=0, column=0, sticky="nsew")
             self.btn_step3.configure(fg_color=BG_INPUT, text_color=COLOR_PRIMARY)
+        elif step_number == 4:
+            self.frame_step4.grid(row=0, column=0, sticky="nsew")
+            self.btn_step4.configure(fg_color=BG_INPUT, text_color=COLOR_PRIMARY)
 
     def show_settings(self):
         self.frame_step1.grid_forget()
-        self.frame_step2.grid_forget()
-        self.frame_step3.grid_forget()
+        self.frame_step2.grid_forget() # New step 2
+        self.frame_step3.grid_forget() # Old step 2, now step 3
+        self.frame_step4.grid_forget() # Old step 3, now step 4
         self.settings_frame.grid(row=0, column=0, sticky="nsew")
 
     def _create_sidebar(self):
         self.sidebar_frame = ctk.CTkFrame(self, width=280, corner_radius=0, fg_color=BG_SIDEBAR)
         self.sidebar_frame.grid(row=0, column=0, rowspan=2, sticky="nsew")
-        self.sidebar_frame.grid_rowconfigure(5, weight=1)
+        self.sidebar_frame.grid_rowconfigure(6, weight=1)
         self.sidebar_frame.grid_propagate(False)
 
         # Brand Logo (Image + Text)
@@ -210,15 +232,18 @@ class DelphiMigratorApp(ctk.CTk):
         self.btn_step1 = ctk.CTkButton(self.sidebar_frame, text=self._("step_1", default="1. Select Folders"), font=ctk.CTkFont(size=14, weight="bold"), fg_color="transparent", text_color=COLOR_SECONDARY, anchor="w", height=45, hover_color=BG_INPUT, command=lambda: self.show_step(1))
         self.btn_step1.grid(row=2, column=0, padx=20, pady=8, sticky="ew")
 
-        self.btn_step2 = ctk.CTkButton(self.sidebar_frame, text=self._("step_2", default="2. Migration Rules"), font=ctk.CTkFont(size=14, weight="bold"), fg_color="transparent", text_color=COLOR_SECONDARY, anchor="w", height=45, hover_color=BG_INPUT, command=lambda: self.show_step(2))
+        self.btn_step2 = ctk.CTkButton(self.sidebar_frame, text=self._("step_2", default="2. Filters & Exceptions"), font=ctk.CTkFont(size=14, weight="bold"), fg_color="transparent", text_color=COLOR_SECONDARY, anchor="w", height=45, hover_color=BG_INPUT, command=lambda: self.show_step(2))
         self.btn_step2.grid(row=3, column=0, padx=20, pady=8, sticky="ew")
 
-        self.btn_step3 = ctk.CTkButton(self.sidebar_frame, text=self._("step_3", default="3. Execution & Output"), font=ctk.CTkFont(size=14, weight="bold"), fg_color="transparent", text_color=COLOR_SECONDARY, anchor="w", height=45, hover_color=BG_INPUT, command=lambda: self.show_step(3))
+        self.btn_step3 = ctk.CTkButton(self.sidebar_frame, text=self._("step_3", default="3. Migration Rules"), font=ctk.CTkFont(size=14, weight="bold"), fg_color="transparent", text_color=COLOR_SECONDARY, anchor="w", height=45, hover_color=BG_INPUT, command=lambda: self.show_step(3))
         self.btn_step3.grid(row=4, column=0, padx=20, pady=8, sticky="ew")
+
+        self.btn_step4 = ctk.CTkButton(self.sidebar_frame, text=self._("step_4", default="4. Execution & Output"), font=ctk.CTkFont(size=14, weight="bold"), fg_color="transparent", text_color=COLOR_SECONDARY, anchor="w", height=45, hover_color=BG_INPUT, command=lambda: self.show_step(4))
+        self.btn_step4.grid(row=5, column=0, padx=20, pady=8, sticky="ew")
 
         # Bottom Mini-Player / Profile mimic
         self.profile_frame = ctk.CTkFrame(self.sidebar_frame, fg_color=BG_INPUT, corner_radius=16)
-        self.profile_frame.grid(row=6, column=0, padx=20, pady=30, sticky="ew")
+        self.profile_frame.grid(row=7, column=0, padx=20, pady=30, sticky="ew")
         
         self.lbl_user_title = ctk.CTkLabel(self.profile_frame, text=self._("user_title"), font=ctk.CTkFont(size=14, weight="bold"), text_color=COLOR_PRIMARY)
         self.lbl_user_title.pack(padx=15, pady=(15, 0), anchor="w")
@@ -293,17 +318,96 @@ class DelphiMigratorApp(ctk.CTk):
         
         self._toggle_destination_card()
 
-    def _create_step2_options(self):
+    def _create_step2_filters(self):
         self.frame_step2 = ctk.CTkFrame(self.container_frame, fg_color="transparent")
         self.frame_step2.grid_columnconfigure(0, weight=1)
+        self.frame_step2.grid_columnconfigure(1, weight=1)
+        self.frame_step2.grid_rowconfigure(2, weight=1)
+        self.frame_step2.grid_rowconfigure(5, weight=1)
 
-        self.header_label_2 = ctk.CTkLabel(self.frame_step2, text=self._("step_2", default="2. Migration Rules"), font=ctk.CTkFont(family="Inter", size=36, weight="bold"), text_color=COLOR_PRIMARY)
-        self.header_label_2.grid(row=0, column=0, sticky="w", pady=(0, 40))
+        self.header_label_2 = ctk.CTkLabel(self.frame_step2, text=self._("step_2", default="2. Filters & Exceptions"), font=ctk.CTkFont(family="Inter", size=36, weight="bold"), text_color=COLOR_PRIMARY)
+        self.header_label_2.grid(row=0, column=0, columnspan=2, sticky="w", pady=(0, 40))
 
-        self.lbl_options = ctk.CTkLabel(self.frame_step2, text=self._("lbl_options"), font=ctk.CTkFont(family="Inter", size=20, weight="bold"), text_color=COLOR_PRIMARY)
+        # --- INCLUDE LIST ---
+        self.lbl_inc = ctk.CTkLabel(self.frame_step2, text=self._("lbl_include_only", default="Include ONLY these files"), font=ctk.CTkFont(weight="bold", size=15), text_color=COLOR_PRIMARY)
+        self.lbl_inc.grid(row=1, column=0, sticky="w", pady=(0, 5))
+        
+        self.lst_include = ctk.CTkTextbox(self.frame_step2, width=300, height=120, fg_color=BG_INPUT, text_color="#FFFFFF", border_width=1, border_color="#333344")
+        self.lst_include.grid(row=2, column=0, sticky="nsew", padx=(0, 10))
+        
+        # Include Toolbar
+        inc_toolbar = ctk.CTkFrame(self.frame_step2, fg_color="transparent")
+        inc_toolbar.grid(row=3, column=0, sticky="ew", pady=(5, 20))
+        
+        self.btn_add_inc = ctk.CTkButton(inc_toolbar, text=self._("btn_add", default="Add"), width=80, fg_color=CARD_1, hover_color="#8080FF", command=lambda: self._add_filter_gui(self.lst_include))
+        self.btn_add_inc.pack(side="left", padx=(0, 5))
+        self.btn_rem_inc = ctk.CTkButton(inc_toolbar, text=self._("btn_remove", default="Remove"), width=80, fg_color="#3A3A4A", hover_color="#2A2A35", command=lambda: self._rem_filter_gui(self.lst_include))
+        self.btn_rem_inc.pack(side="left")
+
+        # --- IGNORE LIST ---
+        self.lbl_exc = ctk.CTkLabel(self.frame_step2, text=self._("lbl_ignore", default="Ignore these files"), font=ctk.CTkFont(weight="bold", size=15), text_color=COLOR_PRIMARY)
+        self.lbl_exc.grid(row=1, column=1, sticky="w", pady=(0, 5))
+        
+        self.lst_ignore = ctk.CTkTextbox(self.frame_step2, width=300, height=120, fg_color=BG_INPUT, text_color="#FFFFFF", border_width=1, border_color="#333344")
+        self.lst_ignore.grid(row=2, column=1, sticky="nsew", padx=(10, 0))
+        
+        # Ignore Toolbar
+        exc_toolbar = ctk.CTkFrame(self.frame_step2, fg_color="transparent")
+        exc_toolbar.grid(row=3, column=1, sticky="ew", pady=(5, 20), padx=(10, 0))
+        
+        self.btn_add_exc = ctk.CTkButton(exc_toolbar, text=self._("btn_add", default="Add"), width=80, fg_color=CARD_1, hover_color="#8080FF", command=lambda: self._add_filter_gui(self.lst_ignore))
+        self.btn_add_exc.pack(side="left", padx=(0, 5))
+        self.btn_rem_exc = ctk.CTkButton(exc_toolbar, text=self._("btn_remove", default="Remove"), width=80, fg_color="#3A3A4A", hover_color="#2A2A35", command=lambda: self._rem_filter_gui(self.lst_ignore))
+        self.btn_rem_exc.pack(side="left")
+
+        # Load Default Ignores if empty
+        if not self.app_settings.get("ignore_filters"):
+            default_ignores = ["*.~pas", "*.~dfm", "*.dcu", "*.identcache", "*.local", "*.stat", "__history/"]
+            self.lst_ignore.insert("1.0", "\n".join(default_ignores) + "\n")
+        else:
+            self.lst_ignore.insert("1.0", "\n".join(self.app_settings.get("ignore_filters", [])) + "\n")
+            
+        if self.app_settings.get("include_filters"):
+            self.lst_include.insert("1.0", "\n".join(self.app_settings.get("include_filters", [])) + "\n")
+
+        # Step Navigation Row (Bottom)
+        self.step_nav2 = ctk.CTkFrame(self.frame_step2, fg_color="transparent")
+        self.step_nav2.grid(row=4, column=0, columnspan=2, sticky="sew", pady=(20, 0))
+        
+        self.btn_prev2 = ctk.CTkButton(self.step_nav2, text=self._("btn_prev", default="Previous Step"), command=lambda: self.show_step(1), font=ctk.CTkFont(size=14, weight="bold"), fg_color="transparent", border_width=1, border_color=COLOR_SECONDARY, text_color=COLOR_SECONDARY, hover_color=BG_INPUT, height=40)
+        self.btn_prev2.pack(side="left")
+        
+        self.btn_next2 = ctk.CTkButton(self.step_nav2, text=self._("btn_next", default="Next Step"), command=lambda: self.show_step(3), font=ctk.CTkFont(size=14, weight="bold"), fg_color=CARD_1, hover_color="#8080FF", height=40)
+        self.btn_next2.pack(side="right")
+
+    def _add_filter_gui(self, textbox):
+        dialog = ctk.CTkInputDialog(text=self._("msg_add_filter", default="Type the wildcard pattern:"), title=self._("title_add_filter", default="Add"))
+        new_val = dialog.get_input()
+        if new_val and new_val.strip():
+            textbox.insert("end", new_val.strip() + "\n")
+            self.save_settings()
+
+    def _rem_filter_gui(self, textbox):
+        content = textbox.get("1.0", "end-1c").strip()
+        lines = content.split('\n')
+        if lines and lines[-1]:
+            lines.pop()
+            textbox.delete("1.0", "end")
+            if lines:
+                textbox.insert("1.0", "\n".join(lines) + "\n")
+            self.save_settings()
+
+    def _create_step3_options(self): # Formerly _create_step2_options
+        self.frame_step3 = ctk.CTkFrame(self.container_frame, fg_color="transparent")
+        self.frame_step3.grid_columnconfigure(0, weight=1)
+
+        self.header_label_3 = ctk.CTkLabel(self.frame_step3, text=self._("step_3", default="3. Migration Rules"), font=ctk.CTkFont(family="Inter", size=36, weight="bold"), text_color=COLOR_PRIMARY)
+        self.header_label_3.grid(row=0, column=0, sticky="w", pady=(0, 40))
+
+        self.lbl_options = ctk.CTkLabel(self.frame_step3, text=self._("lbl_options"), font=ctk.CTkFont(family="Inter", size=20, weight="bold"), text_color=COLOR_PRIMARY)
         self.lbl_options.grid(row=1, column=0, sticky="w", pady=(0, 20))
 
-        self.options_frame = ctk.CTkFrame(self.frame_step2, fg_color="transparent")
+        self.options_frame = ctk.CTkFrame(self.frame_step3, fg_color="transparent")
         self.options_frame.grid(row=2, column=0, sticky="nsew")
 
         self.var_utf8 = ctk.BooleanVar(value=self.app_settings.get("utf8", True))
@@ -324,33 +428,33 @@ class DelphiMigratorApp(ctk.CTk):
         self.chk_advanced.pack(anchor="w", pady=(0, 15))
 
         # Spacer to push navigation to bottom
-        self.frame_step2.grid_rowconfigure(3, weight=1)
+        self.frame_step3.grid_rowconfigure(3, weight=1)
 
         # Step Navigation
-        self.step_nav2 = ctk.CTkFrame(self.frame_step2, fg_color="transparent")
-        self.step_nav2.grid(row=4, column=0, sticky="sew", pady=(20, 0))
+        self.step_nav3 = ctk.CTkFrame(self.frame_step3, fg_color="transparent")
+        self.step_nav3.grid(row=4, column=0, sticky="sew", pady=(20, 0))
         
-        self.btn_next2 = ctk.CTkButton(self.step_nav2, text=self._("btn_next", default="Next Step"), command=lambda: self.show_step(3), font=ctk.CTkFont(size=14, weight="bold"), fg_color=CARD_1, hover_color="#8080FF", height=40)
-        self.btn_next2.pack(side="right")
-        self.btn_prev2 = ctk.CTkButton(self.step_nav2, text=self._("btn_prev", default="Previous Step"), command=lambda: self.show_step(1), font=ctk.CTkFont(size=14, weight="bold"), fg_color="transparent", border_width=1, border_color=COLOR_SECONDARY, text_color=COLOR_SECONDARY, hover_color=BG_INPUT, height=40)
-        self.btn_prev2.pack(side="right", padx=(0, 15))
+        self.btn_next3 = ctk.CTkButton(self.step_nav3, text=self._("btn_next", default="Next Step"), command=lambda: self.show_step(4), font=ctk.CTkFont(size=14, weight="bold"), fg_color=CARD_1, hover_color="#8080FF", height=40)
+        self.btn_next3.pack(side="right")
+        self.btn_prev3 = ctk.CTkButton(self.step_nav3, text=self._("btn_prev", default="Previous Step"), command=lambda: self.show_step(2), font=ctk.CTkFont(size=14, weight="bold"), fg_color="transparent", border_width=1, border_color=COLOR_SECONDARY, text_color=COLOR_SECONDARY, hover_color=BG_INPUT, height=40)
+        self.btn_prev3.pack(side="right", padx=(0, 15))
 
-    def _create_step3_execution(self):
-        self.frame_step3 = ctk.CTkFrame(self.container_frame, fg_color="transparent")
-        self.frame_step3.grid_columnconfigure(0, weight=1)
-        self.frame_step3.grid_rowconfigure(2, weight=1)
+    def _create_step4_execution(self): # Formerly _create_step3_execution
+        self.frame_step4 = ctk.CTkFrame(self.container_frame, fg_color="transparent")
+        self.frame_step4.grid_columnconfigure(0, weight=1)
+        self.frame_step4.grid_rowconfigure(2, weight=1)
 
-        self.header_label_3 = ctk.CTkLabel(self.frame_step3, text=self._("step_3", default="3. Execution & Output"), font=ctk.CTkFont(family="Inter", size=36, weight="bold"), text_color=COLOR_PRIMARY)
-        self.header_label_3.grid(row=0, column=0, sticky="w", pady=(0, 20))
+        self.header_label_4 = ctk.CTkLabel(self.frame_step4, text=self._("step_4", default="4. Execution & Output"), font=ctk.CTkFont(family="Inter", size=36, weight="bold"), text_color=COLOR_PRIMARY)
+        self.header_label_4.grid(row=0, column=0, sticky="w", pady=(0, 20))
 
         # Action Top Section
-        self.action_frame = ctk.CTkFrame(self.frame_step3, fg_color="transparent")
+        self.action_frame = ctk.CTkFrame(self.frame_step4, fg_color="transparent")
         self.action_frame.grid(row=1, column=0, sticky="ew", pady=(0, 20))
         self.action_frame.grid_columnconfigure(1, weight=1)
 
         self.var_precompile = ctk.BooleanVar(value=self.app_settings.get("precompile", False))
         
-        kwargs = {"text_color": COLOR_SECONDARY, "fg_color": "#D94343", "font": ctk.CTkFont(size=14), "border_width": 2, "border_color": "#2A2A35", "checkbox_width": 24, "checkbox_height": 24, "hover_color": "#FF8080"}
+        kwargs = {"text_color": COLOR_SECONDARY, "fg_color": "#101014", "font": ctk.CTkFont(size=14), "border_width": 2, "border_color": "#2A2A35", "checkbox_width": 24, "checkbox_height": 24, "hover_color": "#2A2A35"}
         self.chk_precompile = ctk.CTkCheckBox(self.action_frame, text=self._("chk_precompile"), variable=self.var_precompile, **kwargs)
         self.chk_precompile.pack(side="left")
 
@@ -358,7 +462,7 @@ class DelphiMigratorApp(ctk.CTk):
         self.btn_start.pack(side="right")
 
         # Console Section
-        self.console_frame = ctk.CTkFrame(self.frame_step3, fg_color="transparent")
+        self.console_frame = ctk.CTkFrame(self.frame_step4, fg_color="transparent")
         self.console_frame.grid(row=2, column=0, sticky="nsew")
         self.console_frame.grid_rowconfigure(1, weight=1)
         self.console_frame.grid_columnconfigure(0, weight=1)
@@ -372,11 +476,11 @@ class DelphiMigratorApp(ctk.CTk):
         self.log_textbox.configure(state="disabled")
 
         # Step Navigation Row (Bottom)
-        self.step_nav3 = ctk.CTkFrame(self.frame_step3, fg_color="transparent")
-        self.step_nav3.grid(row=3, column=0, sticky="sew", pady=(20, 0))
+        self.step_nav4 = ctk.CTkFrame(self.frame_step4, fg_color="transparent")
+        self.step_nav4.grid(row=3, column=0, sticky="sew", pady=(20, 0))
         
-        self.btn_prev3 = ctk.CTkButton(self.step_nav3, text=self._("btn_prev", default="Previous Step"), command=lambda: self.show_step(2), font=ctk.CTkFont(size=14, weight="bold"), fg_color="transparent", border_width=1, border_color=COLOR_SECONDARY, text_color=COLOR_SECONDARY, hover_color=BG_INPUT, height=40)
-        self.btn_prev3.pack(side="left")
+        self.btn_prev4 = ctk.CTkButton(self.step_nav4, text=self._("btn_prev", default="Previous Step"), command=lambda: self.show_step(3), font=ctk.CTkFont(size=14, weight="bold"), fg_color="transparent", border_width=1, border_color=COLOR_SECONDARY, text_color=COLOR_SECONDARY, hover_color=BG_INPUT, height=40)
+        self.btn_prev4.pack(side="left")
         
         # Save Triggers
         self.var_precompile.trace_add("write", lambda *_: self.save_settings())
@@ -467,7 +571,9 @@ class DelphiMigratorApp(ctk.CTk):
             'bde': self.var_bde.get(),
             'scopes': self.var_scopes.get(),
             'advanced': self.var_advanced.get(),
-            'precompile': getattr(self, 'var_precompile', ctk.BooleanVar(value=False)).get()
+            'precompile': getattr(self, 'var_precompile', ctk.BooleanVar(value=False)).get(),
+            "include_filters": [f for f in self.lst_include.get("1.0", "end-1c").split("\n") if f.strip()],
+            "ignore_filters": [f for f in self.lst_ignore.get("1.0", "end-1c").split("\n") if f.strip()]
         }
 
         threading.Thread(target=self._run_engine, args=(src, dst, config), daemon=True).start()

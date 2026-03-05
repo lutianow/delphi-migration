@@ -3,8 +3,8 @@
 import os
 import shutil
 
-def safe_copy_tree(src: str, dst: str, log_callback=None):
-    """Copia a estrutura de diretórios, recriando caso já exista o destino."""
+def safe_copy_tree(src: str, dst: str, log_callback=None, is_allowed_callback=None):
+    """Copia a estrutura de diretórios avaliando o callback de allow-list antes de transferir o arquivo."""
     if os.path.exists(dst):
         if log_callback:
             log_callback(f"Removendo diretório de destino existente: {dst}")
@@ -13,7 +13,19 @@ def safe_copy_tree(src: str, dst: str, log_callback=None):
     if log_callback:
         log_callback(f"Copiando arquivos de {src} para {dst} ...")
         
-    shutil.copytree(src, dst)
+    os.makedirs(dst)
+    for root, dirs, files in os.walk(src):
+        # Allow filtering dirs? Here we focus heavily on files but ignoring a dir early saves time
+        if is_allowed_callback:
+            dirs[:] = [d for d in dirs if is_allowed_callback(d)]
+            
+        for file in files:
+            if not is_allowed_callback or is_allowed_callback(file):
+                src_file = os.path.join(root, file)
+                rel_path = os.path.relpath(root, src)
+                dst_dir = os.path.join(dst, rel_path)
+                os.makedirs(dst_dir, exist_ok=True)
+                shutil.copy2(src_file, os.path.join(dst_dir, file))
 
 def read_file_content(filepath: str) -> tuple[str, bool]:
     """Tenta ler um arquivo em utf-8, cai para windows-1252 em caso de erro. Retorna (conteudo, era_ansi)"""

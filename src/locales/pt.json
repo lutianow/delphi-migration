@@ -32,8 +32,17 @@
     "chk_precompile": "Pr\u00e9-Compilar Projeto Legado (Checar por erros nativos do Delphi 12 antes de modificar)",
     "lbl_lang_select": "Idioma do Sistema:",
     "step_1": "1. Sele\u00e7\u00e3o de Pastas",
-    "step_2": "2. Regras de Migra\u00e7\u00e3o",
-    "step_3": "3. Execu\u00e7\u00e3o e Output",
+    "step_2": "2. Filtros e Exce\u00e7\u00f5es",
+    "step_3": "3. Regras de Migra\u00e7\u00e3o",
     "btn_next": "Pr\u00f3ximo Passo",
-    "btn_prev": "Passo Anterior"
+    "btn_prev": "Passo Anterior",
+    "step_4": "4. Execu\u00e7\u00e3o e Output",
+    "lbl_include_only": "Incluir SOMENTE estes arquivos",
+    "lbl_ignore": "Ignorar (Excluir) estes arquivos",
+    "btn_add": "Adicionar",
+    "btn_edit": "Editar",
+    "btn_remove": "Remover",
+    "msg_add_filter": "Digite o padr\u00e3o wildcard (ex: *.dcu ou pasta/):",
+    "title_add_filter": "Adicionar Filtro",
+    "title_edit_filter": "Editar Filtro"
 }

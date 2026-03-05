@@ -32,8 +32,17 @@
     "lbl_console": "Execution Output (Verbose)",
     "lbl_lang_select": "Select Language:",
     "step_1": "1. Select Folders",
-    "step_2": "2. Migration Rules",
-    "step_3": "3. Execution & Output",
+    "step_2": "2. Filters & Exceptions",
+    "step_3": "3. Migration Rules",
     "btn_next": "Next Step",
-    "btn_prev": "Previous Step"
+    "btn_prev": "Previous Step",
+    "step_4": "4. Execution & Output",
+    "lbl_include_only": "Include ONLY these files/folders",
+    "lbl_ignore": "Ignore these files/folders",
+    "btn_add": "Add",
+    "btn_edit": "Edit",
+    "btn_remove": "Remove",
+    "msg_add_filter": "Type the wildcard pattern (e.g., *.dcu or backup/):",
+    "title_add_filter": "Add Filter",
+    "title_edit_filter": "Edit Filter"
 }

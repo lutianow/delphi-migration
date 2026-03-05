@@ -2,6 +2,7 @@
 
 import os
 import re
+import fnmatch
 import subprocess
 from src.core.constants import BDE_TO_FD_COMPONENTS, DBTABLES_REPLACEMENT, UNIT_SCOPES, ADVANCED_PAS_REPLACEMENTS, DEPRECATED_THREAD_METHODS, LEGACY_DFM_PROPERTIES
 from src.utils.file_utils import safe_copy_tree, read_file_content, write_file_content
@@ -15,6 +16,8 @@ class DelphiMigratorEngine:
         self.do_scopes = config.get('scopes', True)
         self.do_advanced = config.get('advanced', True)
         self.do_precompile = config.get('precompile', False)
+        self.include_filters = config.get('include_filters', [])
+        self.ignore_filters = config.get('ignore_filters', [])
         self.delphi_bin = config.get('delphi_bin', r"C:\Program Files (x86)\Embarcadero\Studio\23.0\bin")
         self.log = log_callback
 
@@ -22,6 +25,25 @@ class DelphiMigratorEngine:
         self.count_bde_fixes = 0
         self.count_scope_fixes = 0
         self.count_advanced_fixes = 0
+
+    def _is_allowed(self, filename: str) -> bool:
+        # Check Exclusions (Blacklist) First
+        if self.ignore_filters:
+            for pattern in self.ignore_filters:
+                if fnmatch.fnmatch(filename, pattern):
+                    return False
+        
+        # Check Inclusions (Whitelist) Second
+        if self.include_filters:
+            matched = False
+            for pattern in self.include_filters:
+                if fnmatch.fnmatch(filename, pattern):
+                    matched = True
+                    break
+            if not matched:
+                return False
+                
+        return True
 
     def start_migration(self):
         try:
@@ -32,14 +54,18 @@ class DelphiMigratorEngine:
             
             if self.src != self.dst:
                 self.log(f">> Extração Segura Ativada. Copiando para: {self.dst}")
-                safe_copy_tree(self.src, self.dst, self.log)
+                safe_copy_tree(self.src, self.dst, self.log, self._is_allowed)
             else:
                 self.log(f">> Modo In-Place Ativado. Analisando e modificando DIRETAMENTE em: {self.src}")
             
             self.log(">> Analisando e processando arquivos (.pas, .dfm, .dpr)...")
             
-            for root, _, files in os.walk(self.dst):
+            for root, dirs, files in os.walk(self.dst):
+                # Optionally filter dirs here too if In-Place was used since copy_tree was bypassed
+                dirs[:] = [d for d in dirs if self._is_allowed(d)]
                 for file in files:
+                    if not self._is_allowed(file):
+                        continue
                     ext = os.path.splitext(file)[1].lower()
                     if ext in ['.pas', '.dfm', '.dpr']:
                         filepath = os.path.join(root, file)
