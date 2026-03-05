@@ -40,20 +40,25 @@ class DelphiMigratorApp(ctk.CTk):
         # Prevent Sidebar from expanding during long language values
         self.grid_columnconfigure(0, weight=0, minsize=280)
         self.grid_columnconfigure(1, weight=1)
-        self.grid_rowconfigure(0, weight=1)
+        self.grid_rowconfigure(0, weight=0, minsize=45) # Topbar
+        self.grid_rowconfigure(1, weight=1) # Main Content
 
+        self._create_topbar()
         self._create_sidebar()
         
-        # Container for swappable frames (Dashboard & Settings)
+        # Container for swappable frames (Wizard Steps & Settings)
         self.container_frame = ctk.CTkFrame(self, fg_color=BG_MAIN, corner_radius=0)
-        self.container_frame.grid(row=0, column=1, sticky="nsew", padx=60, pady=50)
+        self.container_frame.grid(row=1, column=1, sticky="nsew", padx=60, pady=40)
         self.container_frame.grid_columnconfigure(0, weight=1)
         self.container_frame.grid_rowconfigure(0, weight=1)
 
-        self._create_dashboard_frame()
+        self._create_step1_paths()
+        self._create_step2_options()
+        self._create_step3_execution()
         self._create_settings_frame()
         
-        self.show_dashboard()
+        self.current_step = 1
+        self.show_step(1)
 
     def change_language(self, choice):
         self.i18n.set_language(choice)
@@ -62,24 +67,27 @@ class DelphiMigratorApp(ctk.CTk):
         self.save_settings()
 
     def _update_all_texts(self):
-        # Window & Sidebar
+        # Window & Topbar
         self.title(self._("app_title"))
+        self.btn_settings.configure(text="⚙")
+        
+        # Sidebar
         self.logo_label.configure(text=self._("logo_title"))
         self.lbl_menu.configure(text=self._("lbl_menu"))
-        self.btn_nav1.configure(text=self._("nav_dashboard"))
-        self.btn_nav2.configure(text=self._("nav_settings"))
+        self.btn_step1.configure(text=self._("step_1", default="1. Select Folders"))
+        self.btn_step2.configure(text=self._("step_2", default="2. Migration Rules"))
+        self.btn_step3.configure(text=self._("step_3", default="3. Execution & Output"))
         self.lbl_user_title.configure(text=self._("user_title"))
         self.lbl_user_sub.configure(text=self._("user_sub"))
         
-        # Dashboard
-        self.header_label.configure(text=self._("header_title"))
+        # Step 1: Paths & Modes
+        self.header_label_1.configure(text=self._("step_1", default="1. Select Folders"))
         self.lbl_src_title.configure(text=self._("card_src_title"))
         self.lbl_src_sub.configure(text=self._("card_src_sub"))
         self.btn_source.configure(text=self._("btn_browse"))
         self.lbl_dst_title.configure(text=self._("card_dst_title"))
         self.lbl_dst_sub.configure(text=self._("card_dst_sub"))
         self.btn_dest.configure(text=self._("btn_browse"))
-        self.lbl_options.configure(text=self._("lbl_options"))
         self.lbl_mode.configure(text=self._("mode_lbl"))
         
         self.combo_mode.configure(values=[self._("mode_extract"), self._("mode_inplace")])
@@ -88,10 +96,21 @@ class DelphiMigratorApp(ctk.CTk):
         else:
             self.combo_mode.set(self._("mode_extract"))
             
+        self.btn_next1.configure(text=self._("btn_next", default="Next Step"))
+
+        # Step 2: Options
+        self.header_label_2.configure(text=self._("step_2", default="2. Migration Rules"))
+        self.lbl_options.configure(text=self._("lbl_options"))
         self.chk_utf8.configure(text=self._("chk_utf8"))
         self.chk_bde.configure(text=self._("chk_bde"))
         self.chk_scopes.configure(text=self._("chk_scopes"))
         self.chk_advanced.configure(text=self._("chk_advanced"))
+        
+        self.btn_prev2.configure(text=self._("btn_prev", default="Previous Step"))
+        self.btn_next2.configure(text=self._("btn_next", default="Next Step"))
+        
+        # Step 3: Execution
+        self.header_label_3.configure(text=self._("step_3", default="3. Execution & Output"))
         self.chk_precompile.configure(text=self._("chk_precompile"))
         
         try:
@@ -104,68 +123,90 @@ class DelphiMigratorApp(ctk.CTk):
         else:
             self.btn_start.configure(text=self._("btn_start_busy"))
             
+        self.btn_prev3.configure(text=self._("btn_prev", default="Previous Step"))
+            
         # Settings
         self.lbl_settings_title.configure(text=self._("nav_settings").strip())
         self.lbl_lang_select.configure(text=self._("lbl_lang_select"))
 
-    def show_dashboard(self):
+    def _create_topbar(self):
+        self.topbar_frame = ctk.CTkFrame(self, height=45, corner_radius=0, fg_color=BG_MAIN)
+        self.topbar_frame.grid(row=0, column=1, sticky="ew")
+        self.topbar_frame.grid_columnconfigure(0, weight=1)
+        
+        self.btn_settings = ctk.CTkButton(self.topbar_frame, text="⚙", width=40, height=40, font=ctk.CTkFont(size=20), fg_color="transparent", text_color=COLOR_SECONDARY, hover_color=BG_INPUT, command=self.show_settings)
+        self.btn_settings.grid(row=0, column=1, padx=20, pady=5, sticky="e")
+
+    def show_step(self, step_number):
         self.settings_frame.grid_forget()
-        self.dashboard_frame.grid(row=0, column=0, sticky="nsew")
-        self.btn_nav1.configure(fg_color=BG_INPUT)
-        self.btn_nav2.configure(fg_color="transparent")
+        self.frame_step1.grid_forget()
+        self.frame_step2.grid_forget()
+        self.frame_step3.grid_forget()
+        
+        self.btn_step1.configure(fg_color="transparent", text_color=COLOR_SECONDARY)
+        self.btn_step2.configure(fg_color="transparent", text_color=COLOR_SECONDARY)
+        self.btn_step3.configure(fg_color="transparent", text_color=COLOR_SECONDARY)
+
+        self.current_step = step_number
+
+        if step_number == 1:
+            self.frame_step1.grid(row=0, column=0, sticky="nsew")
+            self.btn_step1.configure(fg_color=BG_INPUT, text_color=COLOR_PRIMARY)
+        elif step_number == 2:
+            self.frame_step2.grid(row=0, column=0, sticky="nsew")
+            self.btn_step2.configure(fg_color=BG_INPUT, text_color=COLOR_PRIMARY)
+        elif step_number == 3:
+            self.frame_step3.grid(row=0, column=0, sticky="nsew")
+            self.btn_step3.configure(fg_color=BG_INPUT, text_color=COLOR_PRIMARY)
 
     def show_settings(self):
-        self.dashboard_frame.grid_forget()
+        self.frame_step1.grid_forget()
+        self.frame_step2.grid_forget()
+        self.frame_step3.grid_forget()
         self.settings_frame.grid(row=0, column=0, sticky="nsew")
-        self.btn_nav2.configure(fg_color=BG_INPUT)
-        self.btn_nav1.configure(fg_color="transparent")
 
     def _create_sidebar(self):
         self.sidebar_frame = ctk.CTkFrame(self, width=280, corner_radius=0, fg_color=BG_SIDEBAR)
-        self.sidebar_frame.grid(row=0, column=0, sticky="nsew")
-        self.sidebar_frame.grid_rowconfigure(4, weight=1)
+        self.sidebar_frame.grid(row=0, column=0, rowspan=2, sticky="nsew")
+        self.sidebar_frame.grid_rowconfigure(5, weight=1)
         self.sidebar_frame.grid_propagate(False)
 
         # Brand Logo
         self.logo_label = ctk.CTkLabel(self.sidebar_frame, text=self._("logo_title"), font=ctk.CTkFont(family="Inter", size=24, weight="bold"), text_color=COLOR_PRIMARY)
         self.logo_label.grid(row=0, column=0, padx=25, pady=(40, 50), sticky="w")
 
-        # Fake Navigation Menu for aesthetic
+        # Step-by-Step Navigation Menu
         self.lbl_menu = ctk.CTkLabel(self.sidebar_frame, text=self._("lbl_menu"), font=ctk.CTkFont(family="Inter", size=12, weight="bold"), text_color=COLOR_SECONDARY)
         self.lbl_menu.grid(row=1, column=0, padx=25, pady=(0, 15), sticky="w")
 
-        self.btn_nav1 = ctk.CTkButton(self.sidebar_frame, text=self._("nav_dashboard"), font=ctk.CTkFont(size=14, weight="bold"), fg_color=BG_INPUT, text_color=COLOR_PRIMARY, anchor="w", height=45, command=self.show_dashboard)
-        self.btn_nav1.grid(row=2, column=0, padx=20, pady=8, sticky="ew")
+        self.btn_step1 = ctk.CTkButton(self.sidebar_frame, text=self._("step_1", default="1. Select Folders"), font=ctk.CTkFont(size=14, weight="bold"), fg_color="transparent", text_color=COLOR_SECONDARY, anchor="w", height=45, hover_color=BG_INPUT, command=lambda: self.show_step(1))
+        self.btn_step1.grid(row=2, column=0, padx=20, pady=8, sticky="ew")
 
-        self.btn_nav2 = ctk.CTkButton(self.sidebar_frame, text=self._("nav_settings"), font=ctk.CTkFont(size=14, weight="bold"), fg_color="transparent", text_color=COLOR_SECONDARY, anchor="w", height=45, hover_color=BG_INPUT, command=self.show_settings)
-        self.btn_nav2.grid(row=3, column=0, padx=20, pady=8, sticky="ew")
+        self.btn_step2 = ctk.CTkButton(self.sidebar_frame, text=self._("step_2", default="2. Migration Rules"), font=ctk.CTkFont(size=14, weight="bold"), fg_color="transparent", text_color=COLOR_SECONDARY, anchor="w", height=45, hover_color=BG_INPUT, command=lambda: self.show_step(2))
+        self.btn_step2.grid(row=3, column=0, padx=20, pady=8, sticky="ew")
+
+        self.btn_step3 = ctk.CTkButton(self.sidebar_frame, text=self._("step_3", default="3. Execution & Output"), font=ctk.CTkFont(size=14, weight="bold"), fg_color="transparent", text_color=COLOR_SECONDARY, anchor="w", height=45, hover_color=BG_INPUT, command=lambda: self.show_step(3))
+        self.btn_step3.grid(row=4, column=0, padx=20, pady=8, sticky="ew")
 
         # Bottom Mini-Player / Profile mimic
         self.profile_frame = ctk.CTkFrame(self.sidebar_frame, fg_color=BG_INPUT, corner_radius=16)
-        self.profile_frame.grid(row=5, column=0, padx=20, pady=30, sticky="ew")
+        self.profile_frame.grid(row=6, column=0, padx=20, pady=30, sticky="ew")
         
         self.lbl_user_title = ctk.CTkLabel(self.profile_frame, text=self._("user_title"), font=ctk.CTkFont(size=14, weight="bold"), text_color=COLOR_PRIMARY)
         self.lbl_user_title.pack(padx=15, pady=(15, 0), anchor="w")
         self.lbl_user_sub = ctk.CTkLabel(self.profile_frame, text=self._("user_sub"), font=ctk.CTkFont(size=12), text_color=COLOR_SECONDARY)
         self.lbl_user_sub.pack(padx=15, pady=(0, 15), anchor="w")
 
-    def _create_dashboard_frame(self):
-        self.dashboard_frame = ctk.CTkFrame(self.container_frame, fg_color="transparent")
-        self.dashboard_frame.grid_columnconfigure((0, 1), weight=1)
+    def _create_step1_paths(self):
+        self.frame_step1 = ctk.CTkFrame(self.container_frame, fg_color="transparent")
+        self.frame_step1.grid_columnconfigure((0, 1), weight=1)
 
         # Header Title
-        self.header_frame = ctk.CTkFrame(self.dashboard_frame, fg_color="transparent")
-        self.header_frame.grid(row=0, column=0, columnspan=2, sticky="ew", pady=(0, 40))
-        self.header_frame.grid_columnconfigure(0, weight=1)
+        self.header_label_1 = ctk.CTkLabel(self.frame_step1, text=self._("step_1", default="1. Select Folders"), font=ctk.CTkFont(family="Inter", size=36, weight="bold"), text_color=COLOR_PRIMARY)
+        self.header_label_1.grid(row=0, column=0, columnspan=2, sticky="w", pady=(0, 40))
 
-        self.header_label = ctk.CTkLabel(self.header_frame, text=self._("header_title"), font=ctk.CTkFont(family="Inter", size=36, weight="bold"), text_color=COLOR_PRIMARY)
-        self.header_label.grid(row=0, column=0, sticky="w")
-
-        # Vertical Stacked Cards Row (Source on top, Dest below)
-        self.dashboard_frame.grid_columnconfigure(0, weight=1) # Allow cards to stretch horizontally
-        
-        # Card 1: Source
-        self.card_source = ctk.CTkFrame(self.dashboard_frame, fg_color=CARD_1, corner_radius=16, height=130)
+        # Vertical Stacked Cards
+        self.card_source = ctk.CTkFrame(self.frame_step1, fg_color=CARD_1, corner_radius=16, height=130)
         self.card_source.grid(row=1, column=0, columnspan=2, sticky="ew", pady=(0, 15))
         self.card_source.grid_propagate(False)
 
@@ -182,8 +223,7 @@ class DelphiMigratorApp(ctk.CTk):
         self.btn_source = ctk.CTkButton(self.card_source, text=self._("btn_browse"), command=self.browse_source, fg_color="#FFFFFF", text_color=CARD_1, hover_color="#E0E0FF", font=ctk.CTkFont(weight="bold", size=13), corner_radius=8, height=36, width=100)
         self.btn_source.grid(row=2, column=1, sticky="w", padx=(0, 20), pady=(0, 15))
 
-        # Card 2: Destination
-        self.card_dest = ctk.CTkFrame(self.dashboard_frame, fg_color=CARD_2, corner_radius=16, height=130)
+        self.card_dest = ctk.CTkFrame(self.frame_step1, fg_color=CARD_2, corner_radius=16, height=130)
         self.card_dest.grid(row=2, column=0, columnspan=2, sticky="ew", pady=(0, 15))
         self.card_dest.grid_propagate(False)
 
@@ -200,19 +240,12 @@ class DelphiMigratorApp(ctk.CTk):
         self.btn_dest = ctk.CTkButton(self.card_dest, text=self._("btn_browse"), command=self.browse_dest, fg_color="#FFFFFF", text_color=CARD_2, hover_color="#FFE0D0", font=ctk.CTkFont(weight="bold", size=13), corner_radius=8, height=36, width=100)
         self.btn_dest.grid(row=2, column=1, sticky="w", padx=(0, 20), pady=(0, 15))
 
-        # Options Section
-        self.lbl_options = ctk.CTkLabel(self.dashboard_frame, text=self._("lbl_options"), font=ctk.CTkFont(family="Inter", size=20, weight="bold"), text_color=COLOR_PRIMARY)
-        self.lbl_options.grid(row=3, column=0, columnspan=2, sticky="w", pady=(15, 10))
-
-        self.options_frame = ctk.CTkFrame(self.dashboard_frame, fg_color="transparent")
-        self.options_frame.grid(row=4, column=0, sticky="nsew", pady=(0, 10))
-
         # Operation Mode
         self.var_mode = ctk.StringVar(value=self.app_settings.get("op_mode", "extract"))
         self.var_mode.trace_add("write", lambda *args: self._toggle_destination_card())
 
-        mode_frame = ctk.CTkFrame(self.options_frame, fg_color="transparent")
-        mode_frame.pack(anchor="w", pady=(0, 15))
+        mode_frame = ctk.CTkFrame(self.frame_step1, fg_color="transparent")
+        mode_frame.grid(row=3, column=0, columnspan=2, sticky="w", pady=(15, 0))
         
         self.lbl_mode = ctk.CTkLabel(mode_frame, text=self._("mode_lbl"), font=ctk.CTkFont(weight="bold", size=15), text_color=COLOR_PRIMARY)
         self.lbl_mode.pack(side="left", padx=(0, 10))
@@ -220,63 +253,99 @@ class DelphiMigratorApp(ctk.CTk):
         self.combo_mode = ctk.CTkOptionMenu(mode_frame, variable=self.var_mode, values=[self._("mode_extract"), self._("mode_inplace")], fg_color=BG_INPUT, button_color="#2A2A35", text_color=COLOR_PRIMARY, width=280)
         self.combo_mode.pack(side="left")
 
-        # Checkboxes
+        # Step Navigation
+        self.step_nav1 = ctk.CTkFrame(self.frame_step1, fg_color="transparent")
+        self.step_nav1.grid(row=4, column=0, columnspan=2, sticky="ew", pady=(40, 0))
+        
+        self.btn_next1 = ctk.CTkButton(self.step_nav1, text=self._("btn_next", default="Next Step"), command=lambda: self.show_step(2), font=ctk.CTkFont(size=14, weight="bold"), fg_color=CARD_1, hover_color="#8080FF", height=40)
+        self.btn_next1.pack(side="right")
+        
+        self._toggle_destination_card()
+
+    def _create_step2_options(self):
+        self.frame_step2 = ctk.CTkFrame(self.container_frame, fg_color="transparent")
+        self.frame_step2.grid_columnconfigure(0, weight=1)
+
+        self.header_label_2 = ctk.CTkLabel(self.frame_step2, text=self._("step_2", default="2. Migration Rules"), font=ctk.CTkFont(family="Inter", size=36, weight="bold"), text_color=COLOR_PRIMARY)
+        self.header_label_2.grid(row=0, column=0, sticky="w", pady=(0, 40))
+
+        self.lbl_options = ctk.CTkLabel(self.frame_step2, text=self._("lbl_options"), font=ctk.CTkFont(family="Inter", size=20, weight="bold"), text_color=COLOR_PRIMARY)
+        self.lbl_options.grid(row=1, column=0, sticky="w", pady=(0, 20))
+
+        self.options_frame = ctk.CTkFrame(self.frame_step2, fg_color="transparent")
+        self.options_frame.grid(row=2, column=0, sticky="nsew")
+
         self.var_utf8 = ctk.BooleanVar(value=self.app_settings.get("utf8", True))
         self.var_bde = ctk.BooleanVar(value=self.app_settings.get("bde", True))
         self.var_scopes = ctk.BooleanVar(value=self.app_settings.get("scopes", True))
         self.var_advanced = ctk.BooleanVar(value=self.app_settings.get("advanced", True))
-        self.var_precompile = ctk.BooleanVar(value=self.app_settings.get("precompile", False))
 
-        # Auto-save triggers
-        self.source_dir.trace_add("write", lambda *args: self.save_settings())
-        self.dest_dir.trace_add("write", lambda *args: self.save_settings())
-        self.var_mode.trace_add("write", lambda *args: self.save_settings())
-        self.var_utf8.trace_add("write", lambda *args: self.save_settings())
-        self.var_bde.trace_add("write", lambda *args: self.save_settings())
-        self.var_scopes.trace_add("write", lambda *args: self.save_settings())
-        self.var_advanced.trace_add("write", lambda *args: self.save_settings())
-        self.var_precompile.trace_add("write", lambda *args: self.save_settings())
-
-        chk_font = ctk.CTkFont(size=14) # Increased font size
-        
-        # We unify checkboxes as requested to a neutral console-style color
+        chk_font = ctk.CTkFont(size=14)
         kwargs = {"text_color": COLOR_SECONDARY, "fg_color": "#101014", "font": chk_font, "border_width": 2, "border_color": "#2A2A35", "checkbox_width": 24, "checkbox_height": 24, "hover_color": "#2A2A35"}
         
         self.chk_utf8 = ctk.CTkCheckBox(self.options_frame, text=self._("chk_utf8"), variable=self.var_utf8, **kwargs)
-        self.chk_utf8.pack(anchor="w", pady=(0, 10))
+        self.chk_utf8.pack(anchor="w", pady=(0, 15))
         self.chk_bde = ctk.CTkCheckBox(self.options_frame, text=self._("chk_bde"), variable=self.var_bde, **kwargs)
-        self.chk_bde.pack(anchor="w", pady=(0, 10))
+        self.chk_bde.pack(anchor="w", pady=(0, 15))
         self.chk_scopes = ctk.CTkCheckBox(self.options_frame, text=self._("chk_scopes"), variable=self.var_scopes, **kwargs)
-        self.chk_scopes.pack(anchor="w", pady=(0, 10))
-        
+        self.chk_scopes.pack(anchor="w", pady=(0, 15))
         self.chk_advanced = ctk.CTkCheckBox(self.options_frame, text=self._("chk_advanced"), variable=self.var_advanced, **kwargs)
-        self.chk_advanced.pack(anchor="w", pady=(0, 10))
+        self.chk_advanced.pack(anchor="w", pady=(0, 15))
+
+        # Step Navigation
+        self.step_nav2 = ctk.CTkFrame(self.frame_step2, fg_color="transparent")
+        self.step_nav2.grid(row=3, column=0, sticky="ew", pady=(40, 0))
         
-        self.chk_precompile = ctk.CTkCheckBox(self.options_frame, text=self._("chk_precompile"), variable=self.var_precompile, **kwargs)
-        self.chk_precompile.pack(anchor="w", pady=(0, 10))
+        self.btn_next2 = ctk.CTkButton(self.step_nav2, text=self._("btn_next", default="Next Step"), command=lambda: self.show_step(3), font=ctk.CTkFont(size=14, weight="bold"), fg_color=CARD_1, hover_color="#8080FF", height=40)
+        self.btn_next2.pack(side="right")
+        self.btn_prev2 = ctk.CTkButton(self.step_nav2, text=self._("btn_prev", default="Previous Step"), command=lambda: self.show_step(1), font=ctk.CTkFont(size=14, weight="bold"), fg_color="transparent", border_width=1, border_color=COLOR_SECONDARY, text_color=COLOR_SECONDARY, hover_color=BG_INPUT, height=40)
+        self.btn_prev2.pack(side="right", padx=(0, 15))
 
-        # Start Button (Adjusted row alignment and reduced height)
-        self.action_frame = ctk.CTkFrame(self.dashboard_frame, fg_color="transparent")
-        self.action_frame.grid(row=4, column=1, sticky="nsew", padx=(25, 0), pady=(0, 10))
+    def _create_step3_execution(self):
+        self.frame_step3 = ctk.CTkFrame(self.container_frame, fg_color="transparent")
+        self.frame_step3.grid_columnconfigure(0, weight=1)
+        self.frame_step3.grid_rowconfigure(2, weight=1)
 
-        self.btn_start = ctk.CTkButton(self.action_frame, text=self._("btn_start_ready"), command=self.start_migration, font=ctk.CTkFont(size=16, weight="bold"), fg_color=COLOR_PRIMARY, text_color=BG_MAIN, hover_color="#E5E5E5", corner_radius=16, height=45)
-        self.btn_start.pack(fill="x", side="bottom", pady=(0, 20))
+        self.header_label_3 = ctk.CTkLabel(self.frame_step3, text=self._("step_3", default="3. Execution & Output"), font=ctk.CTkFont(family="Inter", size=36, weight="bold"), text_color=COLOR_PRIMARY)
+        self.header_label_3.grid(row=0, column=0, sticky="w", pady=(0, 20))
 
-        # Full-Width Verbose Console Section
-        self.console_frame = ctk.CTkFrame(self.dashboard_frame, fg_color="transparent")
-        self.console_frame.grid(row=5, column=0, columnspan=2, sticky="nsew", pady=(5, 0))
-        self.dashboard_frame.grid_rowconfigure(5, weight=1) # Allow console to expand vertically
+        # Action Top Section
+        self.action_frame = ctk.CTkFrame(self.frame_step3, fg_color="transparent")
+        self.action_frame.grid(row=1, column=0, sticky="ew", pady=(0, 20))
+        self.action_frame.grid_columnconfigure(1, weight=1)
+
+        self.var_precompile = ctk.BooleanVar(value=self.app_settings.get("precompile", False))
+        
+        kwargs = {"text_color": COLOR_SECONDARY, "fg_color": "#D94343", "font": ctk.CTkFont(size=14), "border_width": 2, "border_color": "#2A2A35", "checkbox_width": 24, "checkbox_height": 24, "hover_color": "#FF8080"}
+        self.chk_precompile = ctk.CTkCheckBox(self.action_frame, text=self._("chk_precompile"), variable=self.var_precompile, **kwargs)
+        self.chk_precompile.pack(side="left")
+
+        self.btn_start = ctk.CTkButton(self.action_frame, text=self._("btn_start_ready"), command=self.start_migration, font=ctk.CTkFont(size=16, weight="bold"), fg_color=COLOR_PRIMARY, text_color=BG_MAIN, hover_color="#E5E5E5", corner_radius=16, height=45, width=200)
+        self.btn_start.pack(side="right")
+
+        # Console Section
+        self.console_frame = ctk.CTkFrame(self.frame_step3, fg_color="transparent")
+        self.console_frame.grid(row=2, column=0, sticky="nsew")
+        self.console_frame.grid_rowconfigure(1, weight=1)
+        self.console_frame.grid_columnconfigure(0, weight=1)
 
         self.lbl_console = ctk.CTkLabel(self.console_frame, text="Execution Output (Verbose)", font=ctk.CTkFont(family="Inter", size=16, weight="bold"), text_color=COLOR_SECONDARY)
-        self.lbl_console.pack(anchor="w", pady=(0, 10))
+        self.lbl_console.grid(row=0, column=0, sticky="w", pady=(0, 10))
 
         self.log_textbox = ctk.CTkTextbox(self.console_frame, fg_color="#101014", text_color="#A4A4B5", corner_radius=12, font=ctk.CTkFont(family="Consolas", size=13), border_width=2, border_color="#2A2A35")
-        self.log_textbox.pack(fill="both", expand=True)
+        self.log_textbox.grid(row=1, column=0, sticky="nsew")
         self.log_textbox.insert("end", self._("log_ready") + "\n")
         self.log_textbox.configure(state="disabled")
+
+        # Step Navigation Row (Bottom)
+        self.step_nav3 = ctk.CTkFrame(self.frame_step3, fg_color="transparent")
+        self.step_nav3.grid(row=3, column=0, sticky="ew", pady=(20, 0))
         
-        # Initialize UI state logic
-        self._toggle_destination_card()
+        self.btn_prev3 = ctk.CTkButton(self.step_nav3, text=self._("btn_prev", default="Previous Step"), command=lambda: self.show_step(2), font=ctk.CTkFont(size=14, weight="bold"), fg_color="transparent", border_width=1, border_color=COLOR_SECONDARY, text_color=COLOR_SECONDARY, hover_color=BG_INPUT, height=40)
+        self.btn_prev3.pack(side="left")
+        
+        # Save Triggers
+        self.var_precompile.trace_add("write", lambda *args: self.save_settings())
 
     def _toggle_destination_card(self):
         try:

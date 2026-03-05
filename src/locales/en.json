@@ -30,5 +30,10 @@
     "tag_error": "Error",
     "chk_precompile": "Pre-Compile Legacy Project (Check for native Delphi 12 errors before modifying)",
     "lbl_console": "Execution Output (Verbose)",
-    "lbl_lang_select": "Select Language:"
+    "lbl_lang_select": "Select Language:",
+    "step_1": "1. Select Folders",
+    "step_2": "2. Migration Rules",
+    "step_3": "3. Execution & Output",
+    "btn_next": "Next Step",
+    "btn_prev": "Previous Step"
 }
