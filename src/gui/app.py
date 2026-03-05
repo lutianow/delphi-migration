@@ -70,7 +70,6 @@ class DelphiMigratorApp(ctk.CTk):
         self._create_step3_execution()
         self._create_settings_frame()
         
-        self.current_step = 1
         self.show_step(1)
 
     def change_language(self, choice):
@@ -159,8 +158,6 @@ class DelphiMigratorApp(ctk.CTk):
         self.btn_step1.configure(fg_color="transparent", text_color=COLOR_SECONDARY)
         self.btn_step2.configure(fg_color="transparent", text_color=COLOR_SECONDARY)
         self.btn_step3.configure(fg_color="transparent", text_color=COLOR_SECONDARY)
-
-        self.current_step = step_number
 
         if step_number == 1:
             self.frame_step1.grid(row=0, column=0, sticky="nsew")
@@ -273,7 +270,7 @@ class DelphiMigratorApp(ctk.CTk):
 
         # Operation Mode
         self.var_mode = ctk.StringVar(value=self.app_settings.get("op_mode", "extract"))
-        self.var_mode.trace_add("write", lambda *args: self._toggle_destination_card())
+        self.var_mode.trace_add("write", lambda *_: self._toggle_destination_card())
 
         mode_frame = ctk.CTkFrame(self.frame_step1, fg_color="transparent")
         mode_frame.grid(row=3, column=0, columnspan=2, sticky="nw", pady=(15, 0))
@@ -382,7 +379,7 @@ class DelphiMigratorApp(ctk.CTk):
         self.btn_prev3.pack(side="left")
         
         # Save Triggers
-        self.var_precompile.trace_add("write", lambda *args: self.save_settings())
+        self.var_precompile.trace_add("write", lambda *_: self.save_settings())
 
     def _toggle_destination_card(self):
         try:
