@@ -245,7 +245,7 @@ class DelphiMigratorApp(ctk.CTk):
         self.var_mode.trace_add("write", lambda *args: self._toggle_destination_card())
 
         mode_frame = ctk.CTkFrame(self.frame_step1, fg_color="transparent")
-        mode_frame.grid(row=3, column=0, columnspan=2, sticky="w", pady=(15, 0))
+        mode_frame.grid(row=3, column=0, columnspan=2, sticky="nw", pady=(15, 0))
         
         self.lbl_mode = ctk.CTkLabel(mode_frame, text=self._("mode_lbl"), font=ctk.CTkFont(weight="bold", size=15), text_color=COLOR_PRIMARY)
         self.lbl_mode.pack(side="left", padx=(0, 10))
@@ -253,9 +253,12 @@ class DelphiMigratorApp(ctk.CTk):
         self.combo_mode = ctk.CTkOptionMenu(mode_frame, variable=self.var_mode, values=[self._("mode_extract"), self._("mode_inplace")], fg_color=BG_INPUT, button_color="#2A2A35", text_color=COLOR_PRIMARY, width=280)
         self.combo_mode.pack(side="left")
 
+        # Spacer to push navigation to bottom
+        self.frame_step1.grid_rowconfigure(4, weight=1)
+
         # Step Navigation
         self.step_nav1 = ctk.CTkFrame(self.frame_step1, fg_color="transparent")
-        self.step_nav1.grid(row=4, column=0, columnspan=2, sticky="ew", pady=(40, 0))
+        self.step_nav1.grid(row=5, column=0, columnspan=2, sticky="sew", pady=(20, 0))
         
         self.btn_next1 = ctk.CTkButton(self.step_nav1, text=self._("btn_next", default="Next Step"), command=lambda: self.show_step(2), font=ctk.CTkFont(size=14, weight="bold"), fg_color=CARD_1, hover_color="#8080FF", height=40)
         self.btn_next1.pack(side="right")
@@ -292,9 +295,12 @@ class DelphiMigratorApp(ctk.CTk):
         self.chk_advanced = ctk.CTkCheckBox(self.options_frame, text=self._("chk_advanced"), variable=self.var_advanced, **kwargs)
         self.chk_advanced.pack(anchor="w", pady=(0, 15))
 
+        # Spacer to push navigation to bottom
+        self.frame_step2.grid_rowconfigure(3, weight=1)
+
         # Step Navigation
         self.step_nav2 = ctk.CTkFrame(self.frame_step2, fg_color="transparent")
-        self.step_nav2.grid(row=3, column=0, sticky="ew", pady=(40, 0))
+        self.step_nav2.grid(row=4, column=0, sticky="sew", pady=(20, 0))
         
         self.btn_next2 = ctk.CTkButton(self.step_nav2, text=self._("btn_next", default="Next Step"), command=lambda: self.show_step(3), font=ctk.CTkFont(size=14, weight="bold"), fg_color=CARD_1, hover_color="#8080FF", height=40)
         self.btn_next2.pack(side="right")
@@ -339,7 +345,7 @@ class DelphiMigratorApp(ctk.CTk):
 
         # Step Navigation Row (Bottom)
         self.step_nav3 = ctk.CTkFrame(self.frame_step3, fg_color="transparent")
-        self.step_nav3.grid(row=3, column=0, sticky="ew", pady=(20, 0))
+        self.step_nav3.grid(row=3, column=0, sticky="sew", pady=(20, 0))
         
         self.btn_prev3 = ctk.CTkButton(self.step_nav3, text=self._("btn_prev", default="Previous Step"), command=lambda: self.show_step(2), font=ctk.CTkFont(size=14, weight="bold"), fg_color="transparent", border_width=1, border_color=COLOR_SECONDARY, text_color=COLOR_SECONDARY, hover_color=BG_INPUT, height=40)
         self.btn_prev3.pack(side="left")
