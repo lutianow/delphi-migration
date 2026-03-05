@@ -35,5 +35,5 @@ class I18N:
         self.lang = lang.lower().replace('português', 'pt').replace('english', 'en')
         self.load_translations()
 
-    def _(self, key):
-        return self.translations.get(key, key)
+    def _(self, key, default=None):
+        return self.translations.get(key, default if default is not None else key)
