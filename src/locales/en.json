@@ -16,6 +16,7 @@
     "chk_utf8": "Convert files to UTF-8 (Fix Latin Accents)",
     "chk_bde": "Migrate BDE to FireDAC components",
     "chk_scopes": "Inject Delphi XE2+ Unit Scope Names",
+    "chk_advanced": "Apply advanced refactoring (Unicode, Threads, dfm legacy)",
     "btn_start_ready": "Play Migration",
     "btn_start_busy": "Processing...",
     "log_ready": "System ready. Awaiting instructions...",

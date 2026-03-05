@@ -2,7 +2,7 @@
 
 import os
 import re
-from src.core.constants import BDE_TO_FD_COMPONENTS, DBTABLES_REPLACEMENT, UNIT_SCOPES
+from src.core.constants import BDE_TO_FD_COMPONENTS, DBTABLES_REPLACEMENT, UNIT_SCOPES, ADVANCED_PAS_REPLACEMENTS, DEPRECATED_THREAD_METHODS, LEGACY_DFM_PROPERTIES
 from src.utils.file_utils import safe_copy_tree, read_file_content, write_file_content
 
 class DelphiMigratorEngine:
@@ -12,11 +12,13 @@ class DelphiMigratorEngine:
         self.do_utf8 = config.get('utf8', True)
         self.do_bde = config.get('bde', True)
         self.do_scopes = config.get('scopes', True)
+        self.do_advanced = config.get('advanced', True) # Inject Phase 3 advanced rules natively
         self.log = log_callback
 
         self.count_utf8 = 0
         self.count_bde_fixes = 0
         self.count_scope_fixes = 0
+        self.count_advanced_fixes = 0
 
     def start_migration(self):
         try:
@@ -39,6 +41,8 @@ class DelphiMigratorEngine:
                 self.log(f"   ✓ Ocorrências BDE substituídas: {self.count_bde_fixes}")
             if self.do_scopes:
                 self.log(f"   ✓ Unit Scope Names atualizados: {self.count_scope_fixes}")
+            if self.do_advanced:
+                self.log(f"   ✓ Refatorações Avançadas (Unicode/Threads/.dfm): {self.count_advanced_fixes}")
 
             self.log("\n=== MIGRAÇÃO FINALIZADA COM SUCESSO! ===")
 
@@ -58,6 +62,12 @@ class DelphiMigratorEngine:
 
         if self.do_scopes and ext in ['.pas', '.dpr']:
             nova_string = self._apply_unit_scopes(nova_string)
+
+        if self.do_advanced:
+            if ext in ['.pas', '.dpr']:
+                nova_string = self._apply_advanced_pas_fixes(nova_string)
+            elif ext == '.dfm':
+                nova_string = self._apply_advanced_dfm_fixes(nova_string)
 
         write_enc = 'utf-8' if self.do_utf8 else 'windows-1252'
         
@@ -86,4 +96,31 @@ class DelphiMigratorEngine:
                 if re.search(pattern, code):
                     code = re.sub(pattern, replacement, code)
                     self.count_scope_fixes += 1
+        return code
+
+    def _apply_advanced_pas_fixes(self, code: str) -> str:
+        # PChar castes / FormatSettings mapping
+        for old_rule, new_rule in ADVANCED_PAS_REPLACEMENTS.items():
+            if re.search(old_rule, code, re.IGNORECASE):
+                code = re.sub(old_rule, new_rule, code, flags=re.IGNORECASE)
+                self.count_advanced_fixes += 1
+
+        # Warn/Comment deprecated thread calls
+        for thr_method in DEPRECATED_THREAD_METHODS:
+            regex = r'(\w+)' + thr_method
+            def thr_repl(match):
+                self.count_advanced_fixes += 1
+                return f"{match.group(0)} // TODO: Upgrade thread method for Delphi 12"
+            
+            if re.search(regex, code, re.IGNORECASE):
+                code = re.sub(regex, thr_repl, code, flags=re.IGNORECASE)
+
+        return code
+
+    def _apply_advanced_dfm_fixes(self, code: str) -> str:
+        # Strip old VCL and 3rd party D7 specific UI properties
+        for prop in LEGACY_DFM_PROPERTIES:
+            if re.search(prop, code, re.IGNORECASE | re.MULTILINE):
+                code = re.sub(prop, '', code, flags=re.IGNORECASE | re.MULTILINE)
+                self.count_advanced_fixes += 1
         return code

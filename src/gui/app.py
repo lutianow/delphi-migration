@@ -78,6 +78,7 @@ class DelphiMigratorApp(ctk.CTk):
         self.chk_utf8.configure(text=self._("chk_utf8"))
         self.chk_bde.configure(text=self._("chk_bde"))
         self.chk_scopes.configure(text=self._("chk_scopes"))
+        self.chk_advanced.configure(text=self._("chk_advanced"))
         
         if self.btn_start.cget("state") == "normal":
             self.btn_start.configure(text=self._("btn_start_ready"))
@@ -184,6 +185,7 @@ class DelphiMigratorApp(ctk.CTk):
         self.var_utf8 = ctk.BooleanVar(value=True)
         self.var_bde = ctk.BooleanVar(value=True)
         self.var_scopes = ctk.BooleanVar(value=True)
+        self.var_advanced = ctk.BooleanVar(value=True)
 
         chk_font = ctk.CTkFont(size=13)
         self.chk_utf8 = ctk.CTkCheckBox(self.options_frame, text=self._("chk_utf8"), variable=self.var_utf8, text_color=COLOR_SECONDARY, fg_color=CARD_1, font=chk_font)
@@ -192,6 +194,8 @@ class DelphiMigratorApp(ctk.CTk):
         self.chk_bde.pack(anchor="w", pady=8)
         self.chk_scopes = ctk.CTkCheckBox(self.options_frame, text=self._("chk_scopes"), variable=self.var_scopes, text_color=COLOR_SECONDARY, fg_color=CARD_1, font=chk_font)
         self.chk_scopes.pack(anchor="w", pady=8)
+        self.chk_advanced = ctk.CTkCheckBox(self.options_frame, text=self._("chk_advanced"), variable=self.var_advanced, text_color=CARD_2, fg_color=CARD_1, font=chk_font)
+        self.chk_advanced.pack(anchor="w", pady=8)
 
         # Start Button & Log
         self.right_col_frame = ctk.CTkFrame(self.dashboard_frame, fg_color="transparent")
@@ -272,7 +276,8 @@ class DelphiMigratorApp(ctk.CTk):
         config = {
             'utf8': self.var_utf8.get(),
             'bde': self.var_bde.get(),
-            'scopes': self.var_scopes.get()
+            'scopes': self.var_scopes.get(),
+            'advanced': self.var_advanced.get()
         }
 
         threading.Thread(target=self._run_engine, args=(src, dst, config), daemon=True).start()
