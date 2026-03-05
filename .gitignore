@@ -35,3 +35,6 @@ make_shortcut.py
 *.vbs
 *.lnk
 migrador_delphi.py
+
+# User Configurations
+migrador_config.json

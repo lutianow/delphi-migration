@@ -21,7 +21,10 @@ class DelphiMigratorApp(ctk.CTk):
     def __init__(self):
         super().__init__()
 
-        self.i18n = I18N('en')
+        self.config_file = "migrador_config.json"
+        self.app_settings = self._load_settings()
+
+        self.i18n = I18N(self.app_settings.get('lang', 'en'))
         self._ = self.i18n._
 
         self.title(self._("app_title"))
@@ -29,8 +32,9 @@ class DelphiMigratorApp(ctk.CTk):
         self.resizable(False, False)
         self.configure(fg_color=BG_MAIN)
 
-        self.source_dir = ctk.StringVar()
-        self.dest_dir = ctk.StringVar()
+        self.source_dir = ctk.StringVar(value=self.app_settings.get("source_dir", ""))
+        self.dest_dir = ctk.StringVar(value=self.app_settings.get("dest_dir", ""))
+        self.protocol("WM_DELETE_WINDOW", self.on_closing)
         
         # Grid layout (2 columns)
         # Prevent Sidebar from expanding during long language values
@@ -55,6 +59,7 @@ class DelphiMigratorApp(ctk.CTk):
         self.i18n.set_language(choice)
         self._ = self.i18n._
         self._update_all_texts()
+        self.save_settings()
 
     def _update_all_texts(self):
         # Window & Sidebar
@@ -182,10 +187,18 @@ class DelphiMigratorApp(ctk.CTk):
         self.options_frame = ctk.CTkFrame(self.dashboard_frame, fg_color="transparent")
         self.options_frame.grid(row=3, column=0, sticky="nsew", pady=(0, 10))
 
-        self.var_utf8 = ctk.BooleanVar(value=True)
-        self.var_bde = ctk.BooleanVar(value=True)
-        self.var_scopes = ctk.BooleanVar(value=True)
-        self.var_advanced = ctk.BooleanVar(value=True)
+        self.var_utf8 = ctk.BooleanVar(value=self.app_settings.get("utf8", True))
+        self.var_bde = ctk.BooleanVar(value=self.app_settings.get("bde", True))
+        self.var_scopes = ctk.BooleanVar(value=self.app_settings.get("scopes", True))
+        self.var_advanced = ctk.BooleanVar(value=self.app_settings.get("advanced", True))
+
+        # Auto-save triggers
+        self.source_dir.trace_add("write", lambda *args: self.save_settings())
+        self.dest_dir.trace_add("write", lambda *args: self.save_settings())
+        self.var_utf8.trace_add("write", lambda *args: self.save_settings())
+        self.var_bde.trace_add("write", lambda *args: self.save_settings())
+        self.var_scopes.trace_add("write", lambda *args: self.save_settings())
+        self.var_advanced.trace_add("write", lambda *args: self.save_settings())
 
         chk_font = ctk.CTkFont(size=14) # Increased font size
         
@@ -298,4 +311,33 @@ class DelphiMigratorApp(ctk.CTk):
         finally:
             self.after(0, self._enable_btn)
 
+    def _load_settings(self):
+        import json
+        try:
+            if os.path.exists(self.config_file):
+                with open(self.config_file, 'r', encoding='utf-8') as f:
+                    return json.load(f)
+        except Exception:
+            pass
+        return {}
 
+    def save_settings(self):
+        import json
+        try:
+            config = {
+                'lang': self.i18n.lang,
+                'source_dir': self.source_dir.get(),
+                'dest_dir': self.dest_dir.get(),
+                'utf8': self.var_utf8.get(),
+                'bde': self.var_bde.get(),
+                'scopes': self.var_scopes.get(),
+                'advanced': self.var_advanced.get()
+            }
+            with open(self.config_file, 'w', encoding='utf-8') as f:
+                json.dump(config, f, indent=4)
+        except Exception:
+            pass
+
+    def on_closing(self):
+        self.save_settings()
+        self.destroy()
