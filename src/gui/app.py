@@ -31,6 +31,18 @@ class DelphiMigratorApp(ctk.CTk):
         self.geometry("1180x880")
         self.resizable(False, False)
         self.configure(fg_color=BG_MAIN)
+        
+        # Load Application Icon
+        try:
+            import sys
+            if hasattr(sys, '_MEIPASS'):
+                icon_path = os.path.join(sys._MEIPASS, 'src', 'assets', 'icon.ico')
+            else:
+                icon_path = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), 'assets', 'icon.ico')
+            if os.path.exists(icon_path):
+                self.iconbitmap(icon_path)
+        except Exception:
+            pass
 
         self.source_dir = ctk.StringVar(value=self.app_settings.get("source_dir", ""))
         self.dest_dir = ctk.StringVar(value=self.app_settings.get("dest_dir", ""))
