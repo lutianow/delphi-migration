@@ -33,6 +33,8 @@ ADVANCED_PAS_REPLACEMENTS = {
     r'\bTimeSeparator\b': 'FormatSettings.TimeSeparator',
     r'\bShortDateFormat\b': 'FormatSettings.ShortDateFormat',
     r'\bLongDateFormat\b': 'FormatSettings.LongDateFormat',
+    # Series: Comentar variáveis de séries gráficas órfãs nos formulários após remoção ou rebaixamento do TDBChart
+    r'^(\s*)([a-zA-Z0-9_]+)\s*:\s*T\w*Series\s*;': r'\1// \2: T...Series; { migrated: orphaned series }',
 }
 
 # Métodos de Threads clássicos do D7 depreciados para injetar aviso do compilador
@@ -47,5 +49,6 @@ LEGACY_DFM_PROPERTIES = [
     r'^\s*ExplicitHeight\s*=\s*\d+\r?\n',
     r'^\s*ExplicitLeft\s*=\s*\d+\r?\n',
     r'^\s*ExplicitTop\s*=\s*\d+\r?\n',
-    r'^\s*OldCreateOrder\s*=\s*\w+\r?\n' # Old D7 forms specific
+    r'^\s*OldCreateOrder\s*=\s*\w+\r?\n', # Old D7 forms specific
+    r'^\s*object\s+[a-zA-Z0-9_]+\s*:\s*T\w*Series\b.*?\r?\n' # TeeChart series objects that often corrupt 
 ]
