@@ -28,6 +28,7 @@
     "mode_inplace": "In-Place (Modify Original)",
     "tag_notice": "Notice",
     "tag_error": "Error",
+    "chk_precompile": "Pre-Compile Legacy Project (Check for native Delphi 12 errors before modifying)",
     "lbl_console": "Execution Output (Verbose)",
     "lbl_lang_select": "Select Language:"
 }

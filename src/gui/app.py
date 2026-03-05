@@ -87,6 +87,7 @@ class DelphiMigratorApp(ctk.CTk):
         self.chk_bde.configure(text=self._("chk_bde"))
         self.chk_scopes.configure(text=self._("chk_scopes"))
         self.chk_advanced.configure(text=self._("chk_advanced"))
+        self.chk_precompile.configure(text=self._("chk_precompile"))
         
         try:
             self.lbl_console.configure(text=self._("lbl_console"))
@@ -216,6 +217,7 @@ class DelphiMigratorApp(ctk.CTk):
         self.var_bde = ctk.BooleanVar(value=self.app_settings.get("bde", True))
         self.var_scopes = ctk.BooleanVar(value=self.app_settings.get("scopes", True))
         self.var_advanced = ctk.BooleanVar(value=self.app_settings.get("advanced", True))
+        self.var_precompile = ctk.BooleanVar(value=self.app_settings.get("precompile", False))
 
         # Auto-save triggers
         self.source_dir.trace_add("write", lambda *args: self.save_settings())
@@ -225,6 +227,7 @@ class DelphiMigratorApp(ctk.CTk):
         self.var_bde.trace_add("write", lambda *args: self.save_settings())
         self.var_scopes.trace_add("write", lambda *args: self.save_settings())
         self.var_advanced.trace_add("write", lambda *args: self.save_settings())
+        self.var_precompile.trace_add("write", lambda *args: self.save_settings())
 
         chk_font = ctk.CTkFont(size=14) # Increased font size
         
@@ -242,6 +245,11 @@ class DelphiMigratorApp(ctk.CTk):
         kwargs["hover_color"] = "#FFB080"
         self.chk_advanced = ctk.CTkCheckBox(self.options_frame, text=self._("chk_advanced"), variable=self.var_advanced, **kwargs)
         self.chk_advanced.pack(anchor="w", pady=10)
+        
+        kwargs["fg_color"] = "#D94343"  # Red UI Color for heavy impact action
+        kwargs["hover_color"] = "#FF8080"
+        self.chk_precompile = ctk.CTkCheckBox(self.options_frame, text=self._("chk_precompile"), variable=self.var_precompile, **kwargs)
+        self.chk_precompile.pack(anchor="w", pady=10)
 
         # Start Button
         self.action_frame = ctk.CTkFrame(self.dashboard_frame, fg_color="transparent")
@@ -344,7 +352,8 @@ class DelphiMigratorApp(ctk.CTk):
             'utf8': self.var_utf8.get(),
             'bde': self.var_bde.get(),
             'scopes': self.var_scopes.get(),
-            'advanced': self.var_advanced.get()
+            'advanced': self.var_advanced.get(),
+            'precompile': getattr(self, 'var_precompile', ctk.BooleanVar(value=False)).get()
         }
 
         threading.Thread(target=self._run_engine, args=(src, dst, config), daemon=True).start()
@@ -379,7 +388,8 @@ class DelphiMigratorApp(ctk.CTk):
                 'utf8': self.var_utf8.get(),
                 'bde': self.var_bde.get(),
                 'scopes': self.var_scopes.get(),
-                'advanced': self.var_advanced.get()
+                'advanced': getattr(self, 'var_advanced', ctk.BooleanVar(value=True)).get(),
+                'precompile': getattr(self, 'var_precompile', ctk.BooleanVar(value=False)).get()
             }
             with open(self.config_file, 'w', encoding='utf-8') as f:
                 json.dump(config, f, indent=4)

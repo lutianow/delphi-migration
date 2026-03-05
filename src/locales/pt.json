@@ -29,5 +29,6 @@
     "tag_notice": "Aviso",
     "tag_error": "Erro",
     "lbl_console": "Saída de Execução (Verbose)",
+    "chk_precompile": "Pré-Compilar Projeto Legado (Checar por erros nativos do Delphi 12 antes de modificar)",
     "lbl_lang_select": "Idioma do Sistema:"
 }

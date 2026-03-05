@@ -2,6 +2,7 @@
 
 import os
 import re
+import subprocess
 from src.core.constants import BDE_TO_FD_COMPONENTS, DBTABLES_REPLACEMENT, UNIT_SCOPES, ADVANCED_PAS_REPLACEMENTS, DEPRECATED_THREAD_METHODS, LEGACY_DFM_PROPERTIES
 from src.utils.file_utils import safe_copy_tree, read_file_content, write_file_content
 
@@ -12,7 +13,9 @@ class DelphiMigratorEngine:
         self.do_utf8 = config.get('utf8', True)
         self.do_bde = config.get('bde', True)
         self.do_scopes = config.get('scopes', True)
-        self.do_advanced = config.get('advanced', True) # Inject Phase 3 advanced rules natively
+        self.do_advanced = config.get('advanced', True)
+        self.do_precompile = config.get('precompile', False)
+        self.delphi_bin = config.get('delphi_bin', r"C:\Program Files (x86)\Embarcadero\Studio\23.0\bin")
         self.log = log_callback
 
         self.count_utf8 = 0
@@ -23,6 +26,9 @@ class DelphiMigratorEngine:
     def start_migration(self):
         try:
             self.log(">> Iniciando motor de migração...")
+
+            if self.do_precompile:
+                self._run_precompilation_hook()
             
             if self.src != self.dst:
                 self.log(f">> Extração Segura Ativada. Copiando para: {self.dst}")
@@ -54,6 +60,57 @@ class DelphiMigratorEngine:
         except Exception as e:
             self.log(f"ERRO CRÍTICO NO MOTOR: {str(e)}")
             raise e
+
+    def _run_precompilation_hook(self):
+        self.log(">> [PRE-COMPILE] Buscando arquivo de projeto na Origem...")
+        target_file = None
+        
+        for file in os.listdir(self.src):
+            if file.lower().endswith('.dproj'):
+                target_file = file
+                break
+        
+        if not target_file:
+            for file in os.listdir(self.src):
+                if file.lower().endswith('.dpr'):
+                    target_file = file
+                    break
+        
+        if not target_file:
+            self.log("   [AVISO] Nenhum .dproj ou .dpr encontrado na raiz. Pulando teste de compilação.")
+            return
+
+        rsvars_path = os.path.join(self.delphi_bin, "rsvars.bat")
+        if not os.path.exists(rsvars_path):
+            self.log(f"   [ERRO] Ambiente Delphi não localizado em: {rsvars_path}")
+            self.log("   Falha ao chamar o compilador. Pulando etapa de teste.")
+            return
+
+        self.log(f">> [PRE-COMPILE] Iniciando MSBuild Mock em: {target_file}")
+        
+        # Build command: Call rsvars.bat to setup env, then MSBuild
+        full_command = f'"{rsvars_path}" && MSBuild "{target_file}" /t:Build /p:Config=Debug'
+        
+        process = subprocess.Popen(
+            full_command,
+            cwd=self.src,
+            shell=True,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.STDOUT,
+            text=True,
+            encoding='windows-1252',
+            errors='replace'
+        )
+
+        for line in iter(process.stdout.readline, ''):
+            clean_line = line.strip()
+            if clean_line:
+                self.log(f"| {clean_line}")
+
+        process.stdout.close()
+        process.wait()
+
+        self.log(f">> [PRE-COMPILE] Fim do teste de compilação. Código de Saída: {process.returncode}\n")
 
     def _process_file(self, filepath: str, ext: str):
         content, era_ansi = read_file_content(filepath)
