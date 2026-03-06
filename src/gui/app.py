@@ -6,7 +6,6 @@ import os
 import threading
 from PIL import Image
 from src.core.migrator_engine import DelphiMigratorEngine
-from src.core.updater import check_for_updates
 from src.core.analyzer import ProjectAnalyzer
 from src.core.i18n import I18N
 
