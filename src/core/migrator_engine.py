@@ -144,71 +144,95 @@ class DelphiMigratorEngine:
             self.count_utf8 += 1
 
         nova_string = content
+        all_changes = []
 
         if self.do_bde:
-            nova_string = self._apply_bde_replacements(nova_string, ext)
+            nova_string, changes = self._apply_bde_replacements(nova_string, ext)
+            all_changes.extend(changes)
 
         if self.do_scopes and ext in ['.pas', '.dpr']:
-            nova_string = self._apply_unit_scopes(nova_string)
+            nova_string, changes = self._apply_unit_scopes(nova_string)
+            all_changes.extend(changes)
 
         if self.do_advanced:
             if ext in ['.pas', '.dpr']:
-                nova_string = self._apply_advanced_pas_fixes(nova_string)
+                nova_string, changes = self._apply_advanced_pas_fixes(nova_string)
+                all_changes.extend(changes)
             elif ext == '.dfm':
-                nova_string = self._apply_advanced_dfm_fixes(nova_string)
+                nova_string, changes = self._apply_advanced_dfm_fixes(nova_string)
+                all_changes.extend(changes)
 
         write_enc = 'utf-8' if self.do_utf8 else 'windows-1252'
         
+        filename = os.path.basename(filepath)
+        
+        if all_changes:
+            self.log(f"\n Processando: {filename}")
+            for change in all_changes:
+                self.log(f"  Regra aplicada: {change['rule']}")
+                self.log(f"  Alteração: {change['details']}")
+            self.log("  Status: arquivo modificado\n")
+            
         if content != nova_string or (self.do_utf8 and era_ansi):
             write_file_content(filepath, nova_string, encoding=write_enc)
 
-    def _apply_bde_replacements(self, code: str, ext: str) -> str:
+    def _apply_bde_replacements(self, code: str, ext: str) -> tuple:
+        changes = []
         for old_comp, new_comp in BDE_TO_FD_COMPONENTS.items():
-            if re.search(old_comp, code):
-                code = re.sub(old_comp, new_comp, code)
-                self.count_bde_fixes += 1
+            code, num_subs = re.subn(old_comp, new_comp, code)
+            if num_subs > 0:
+                self.count_bde_fixes += num_subs
+                changes.append({'rule': 'Migração BDE para FireDAC', 'details': f'{old_comp.strip(r"\\b")} -> {new_comp} ({num_subs} ocorrências)'})
                 
         if ext in ['.pas', '.dpr']:
-            if re.search(r'\bDBTables\b', code, re.IGNORECASE):
-                code = re.sub(r'\bDBTables\b', DBTABLES_REPLACEMENT, code, flags=re.IGNORECASE)
+            code, num_subs = re.subn(r'\bDBTables\b', DBTABLES_REPLACEMENT, code, flags=re.IGNORECASE)
+            if num_subs > 0:
+                changes.append({'rule': 'Injeção de Uses FireDAC', 'details': f'DBTables -> Uses do FireDAC ({num_subs} ocorrências)'})
         
-        return code
+        return code, changes
 
-    def _apply_unit_scopes(self, code: str) -> str:
+    def _apply_unit_scopes(self, code: str) -> tuple:
+        changes = []
         for prefix, units in UNIT_SCOPES.items():
             for unit in units:
                 pattern = r'(?i)(?<!\.)\b' + unit + r'\b'
                 clean_unit = unit.replace("\\", "")
                 replacement = f'{prefix}.{clean_unit}'
                 
-                if re.search(pattern, code):
-                    code = re.sub(pattern, replacement, code)
-                    self.count_scope_fixes += 1
-        return code
+                code, num_subs = re.subn(pattern, replacement, code)
+                if num_subs > 0:
+                    self.count_scope_fixes += num_subs
+                    changes.append({'rule': 'Adicionar Unit Scopes Modernos', 'details': f'{clean_unit} -> {replacement} ({num_subs} ocorrências)'})
+        return code, changes
 
-    def _apply_advanced_pas_fixes(self, code: str) -> str:
+    def _apply_advanced_pas_fixes(self, code: str) -> tuple:
+        changes = []
         # PChar castes / FormatSettings mapping
         for old_rule, new_rule in ADVANCED_PAS_REPLACEMENTS.items():
-            if re.search(old_rule, code, re.IGNORECASE):
-                code = re.sub(old_rule, new_rule, code, flags=re.IGNORECASE)
-                self.count_advanced_fixes += 1
+            code, num_subs = re.subn(old_rule, new_rule, code, flags=re.IGNORECASE)
+            if num_subs > 0:
+                self.count_advanced_fixes += num_subs
+                changes.append({'rule': 'Regra Avançada .PAS (Unicode/FormatSettings/Series)', 'details': f'Padrão regex "{old_rule}" modificado ({num_subs} ocorrências)'})
 
         # Warn/Comment deprecated thread calls
         for thr_method in DEPRECATED_THREAD_METHODS:
             regex = r'(\w+)' + thr_method
             def thr_repl(match):
-                self.count_advanced_fixes += 1
                 return f"{match.group(0)} // TODO: Upgrade thread method for Delphi 12"
             
-            if re.search(regex, code, re.IGNORECASE):
-                code = re.sub(regex, thr_repl, code, flags=re.IGNORECASE)
+            code, num_subs = re.subn(regex, thr_repl, code, flags=re.IGNORECASE)
+            if num_subs > 0:
+                self.count_advanced_fixes += num_subs
+                changes.append({'rule': 'Métodos Restritos de Thread', 'details': f'Adicionado aviso de TODO na chamada de {thr_method} ({num_subs} ocorrências)'})
 
-        return code
+        return code, changes
 
-    def _apply_advanced_dfm_fixes(self, code: str) -> str:
+    def _apply_advanced_dfm_fixes(self, code: str) -> tuple:
+        changes = []
         # Strip old VCL and 3rd party D7 specific UI properties
         for prop in LEGACY_DFM_PROPERTIES:
-            if re.search(prop, code, re.IGNORECASE | re.MULTILINE):
-                code = re.sub(prop, '', code, flags=re.IGNORECASE | re.MULTILINE)
-                self.count_advanced_fixes += 1
-        return code
+            code, num_subs = re.subn(prop, '', code, flags=re.IGNORECASE | re.MULTILINE)
+            if num_subs > 0:
+                self.count_advanced_fixes += num_subs
+                changes.append({'rule': 'Limpeza Avançada de .DFM', 'details': f'Propriedade ou bloco legado ignorado ({num_subs} ocorrências)'})
+        return code, changes
