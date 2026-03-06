@@ -39,6 +39,7 @@ class DelphiMigratorEngine:
         self.do_scopes = config.get('scopes', True)
         self.do_advanced = config.get('advanced', True)
         self.do_precompile = config.get('precompile', False)
+        self.delphi_bin = config.get('delphi_bin', r"C:\Program Files (x86)\Embarcadero\Studio\23.0\bin")
         self.include_filters = config.get('include_filters', [])
         self.banned_files = config.get('banned_files', [])
         self.allowed_exts = config.get('allowed_exts', ['.pas', '.dpr', '.dfm', '.dpk', '.dproj'])
@@ -129,15 +130,17 @@ class DelphiMigratorEngine:
             if self.do_scopes:
                 self.log_callback(f"   * Unit Scope Names atualizados: {self.count_scope_fixes}")
             if self.do_advanced:
+                self.log_callback(f"   * Refatorações Avançadas (Unicode/Threads/.dfm): {self.count_advanced_fixes}")
 
-            self.log("\n=== MIGRAÇÃO FINALIZADA COM SUCESSO! ===")
+            self.log_callback("\n=== MIGRAÇÃO FINALIZADA COM SUCESSO! ===")
 
         except Exception as e:
-            self.log(f"ERRO CRÍTICO NO MOTOR: {str(e)}")
+            if self.log_callback:
+                self.log_callback(f"ERRO CRÍTICO NO MOTOR: {str(e)}")
             raise e
 
     def _run_precompilation_hook(self):
-        self.log(">> [PRE-COMPILE] Buscando arquivo de projeto na Origem...")
+        self.log_callback(">> [PRE-COMPILE] Buscando arquivo de projeto na Origem...")
         target_file = None
         
         for file in os.listdir(self.src):
@@ -152,16 +155,16 @@ class DelphiMigratorEngine:
                     break
         
         if not target_file:
-            self.log("   [AVISO] Nenhum .dproj ou .dpr encontrado na raiz. Pulando teste de compilação.")
+            self.log_callback("   [AVISO] Nenhum .dproj ou .dpr encontrado na raiz. Pulando teste de compilação.")
             return
 
         rsvars_path = os.path.join(self.delphi_bin, "rsvars.bat")
         if not os.path.exists(rsvars_path):
-            self.log(f"   [ERRO] Ambiente Delphi não localizado em: {rsvars_path}")
-            self.log("   Falha ao chamar o compilador. Pulando etapa de teste.")
+            self.log_callback(f"   [ERRO] Ambiente Delphi não localizado em: {rsvars_path}")
+            self.log_callback("   Falha ao chamar o compilador. Pulando etapa de teste.")
             return
 
-        self.log(f">> [PRE-COMPILE] Iniciando MSBuild Mock em: {target_file}")
+        self.log_callback(f">> [PRE-COMPILE] Iniciando MSBuild Mock em: {target_file}")
         
         # Build command: Call rsvars.bat to setup env, then MSBuild
         full_command = f'"{rsvars_path}" && MSBuild "{target_file}" /t:Build /p:Config=Debug'
@@ -180,12 +183,12 @@ class DelphiMigratorEngine:
         for line in iter(process.stdout.readline, ''):
             clean_line = line.strip()
             if clean_line:
-                self.log(f"| {clean_line}")
+                self.log_callback(f"| {clean_line}")
 
         process.stdout.close()
         process.wait()
 
-        self.log(f">> [PRE-COMPILE] Fim do teste de compilação. Código de Saída: {process.returncode}\n")
+        self.log_callback(f">> [PRE-COMPILE] Fim do teste de compilação. Código de Saída: {process.returncode}\n")
 
     def _process_file(self, filepath: str, ext: str):
         content, era_ansi = read_file_content(filepath)
@@ -217,11 +220,11 @@ class DelphiMigratorEngine:
         filename = os.path.basename(filepath)
         
         if all_changes:
-            self.log(f"\n Processando: {filename}")
+            self.log_callback(f"\n Processando: {filename}")
             for change in all_changes:
-                self.log(f"  Regra aplicada: {change['rule']}")
-                self.log(f"  Alteração: {change['details']}")
-            self.log("  Status: arquivo modificado\n")
+                self.log_callback(f"  Regra aplicada: {change['rule']}")
+                self.log_callback(f"  Alteração: {change['details']}")
+            self.log_callback("  Status: arquivo modificado\n")
             
         if content != nova_string or (self.do_utf8 and era_ansi):
             write_file_content(filepath, nova_string, encoding=write_enc)
