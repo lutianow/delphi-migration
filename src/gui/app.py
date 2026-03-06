@@ -584,23 +584,30 @@ class DelphiMigratorApp(ctk.CTk):
         self.txt_diff_dst.tag_config("added", background="#1a4a24", foreground="#b3ffb8")
         self.txt_diff_src.tag_config("empty", background="#2a2a35")
         self.txt_diff_dst.tag_config("empty", background="#2a2a35")
-        
-        def sync_scroll_y(*args):
-            self.txt_diff_src.yview(*args)
-            self.txt_diff_dst.yview(*args)
-            
-        def yview_src(*args):
-            self.txt_diff_dst.yview_moveto(args[0])
-            
-        def yview_dst(*args):
-            self.txt_diff_src.yview_moveto(args[0])
-
-        self.txt_diff_src._scrollbar.configure(command=sync_scroll_y)
-        self.txt_diff_dst._scrollbar.configure(command=sync_scroll_y)
-        if hasattr(self.txt_diff_src, '_textbox'):
-            self.txt_diff_src._textbox.configure(yscrollcommand=lambda f, l: [self.txt_diff_src._scrollbar.set(f, l), yview_src(f)])
-            self.txt_diff_dst._textbox.configure(yscrollcommand=lambda f, l: [self.txt_diff_dst._scrollbar.set(f, l), yview_dst(f)])
-            
+        try:
+            if hasattr(self.txt_diff_src, '_textbox') and hasattr(self.txt_diff_dst, '_textbox'):
+                # Sincroniza o MouseWheel no Windows
+                self.txt_diff_src._textbox.bind("<MouseWheel>", lambda e: self.txt_diff_dst.yview_scroll(int(-1*(e.delta/120)), "units") if e.delta else None)
+                self.txt_diff_dst._textbox.bind("<MouseWheel>", lambda e: self.txt_diff_src.yview_scroll(int(-1*(e.delta/120)), "units") if e.delta else None)
+                
+                # Sincroniza o Drag da barra de rolagem injetando comandos Yview cruzados
+                original_yscroll_src = self.txt_diff_src._textbox.cget("yscrollcommand")
+                original_yscroll_dst = self.txt_diff_dst._textbox.cget("yscrollcommand")
+                
+                def sync_src_scroll(*args):
+                    if original_yscroll_src:
+                        self.tk.call(original_yscroll_src, *args)
+                    self.txt_diff_dst.yview_moveto(args[0])
+                    
+                def sync_dst_scroll(*args):
+                    if original_yscroll_dst:
+                        self.tk.call(original_yscroll_dst, *args)
+                    self.txt_diff_src.yview_moveto(args[0])
+                    
+                self.txt_diff_src._textbox.configure(yscrollcommand=sync_src_scroll)
+                self.txt_diff_dst._textbox.configure(yscrollcommand=sync_dst_scroll)
+        except Exception:
+            pass
         # Navigation
         self.step_nav5 = ctk.CTkFrame(self.frame_step5, fg_color="transparent")
         self.step_nav5.grid(row=2, column=0, sticky="sew", pady=(20, 0))
