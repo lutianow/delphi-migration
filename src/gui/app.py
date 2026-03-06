@@ -61,7 +61,7 @@ class DelphiMigratorApp(ctk.CTk):
         
         # Container for swappable frames (Wizard Steps & Settings)
         self.container_frame = ctk.CTkFrame(self, fg_color=BG_MAIN, corner_radius=0)
-        self.container_frame.grid(row=1, column=1, sticky="nsew", padx=60, pady=40)
+        self.container_frame.grid(row=1, column=1, sticky="nsew", padx=30, pady=25)
         self.container_frame.grid_columnconfigure(0, weight=1)
         self.container_frame.grid_rowconfigure(0, weight=1)
 
@@ -546,18 +546,18 @@ class DelphiMigratorApp(ctk.CTk):
 
         # Header Title
         self.header_label_5 = ctk.CTkLabel(self.frame_step5, text=self._("step_5", default="5. Diff Viewer"), font=ctk.CTkFont(family="Inter", size=36, weight="bold"), text_color=COLOR_PRIMARY)
-        self.header_label_5.grid(row=0, column=0, sticky="w", pady=(0, 20))
+        self.header_label_5.grid(row=0, column=0, sticky="w", pady=(0, 12))
 
         # Main Split Content
         self.split_frame = ctk.CTkFrame(self.frame_step5, fg_color="transparent")
         self.split_frame.grid(row=1, column=0, sticky="nsew")
-        self.split_frame.grid_columnconfigure(0, weight=1, minsize=200) # Explorer
-        self.split_frame.grid_columnconfigure(1, weight=4) # Diff Viewer
+        self.split_frame.grid_columnconfigure(0, weight=0, minsize=260) # Explorer
+        self.split_frame.grid_columnconfigure(1, weight=1) # Diff Viewer
         self.split_frame.grid_rowconfigure(0, weight=1)
 
         # Left: File Explorer
         self.tree_frame = ctk.CTkScrollableFrame(self.split_frame, fg_color=BG_INPUT, corner_radius=12)
-        self.tree_frame.grid(row=0, column=0, sticky="nsew", padx=(0, 10))
+        self.tree_frame.grid(row=0, column=0, sticky="nsew", padx=(0, 8))
         
         # Right: Diff Viewer (Side by Side)
         self.diff_container = ctk.CTkFrame(self.split_frame, fg_color="transparent")
@@ -573,10 +573,10 @@ class DelphiMigratorApp(ctk.CTk):
         self.lbl_diff_dst.grid(row=0, column=1, sticky="w", padx=5)
 
         # TextBoxes
-        self.txt_diff_src = ctk.CTkTextbox(self.diff_container, fg_color="#101014", text_color="#A4A4B5", wrap="none")
+        self.txt_diff_src = ctk.CTkTextbox(self.diff_container, fg_color="#101014", text_color="#A4A4B5", wrap="none", font=ctk.CTkFont(family="Consolas", size=13))
         self.txt_diff_src.grid(row=1, column=0, sticky="nsew", padx=(0, 2))
         
-        self.txt_diff_dst = ctk.CTkTextbox(self.diff_container, fg_color="#101014", text_color="#A4A4B5", wrap="none")
+        self.txt_diff_dst = ctk.CTkTextbox(self.diff_container, fg_color="#101014", text_color="#A4A4B5", wrap="none", font=ctk.CTkFont(family="Consolas", size=13))
         self.txt_diff_dst.grid(row=1, column=1, sticky="nsew", padx=(2, 0))
 
         # Configure tags for diff
@@ -610,7 +610,7 @@ class DelphiMigratorApp(ctk.CTk):
             pass
         # Navigation
         self.step_nav5 = ctk.CTkFrame(self.frame_step5, fg_color="transparent")
-        self.step_nav5.grid(row=2, column=0, sticky="sew", pady=(20, 0))
+        self.step_nav5.grid(row=2, column=0, sticky="sew", pady=(10, 0))
         self.btn_prev5 = ctk.CTkButton(self.step_nav5, text=self._("btn_prev", default="Previous Step"), command=lambda: self.show_step(4), font=ctk.CTkFont(size=14, weight="bold"), fg_color="transparent", border_width=1, border_color=COLOR_SECONDARY, text_color=COLOR_SECONDARY, hover_color=BG_INPUT, height=40)
         self.btn_prev5.pack(side="left")
 
