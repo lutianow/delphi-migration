@@ -169,26 +169,32 @@ class DelphiMigratorEngine:
         # Build command: Call rsvars.bat to setup env, then MSBuild
         full_command = f'"{rsvars_path}" && MSBuild "{target_file}" /t:Build /p:Config=Debug'
         
-        process = subprocess.Popen(
-            full_command,
-            cwd=self.src,
-            shell=True,
-            stdout=subprocess.PIPE,
-            stderr=subprocess.STDOUT,
-            text=True,
-            encoding='windows-1252',
-            errors='replace'
-        )
+        try:
+            # Prevent UI thread freeze by using subprocess.run to capture the whole block
+            result = subprocess.run(
+                full_command,
+                cwd=self.src,
+                shell=True,
+                capture_output=True,
+                text=True,
+                encoding='windows-1252',
+                errors='replace'
+            )
 
-        for line in iter(process.stdout.readline, ''):
-            clean_line = line.strip()
-            if clean_line:
-                self.log_callback(f"| {clean_line}")
+            for line in result.stdout.splitlines():
+                clean_line = line.strip()
+                if clean_line:
+                    self.log_callback(f"| {clean_line}")
 
-        process.stdout.close()
-        process.wait()
+            if result.stderr:
+                for line in result.stderr.splitlines():
+                    clean_line = line.strip()
+                    if clean_line:
+                        self.log_callback(f"| [ERRO MSBUILD] {clean_line}")
 
-        self.log_callback(f">> [PRE-COMPILE] Fim do teste de compilação. Código de Saída: {process.returncode}\n")
+            self.log_callback(f">> [PRE-COMPILE] Fim do teste de compilação. Código de Saída: {result.returncode}\n")
+        except Exception as e:
+            self.log_callback(f"   [ERRO] Falha ao executar o hook de compilação: {str(e)}")
 
     def _process_file(self, filepath: str, ext: str):
         content, era_ansi = read_file_content(filepath)
