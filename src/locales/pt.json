@@ -44,5 +44,6 @@
     "btn_remove": "Remover",
     "msg_add_filter": "Digite o padr\u00e3o wildcard (ex: *.dcu ou pasta/):",
     "title_add_filter": "Adicionar Filtro",
-    "title_edit_filter": "Editar Filtro"
+    "title_edit_filter": "Editar Filtro",
+    "step_5": "5. Comparação Visual"
 }

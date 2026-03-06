@@ -69,6 +69,7 @@ class DelphiMigratorApp(ctk.CTk):
         self._create_step2_filters()
         self._create_step3_options()
         self._create_step4_execution()
+        self._create_step5_comparison()
         self._create_settings_frame()
         
         self.show_step(1)
@@ -91,6 +92,7 @@ class DelphiMigratorApp(ctk.CTk):
         self.btn_step2.configure(text=self._("step_2", default="2. Filters & Exceptions"))
         self.btn_step3.configure(text=self._("step_3", default="3. Migration Rules"))
         self.btn_step4.configure(text=self._("step_4", default="4. Execution & Output"))
+        self.btn_step5.configure(text=self._("step_5", default="5. Diff Viewer"))
         self.lbl_user_title.configure(text=self._("user_title"))
         self.lbl_user_sub.configure(text=self._("user_sub"))
         
@@ -137,7 +139,7 @@ class DelphiMigratorApp(ctk.CTk):
         self.btn_prev3.configure(text=self._("btn_prev", default="Previous Step"))
         self.btn_next3.configure(text=self._("btn_next", default="Next Step"))
         
-        # Step 4: Execution (formerly Step 3: Execution)
+        # Step 4: Execution
         self.header_label_4.configure(text=self._("step_4", default="4. Execution & Output"))
         self.chk_precompile.configure(text=self._("chk_precompile"))
         
@@ -152,6 +154,14 @@ class DelphiMigratorApp(ctk.CTk):
             self.btn_start.configure(text=self._("btn_start_busy"))
             
         self.btn_prev4.configure(text=self._("btn_prev", default="Previous Step"))
+        self.btn_next4.configure(text=self._("btn_next", default="Next Step"))
+
+        # Step 5: Diff Viewer
+        try:
+            self.header_label_5.configure(text=self._("step_5", default="5. Diff Viewer"))
+            self.btn_prev5.configure(text=self._("btn_prev", default="Previous Step"))
+        except AttributeError:
+            pass
             
         # Settings
         self.lbl_settings_title.configure(text=self._("nav_settings").strip())
@@ -168,14 +178,18 @@ class DelphiMigratorApp(ctk.CTk):
     def show_step(self, step_number):
         self.settings_frame.grid_forget()
         self.frame_step1.grid_forget()
-        self.frame_step2.grid_forget() # New step 2
-        self.frame_step3.grid_forget() # Old step 2, now step 3
-        self.frame_step4.grid_forget() # Old step 3, now step 4
+        self.frame_step2.grid_forget()
+        self.frame_step3.grid_forget()
+        self.frame_step4.grid_forget()
+        if hasattr(self, 'frame_step5'):
+            self.frame_step5.grid_forget()
         
         self.btn_step1.configure(fg_color="transparent", text_color=COLOR_SECONDARY)
         self.btn_step2.configure(fg_color="transparent", text_color=COLOR_SECONDARY)
         self.btn_step3.configure(fg_color="transparent", text_color=COLOR_SECONDARY)
         self.btn_step4.configure(fg_color="transparent", text_color=COLOR_SECONDARY)
+        if hasattr(self, 'btn_step5'):
+            self.btn_step5.configure(fg_color="transparent", text_color=COLOR_SECONDARY)
 
         if step_number == 1:
             self.frame_step1.grid(row=0, column=0, sticky="nsew")
@@ -189,12 +203,18 @@ class DelphiMigratorApp(ctk.CTk):
         elif step_number == 4:
             self.frame_step4.grid(row=0, column=0, sticky="nsew")
             self.btn_step4.configure(fg_color=BG_INPUT, text_color=COLOR_PRIMARY)
+        elif step_number == 5:
+            self.frame_step5.grid(row=0, column=0, sticky="nsew")
+            self.btn_step5.configure(fg_color=BG_INPUT, text_color=COLOR_PRIMARY)
+            self._refresh_diff_tree()
 
     def show_settings(self):
         self.frame_step1.grid_forget()
-        self.frame_step2.grid_forget() # New step 2
-        self.frame_step3.grid_forget() # Old step 2, now step 3
-        self.frame_step4.grid_forget() # Old step 3, now step 4
+        self.frame_step2.grid_forget()
+        self.frame_step3.grid_forget()
+        self.frame_step4.grid_forget()
+        if hasattr(self, 'frame_step5'):
+            self.frame_step5.grid_forget()
         self.settings_frame.grid(row=0, column=0, sticky="nsew")
 
     def _create_sidebar(self):
@@ -241,9 +261,12 @@ class DelphiMigratorApp(ctk.CTk):
         self.btn_step4 = ctk.CTkButton(self.sidebar_frame, text=self._("step_4", default="4. Execution & Output"), font=ctk.CTkFont(size=14, weight="bold"), fg_color="transparent", text_color=COLOR_SECONDARY, anchor="w", height=45, hover_color=BG_INPUT, command=lambda: self.show_step(4))
         self.btn_step4.grid(row=5, column=0, padx=20, pady=8, sticky="ew")
 
+        self.btn_step5 = ctk.CTkButton(self.sidebar_frame, text=self._("step_5", default="5. Diff Viewer"), font=ctk.CTkFont(size=14, weight="bold"), fg_color="transparent", text_color=COLOR_SECONDARY, anchor="w", height=45, hover_color=BG_INPUT, command=lambda: self.show_step(5))
+        self.btn_step5.grid(row=6, column=0, padx=20, pady=8, sticky="ew")
+
         # Bottom Mini-Player / Profile mimic
         self.profile_frame = ctk.CTkFrame(self.sidebar_frame, fg_color=BG_INPUT, corner_radius=16)
-        self.profile_frame.grid(row=7, column=0, padx=20, pady=30, sticky="ew")
+        self.profile_frame.grid(row=8, column=0, padx=20, pady=30, sticky="ew")
         
         self.lbl_user_title = ctk.CTkLabel(self.profile_frame, text=self._("user_title"), font=ctk.CTkFont(size=14, weight="bold"), text_color=COLOR_PRIMARY)
         self.lbl_user_title.pack(padx=15, pady=(15, 0), anchor="w")
@@ -515,6 +538,145 @@ class DelphiMigratorApp(ctk.CTk):
         
         # Save Triggers
         self.var_precompile.trace_add("write", lambda *_: self.save_settings())
+
+    def _create_step5_comparison(self):
+        self.frame_step5 = ctk.CTkFrame(self.container_frame, fg_color="transparent")
+        self.frame_step5.grid_columnconfigure(0, weight=1)
+        self.frame_step5.grid_rowconfigure(1, weight=1)
+
+        # Header Title
+        self.header_label_5 = ctk.CTkLabel(self.frame_step5, text=self._("step_5", default="5. Diff Viewer"), font=ctk.CTkFont(family="Inter", size=36, weight="bold"), text_color=COLOR_PRIMARY)
+        self.header_label_5.grid(row=0, column=0, sticky="w", pady=(0, 20))
+
+        # Main Split Content
+        self.split_frame = ctk.CTkFrame(self.frame_step5, fg_color="transparent")
+        self.split_frame.grid(row=1, column=0, sticky="nsew")
+        self.split_frame.grid_columnconfigure(0, weight=1, minsize=200) # Explorer
+        self.split_frame.grid_columnconfigure(1, weight=4) # Diff Viewer
+        self.split_frame.grid_rowconfigure(0, weight=1)
+
+        # Left: File Explorer
+        self.tree_frame = ctk.CTkScrollableFrame(self.split_frame, fg_color=BG_INPUT, corner_radius=12)
+        self.tree_frame.grid(row=0, column=0, sticky="nsew", padx=(0, 10))
+        
+        # Right: Diff Viewer (Side by Side)
+        self.diff_container = ctk.CTkFrame(self.split_frame, fg_color="transparent")
+        self.diff_container.grid(row=0, column=1, sticky="nsew")
+        self.diff_container.grid_columnconfigure(0, weight=1)
+        self.diff_container.grid_columnconfigure(1, weight=1)
+        self.diff_container.grid_rowconfigure(1, weight=1)
+
+        # Titles for Diff
+        self.lbl_diff_src = ctk.CTkLabel(self.diff_container, text="Original", font=ctk.CTkFont(weight="bold"))
+        self.lbl_diff_src.grid(row=0, column=0, sticky="w", padx=5)
+        self.lbl_diff_dst = ctk.CTkLabel(self.diff_container, text="Migrated", font=ctk.CTkFont(weight="bold"))
+        self.lbl_diff_dst.grid(row=0, column=1, sticky="w", padx=5)
+
+        # TextBoxes
+        self.txt_diff_src = ctk.CTkTextbox(self.diff_container, fg_color="#101014", text_color="#A4A4B5", wrap="none")
+        self.txt_diff_src.grid(row=1, column=0, sticky="nsew", padx=(0, 2))
+        
+        self.txt_diff_dst = ctk.CTkTextbox(self.diff_container, fg_color="#101014", text_color="#A4A4B5", wrap="none")
+        self.txt_diff_dst.grid(row=1, column=1, sticky="nsew", padx=(2, 0))
+
+        # Configure tags for diff
+        self.txt_diff_src.tag_config("removed", background="#4a1a1a", foreground="#ffb3b3")
+        self.txt_diff_dst.tag_config("added", background="#1a4a24", foreground="#b3ffb8")
+        self.txt_diff_src.tag_config("empty", background="#2a2a35")
+        self.txt_diff_dst.tag_config("empty", background="#2a2a35")
+        
+        def sync_scroll_y(*args):
+            self.txt_diff_src.yview(*args)
+            self.txt_diff_dst.yview(*args)
+            
+        def yview_src(*args):
+            self.txt_diff_dst.yview_moveto(args[0])
+            
+        def yview_dst(*args):
+            self.txt_diff_src.yview_moveto(args[0])
+
+        self.txt_diff_src._scrollbar.configure(command=sync_scroll_y)
+        self.txt_diff_dst._scrollbar.configure(command=sync_scroll_y)
+        if hasattr(self.txt_diff_src, '_textbox'):
+            self.txt_diff_src._textbox.configure(yscrollcommand=lambda f, l: [self.txt_diff_src._scrollbar.set(f, l), yview_src(f)])
+            self.txt_diff_dst._textbox.configure(yscrollcommand=lambda f, l: [self.txt_diff_dst._scrollbar.set(f, l), yview_dst(f)])
+            
+        # Navigation
+        self.step_nav5 = ctk.CTkFrame(self.frame_step5, fg_color="transparent")
+        self.step_nav5.grid(row=2, column=0, sticky="sew", pady=(20, 0))
+        self.btn_prev5 = ctk.CTkButton(self.step_nav5, text=self._("btn_prev", default="Previous Step"), command=lambda: self.show_step(4), font=ctk.CTkFont(size=14, weight="bold"), fg_color="transparent", border_width=1, border_color=COLOR_SECONDARY, text_color=COLOR_SECONDARY, hover_color=BG_INPUT, height=40)
+        self.btn_prev5.pack(side="left")
+
+    def _refresh_diff_tree(self):
+        for widget in self.tree_frame.winfo_children():
+            widget.destroy()
+            
+        src_path = self.source_dir.get().strip()
+        dst_path = self.dest_dir.get().strip()
+        op_mode = self.var_mode.get()
+        if op_mode == "inplace" or op_mode == self._("mode_inplace"):
+            lbl = ctk.CTkLabel(self.tree_frame, text="Diff viewer não suportado no modo In-Place.", text_color=COLOR_SECONDARY)
+            lbl.pack(pady=20, padx=10)
+            return
+            
+        if not src_path or not dst_path or not os.path.exists(src_path) or not os.path.exists(dst_path):
+            return
+
+        import filecmp
+        
+        has_items = False
+        for root, _, files in os.walk(dst_path):
+            for file in files:
+                if file.lower().endswith(('.pas', '.dfm', '.dpr')):
+                    d_file = os.path.join(root, file)
+                    rel_path = os.path.relpath(d_file, dst_path)
+                    s_file = os.path.join(src_path, rel_path)
+                    
+                    if os.path.exists(s_file):
+                        if not filecmp.cmp(s_file, d_file, shallow=False):
+                            btn = ctk.CTkButton(self.tree_frame, text=rel_path, anchor="w", fg_color="transparent", hover_color="#2A2A35", text_color=COLOR_PRIMARY, command=lambda s=s_file, d=d_file: self._load_diff(s, d))
+                            btn.pack(fill="x", pady=2, padx=5)
+                            has_items = True
+
+        if not has_items:
+            lbl = ctk.CTkLabel(self.tree_frame, text="Nenhum arquivo modificado encontrado.", text_color=COLOR_SECONDARY)
+            lbl.pack(pady=20, padx=10)
+
+    def _load_diff(self, src_file, dst_file):
+        import difflib
+        from src.utils.file_utils import read_file_content
+        
+        self.txt_diff_src.configure(state="normal")
+        self.txt_diff_dst.configure(state="normal")
+        self.txt_diff_src.delete("1.0", "end")
+        self.txt_diff_dst.delete("1.0", "end")
+        
+        src_content, _ = read_file_content(src_file)
+        dst_content, _ = read_file_content(dst_file)
+        
+        src_lines = src_content.splitlines()
+        dst_lines = dst_content.splitlines()
+        
+        differ = difflib.ndiff(src_lines, dst_lines)
+        
+        for line in differ:
+            code = line[:2]
+            text = line[2:] + "\n"
+            
+            if code == "- ":
+                self.txt_diff_src.insert("end", text, "removed")
+                self.txt_diff_dst.insert("end", "\n", "empty")
+            elif code == "+ ":
+                self.txt_diff_src.insert("end", "\n", "empty")
+                self.txt_diff_dst.insert("end", text, "added")
+            elif code == "? ":
+                continue
+            else:
+                self.txt_diff_src.insert("end", text)
+                self.txt_diff_dst.insert("end", text)
+                
+        self.txt_diff_src.configure(state="disabled")
+        self.txt_diff_dst.configure(state="disabled")
 
     def _toggle_destination_card(self):
         try:
