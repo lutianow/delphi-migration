@@ -1084,6 +1084,9 @@ class DelphiMigratorApp(ctk.CTk):
         finally:
             self.ui_queue.put(self._enable_btn)
 
+    def _enable_btn(self):
+        self.btn_start.configure(state="normal", text=self._("btn_start"))
+
     def _load_settings(self):
         import json
         try:
