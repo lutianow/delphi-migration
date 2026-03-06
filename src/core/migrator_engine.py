@@ -4,15 +4,35 @@ import os
 import re
 import fnmatch
 import subprocess
-from src.core.constants import BDE_TO_FD_COMPONENTS, DBTABLES_REPLACEMENT, UNIT_SCOPES, ADVANCED_PAS_REPLACEMENTS, DEPRECATED_THREAD_METHODS, LEGACY_DFM_PROPERTIES
+from src.core.constants import (
+    UNIT_SCOPES,
+    BDE_TO_FIREDAC,
+    DBX_TO_FIREDAC,
+    IBX_TO_FIREDAC,
+    ADO_TO_FIREDAC,
+    CDS_TO_FIREDAC,
+    ADVANCED_PAS_REPLACEMENTS,
+    DEPRECATED_THREAD_METHODS,
+    LEGACY_DFM_PROPERTIES
+)
 from src.utils.file_utils import safe_copy_tree, read_file_content, write_file_content
 
 class DelphiMigratorEngine:
     def __init__(self, src: str, dst: str, config: dict, log_callback):
         self.src = src
         self.dst = dst
+        # Feature Flags
         self.do_utf8 = config.get('utf8', True)
-        self.do_bde = config.get('bde', True)
+        
+        self.do_db_main = config.get('db_main', True)
+        self.db_flags = {
+            'bde': config.get('bde', True),
+            'dbx': config.get('dbx', False),
+            'ibx': config.get('ibx', False),
+            'ado': config.get('ado', False),
+            'cds': config.get('cds', False)
+        }
+        
         self.do_scopes = config.get('scopes', True)
         self.do_advanced = config.get('advanced', True)
         self.do_precompile = config.get('precompile', False)
@@ -58,6 +78,11 @@ class DelphiMigratorEngine:
             else:
                 self.log(f">> Modo In-Place Ativado. Analisando e modificando DIRETAMENTE em: {self.src}")
             
+            if self.do_db_main:
+                active_techs = [k.upper() for k, v in self.db_flags.items() if v]
+                if active_techs:
+                    self.log(f">> Migração de Acesso a Dados (FireDAC) Ativa para: {', '.join(active_techs)}")
+
             self.log(">> Analisando e processando arquivos (.pas, .dfm, .dpr)...")
             
             for root, dirs, files in os.walk(self.dst):
@@ -74,8 +99,8 @@ class DelphiMigratorEngine:
             self.log(">> Conversão de texto finalizada.")
             if self.do_utf8:
                 self.log(f"   * Arquivos recodificados (UTF-8): {self.count_utf8}")
-            if self.do_bde:
-                self.log(f"   * Ocorrências BDE substituídas: {self.count_bde_fixes}")
+            if self.do_db_main:
+                self.log(f"   * Ocorrências BDE/DBX/IBX/ADO/CDS substituídas: {self.count_bde_fixes}")
             if self.do_scopes:
                 self.log(f"   * Unit Scope Names atualizados: {self.count_scope_fixes}")
             if self.do_advanced:
@@ -144,10 +169,11 @@ class DelphiMigratorEngine:
             self.count_utf8 += 1
 
         nova_string = content
+        # 2) Text Conversion
         all_changes = []
 
-        if self.do_bde:
-            nova_string, changes = self._apply_bde_replacements(nova_string, ext)
+        if self.do_db_main:
+            nova_string, changes = self._apply_data_access_replacements(nova_string, ext)
             all_changes.extend(changes)
 
         if self.do_scopes and ext in ['.pas', '.dpr']:
@@ -176,20 +202,40 @@ class DelphiMigratorEngine:
         if content != nova_string or (self.do_utf8 and era_ansi):
             write_file_content(filepath, nova_string, encoding=write_enc)
 
-    def _apply_bde_replacements(self, code: str, ext: str) -> tuple:
+    def _apply_data_access_replacements(self, code: str, ext: str) -> tuple:
         changes = []
-        for old_comp, new_comp in BDE_TO_FD_COMPONENTS.items():
-            code, num_subs = re.subn(old_comp, new_comp, code)
-            if num_subs > 0:
-                self.count_bde_fixes += num_subs
-                strip_comp = old_comp.replace(r"\b", "")
-                changes.append({'rule': 'Migração BDE para FireDAC', 'details': f'{strip_comp} -> {new_comp} ({num_subs} ocorrências)'})
-                
-        if ext in ['.pas', '.dpr']:
-            code, num_subs = re.subn(r'\bDBTables\b', DBTABLES_REPLACEMENT, code, flags=re.IGNORECASE)
-            if num_subs > 0:
-                changes.append({'rule': 'Injeção de Uses FireDAC', 'details': f'DBTables -> Uses do FireDAC ({num_subs} ocorrências)'})
         
+        active_rules = []
+        if self.db_flags.get('bde'):
+            active_rules.append(('BDE -> FireDAC', BDE_TO_FIREDAC))
+        if self.db_flags.get('dbx'):
+            active_rules.append(('DBExpress -> FireDAC', DBX_TO_FIREDAC))
+        if self.db_flags.get('ibx'):
+            active_rules.append(('IBX -> FireDAC', IBX_TO_FIREDAC))
+        if self.db_flags.get('ado'):
+            active_rules.append(('ADO -> FireDAC', ADO_TO_FIREDAC))
+        if self.db_flags.get('cds'):
+            active_rules.append(('ClientDataSet -> FireDAC', CDS_TO_FIREDAC))
+            
+        for rule_name, rule_dict in active_rules:
+            for old_comp, new_comp in rule_dict.items():
+                if ext == '.dfm' and not new_comp:
+                    # Often uses are stripped to empty (''), but in DFM we skip empty replacements
+                    # unless it's a specific component deletion rule.
+                    continue
+                    
+                code, num_subs = re.subn(old_comp, new_comp, code, flags=re.IGNORECASE)
+                if num_subs > 0:
+                    self.count_bde_fixes += num_subs
+                    strip_comp = old_comp.replace(r"\b", "")
+                    
+                    if new_comp == '':
+                        action = f"{strip_comp} removido"
+                    else:
+                        action = f"{strip_comp} \u2192 {new_comp}"
+                        
+                    changes.append({'rule': rule_name, 'details': f'{action} ({num_subs} ocorrências)'})
+                    
         return code, changes
 
     def _apply_unit_scopes(self, code: str) -> tuple:

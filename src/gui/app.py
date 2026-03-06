@@ -132,10 +132,17 @@ class DelphiMigratorApp(ctk.CTk):
         self.header_label_3.configure(text=self._("step_3", default="3. Migration Rules"))
         self.lbl_options.configure(text=self._("lbl_options"))
         self.chk_utf8.configure(text=self._("chk_utf8"))
-        self.chk_bde.configure(text=self._("chk_bde"))
         self.chk_scopes.configure(text=self._("chk_scopes"))
         self.chk_advanced.configure(text=self._("chk_advanced"))
         
+        # Update New Database Option & Sub-options
+        self.chk_db_main.configure(text=self._("chk_db_main"))
+        self.chk_db_bde.configure(text="BDE \u2192 FireDAC")
+        self.chk_db_dbx.configure(text="DBExpress \u2192 FireDAC")
+        self.chk_db_ibx.configure(text="IBX \u2192 FireDAC")
+        self.chk_db_ado.configure(text="ADO \u2192 FireDAC")
+        self.chk_db_cds.configure(text="ClientDataSet \u2192 FireDAC")
+            
         self.btn_prev3.configure(text=self._("btn_prev", default="Previous Step"))
         self.btn_next3.configure(text=self._("btn_next", default="Next Step"))
         
@@ -464,7 +471,17 @@ class DelphiMigratorApp(ctk.CTk):
         self.options_frame.grid(row=2, column=0, sticky="nsew")
 
         self.var_utf8 = ctk.BooleanVar(value=self.app_settings.get("utf8", True))
+        
+        # Main Database Toggle
+        self.var_db_main = ctk.BooleanVar(value=self.app_settings.get("db_main", True))
+        
+        # Sub-Technologies Toggles
         self.var_bde = ctk.BooleanVar(value=self.app_settings.get("bde", True))
+        self.var_dbx = ctk.BooleanVar(value=self.app_settings.get("dbx", False))
+        self.var_ibx = ctk.BooleanVar(value=self.app_settings.get("ibx", False))
+        self.var_ado = ctk.BooleanVar(value=self.app_settings.get("ado", False))
+        self.var_cds = ctk.BooleanVar(value=self.app_settings.get("cds", False))
+        
         self.var_scopes = ctk.BooleanVar(value=self.app_settings.get("scopes", True))
         self.var_advanced = ctk.BooleanVar(value=self.app_settings.get("advanced", True))
 
@@ -473,12 +490,39 @@ class DelphiMigratorApp(ctk.CTk):
         
         self.chk_utf8 = ctk.CTkCheckBox(self.options_frame, text=self._("chk_utf8"), variable=self.var_utf8, **kwargs)
         self.chk_utf8.pack(anchor="w", pady=(0, 15))
-        self.chk_bde = ctk.CTkCheckBox(self.options_frame, text=self._("chk_bde"), variable=self.var_bde, **kwargs)
-        self.chk_bde.pack(anchor="w", pady=(0, 15))
+        
         self.chk_scopes = ctk.CTkCheckBox(self.options_frame, text=self._("chk_scopes"), variable=self.var_scopes, **kwargs)
         self.chk_scopes.pack(anchor="w", pady=(0, 15))
+        
         self.chk_advanced = ctk.CTkCheckBox(self.options_frame, text=self._("chk_advanced"), variable=self.var_advanced, **kwargs)
         self.chk_advanced.pack(anchor="w", pady=(0, 15))
+        
+        # Data Access Migration Container
+        self.chk_db_main = ctk.CTkCheckBox(self.options_frame, text=self._("chk_db_main", default="Migrar tecnologias de acesso a dados legadas para FireDAC"), variable=self.var_db_main, command=self._toggle_db_sub_options, **kwargs)
+        self.chk_db_main.pack(anchor="w", pady=(15, 5))
+        
+        self.db_sub_frame = ctk.CTkFrame(self.options_frame, fg_color="transparent")
+        self.db_sub_frame.pack(anchor="w", fill="x", padx=(30, 0), pady=(0, 15))
+        
+        sub_kwargs = kwargs.copy()
+        sub_kwargs["checkbox_width"] = 18
+        sub_kwargs["checkbox_height"] = 18
+        sub_kwargs["font"] = ctk.CTkFont(size=13)
+        
+        self.chk_db_bde = ctk.CTkCheckBox(self.db_sub_frame, text="BDE \u2192 FireDAC", variable=self.var_bde, **sub_kwargs)
+        self.chk_db_bde.pack(anchor="w", pady=(0, 8))
+        self.chk_db_dbx = ctk.CTkCheckBox(self.db_sub_frame, text="DBExpress \u2192 FireDAC", variable=self.var_dbx, **sub_kwargs)
+        self.chk_db_dbx.pack(anchor="w", pady=(0, 8))
+        self.chk_db_ibx = ctk.CTkCheckBox(self.db_sub_frame, text="IBX \u2192 FireDAC", variable=self.var_ibx, **sub_kwargs)
+        self.chk_db_ibx.pack(anchor="w", pady=(0, 8))
+        self.chk_db_ado = ctk.CTkCheckBox(self.db_sub_frame, text="ADO \u2192 FireDAC", variable=self.var_ado, **sub_kwargs)
+        self.chk_db_ado.pack(anchor="w", pady=(0, 8))
+        self.chk_db_cds = ctk.CTkCheckBox(self.db_sub_frame, text="ClientDataSet \u2192 FireDAC", variable=self.var_cds, **sub_kwargs)
+        self.chk_db_cds.pack(anchor="w", pady=(0, 8))
+
+        # Initial toggle enforcement
+        self._toggle_db_sub_options()
+
 
         # Spacer to push navigation to bottom
         self.frame_step3.grid_rowconfigure(3, weight=1)
@@ -492,6 +536,14 @@ class DelphiMigratorApp(ctk.CTk):
         
         self.btn_next3 = ctk.CTkButton(self.step_nav3, text=self._("btn_next", default="Next Step"), command=lambda: self.show_step(4), font=ctk.CTkFont(size=14, weight="bold"), fg_color=CARD_1, hover_color="#8080FF", height=40)
         self.btn_next3.pack(side="right")
+
+    def _toggle_db_sub_options(self):
+        state = "normal" if self.var_db_main.get() else "disabled"
+        self.chk_db_bde.configure(state=state)
+        self.chk_db_dbx.configure(state=state)
+        self.chk_db_ibx.configure(state=state)
+        self.chk_db_ado.configure(state=state)
+        self.chk_db_cds.configure(state=state)
 
     def _create_step4_execution(self): # Formerly _create_step3_execution
         self.frame_step4 = ctk.CTkFrame(self.container_frame, fg_color="transparent")
@@ -768,7 +820,12 @@ class DelphiMigratorApp(ctk.CTk):
         
         config = {
             'utf8': getattr(self, 'var_utf8', ctk.BooleanVar(value=True)).get(),
+            'db_main': getattr(self, 'var_db_main', ctk.BooleanVar(value=True)).get(),
             'bde': getattr(self, 'var_bde', ctk.BooleanVar(value=True)).get(),
+            'dbx': getattr(self, 'var_dbx', ctk.BooleanVar(value=False)).get(),
+            'ibx': getattr(self, 'var_ibx', ctk.BooleanVar(value=False)).get(),
+            'ado': getattr(self, 'var_ado', ctk.BooleanVar(value=False)).get(),
+            'cds': getattr(self, 'var_cds', ctk.BooleanVar(value=False)).get(),
             'scopes': getattr(self, 'var_scopes', ctk.BooleanVar(value=True)).get(),
             'advanced': getattr(self, 'var_advanced', ctk.BooleanVar(value=True)).get(),
             'precompile': getattr(self, 'var_precompile', ctk.BooleanVar(value=False)).get(),
@@ -782,8 +839,8 @@ class DelphiMigratorApp(ctk.CTk):
         engine = DelphiMigratorEngine(src, dst, config, self.log_thread_safe)
         try:
             engine.start_migration()
-        except Exception:
-            pass
+        except Exception as e:
+            self.log_thread_safe(f"Erro ao iniciar motor:\n{e}")
         finally:
             self.after(0, self._enable_btn)
 
@@ -813,13 +870,18 @@ class DelphiMigratorApp(ctk.CTk):
                 'op_mode': safe_mode,
                 'source_dir': self.source_dir.get(),
                 'dest_dir': self.dest_dir.get(),
-                'utf8': getattr(self, 'var_utf8', ctk.BooleanVar(value=True)).get(),
-                'bde': getattr(self, 'var_bde', ctk.BooleanVar(value=True)).get(),
-                'scopes': getattr(self, 'var_scopes', ctk.BooleanVar(value=True)).get(),
-                'advanced': getattr(self, 'var_advanced', ctk.BooleanVar(value=True)).get(),
-                'precompile': getattr(self, 'var_precompile', ctk.BooleanVar(value=False)).get(),
-                'include_filters': getattr(self, "include_filters_list", []),
-                'ignore_filters': getattr(self, "ignore_filters_list", [])
+                "utf8": getattr(self, "var_utf8", ctk.BooleanVar(value=True)).get(),
+                "db_main": getattr(self, "var_db_main", ctk.BooleanVar(value=True)).get(),
+                "bde": getattr(self, "var_bde", ctk.BooleanVar(value=True)).get(),
+                "dbx": getattr(self, "var_dbx", ctk.BooleanVar(value=False)).get(),
+                "ibx": getattr(self, "var_ibx", ctk.BooleanVar(value=False)).get(),
+                "ado": getattr(self, "var_ado", ctk.BooleanVar(value=False)).get(),
+                "cds": getattr(self, "var_cds", ctk.BooleanVar(value=False)).get(),
+                "scopes": getattr(self, "var_scopes", ctk.BooleanVar(value=True)).get(),
+                "advanced": getattr(self, "var_advanced", ctk.BooleanVar(value=True)).get(),
+                "precompile": getattr(self, "var_precompile", ctk.BooleanVar(value=False)).get(),
+                "include_filters": getattr(self, "include_filters_list", []),
+                "ignore_filters": getattr(self, "ignore_filters_list", ["*.~pas", "*.~dfm", "*.dcu", "*.identcache", "*.local", "*.stat", "__history/", "*.ddp"])
             }
             with open(self.config_file, 'w', encoding='utf-8') as f:
                 json.dump(config, f, indent=4)
