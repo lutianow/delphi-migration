@@ -608,8 +608,30 @@ class DelphiMigratorApp(ctk.CTk):
         self.split_frame.grid_rowconfigure(0, weight=1)
 
         # Left: File Explorer
-        self.tree_frame = ctk.CTkScrollableFrame(self.split_frame, fg_color=BG_INPUT, corner_radius=12)
-        self.tree_frame.grid(row=0, column=0, sticky="nsew", padx=(0, 8))
+        self.tree_container = ctk.CTkFrame(self.split_frame, fg_color=BG_INPUT, corner_radius=12)
+        self.tree_container.grid(row=0, column=0, sticky="nsew", padx=(0, 8))
+        self.tree_container.grid_rowconfigure(0, weight=1)
+        self.tree_container.grid_columnconfigure(0, weight=1)
+        
+        import tkinter.ttk as ttk
+        style = ttk.Style(self)
+        style.theme_use("default")
+        style.configure("Treeview", 
+                        background="#1F1F26", 
+                        foreground="#FFFFFF", 
+                        fieldbackground="#1F1F26", 
+                        borderwidth=0,
+                        font=("Inter", 12))
+        style.map("Treeview", background=[("selected", "#5D5DFF")])
+        
+        self.tree = ttk.Treeview(self.tree_container, selectmode="browse", show="tree")
+        self.tree.grid(row=0, column=0, sticky="nsew", padx=5, pady=5)
+        
+        self.tree_scroll = ttk.Scrollbar(self.tree_container, orient="vertical", command=self.tree.yview)
+        self.tree.configure(yscrollcommand=self.tree_scroll.set)
+        self.tree_scroll.grid(row=0, column=1, sticky="ns")
+
+        self.tree.bind("<<TreeviewSelect>>", self._on_tree_select)
         
         # Right: Diff Viewer (Side by Side)
         self.diff_container = ctk.CTkFrame(self.split_frame, fg_color="transparent")
@@ -666,16 +688,30 @@ class DelphiMigratorApp(ctk.CTk):
         self.btn_prev5 = ctk.CTkButton(self.step_nav5, text=self._("btn_prev", default="Previous Step"), command=lambda: self.show_step(4), font=ctk.CTkFont(size=14, weight="bold"), fg_color="transparent", border_width=1, border_color=COLOR_SECONDARY, text_color=COLOR_SECONDARY, hover_color=BG_INPUT, height=40)
         self.btn_prev5.pack(side="left")
 
+    def _on_tree_select(self, event):
+        selected = self.tree.selection()
+        if not selected:
+            return
+        item_id = selected[0]
+        item_type = self.tree.item(item_id, "values")
+        if item_type and item_type[0] == "file":
+            dst_path = self.dest_dir.get().strip()
+            src_path = self.source_dir.get().strip()
+            # Normalize path for all OSes
+            d_file = os.path.join(dst_path, item_id.replace('/', os.sep))
+            s_file = os.path.join(src_path, item_id.replace('/', os.sep))
+            if os.path.exists(s_file) and os.path.exists(d_file):
+                self._load_diff(s_file, d_file)
+
     def _refresh_diff_tree(self):
-        for widget in self.tree_frame.winfo_children():
-            widget.destroy()
+        for item in self.tree.get_children():
+            self.tree.delete(item)
             
         src_path = self.source_dir.get().strip()
         dst_path = self.dest_dir.get().strip()
         op_mode = self.var_mode.get()
         if op_mode == "inplace" or op_mode == self._("mode_inplace"):
-            lbl = ctk.CTkLabel(self.tree_frame, text="Diff viewer não suportado no modo In-Place.", text_color=COLOR_SECONDARY)
-            lbl.pack(pady=20, padx=10)
+            self.tree.insert("", "end", text="Diff view não suportado no modo In-Place.")
             return
             
         if not src_path or not dst_path or not os.path.exists(src_path) or not os.path.exists(dst_path):
@@ -684,6 +720,20 @@ class DelphiMigratorApp(ctk.CTk):
         import filecmp
         
         has_items = False
+        folders_added = set()
+        
+        def add_folder_path(rel_dir):
+            if rel_dir in folders_added or rel_dir == "." or not rel_dir:
+                return
+            parts = rel_dir.replace('\\', '/').split('/')
+            current_path = ""
+            for p in parts:
+                parent = current_path
+                current_path = f"{current_path}/{p}" if current_path else p
+                if current_path not in folders_added:
+                    self.tree.insert(parent, "end", iid=current_path, text="\U0001F4C1 " + p, open=True, values=("folder",))
+                    folders_added.add(current_path)
+
         for root, _, files in os.walk(dst_path):
             for file in files:
                 if file.lower().endswith(('.pas', '.dfm', '.dpr')):
@@ -693,13 +743,16 @@ class DelphiMigratorApp(ctk.CTk):
                     
                     if os.path.exists(s_file):
                         if not filecmp.cmp(s_file, d_file, shallow=False):
-                            btn = ctk.CTkButton(self.tree_frame, text=rel_path, anchor="w", fg_color="transparent", hover_color="#2A2A35", text_color=COLOR_PRIMARY, command=lambda s=s_file, d=d_file: self._load_diff(s, d))
-                            btn.pack(fill="x", pady=2, padx=5)
+                            rel_dir = os.path.dirname(rel_path)
+                            add_folder_path(rel_dir)
+                            
+                            parent_id = rel_dir.replace('\\', '/') if rel_dir and rel_dir != "." else ""
+                            iid = rel_path.replace('\\', '/')
+                            self.tree.insert(parent_id, "end", iid=iid, text="\U0001F4C4 " + file, values=("file",))
                             has_items = True
 
         if not has_items:
-            lbl = ctk.CTkLabel(self.tree_frame, text="Nenhum arquivo modificado encontrado.", text_color=COLOR_SECONDARY)
-            lbl.pack(pady=20, padx=10)
+            self.tree.insert("", "end", text="Nenhum arquivo modificado encontrado.")
 
     def _load_diff(self, src_file, dst_file):
         import difflib
