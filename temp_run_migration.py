@@ -23,7 +23,7 @@ if __name__ == "__main__":
         'cds': True,
         'scopes': True,
         'advanced': True,
-        'precompile': False, # Don't test the old version
+        'precompile': True, 
         'include_filters': [],
         'banned_files': ['*.~*', '*.dcu', '*.identcache', '*.local', '*.stat'],
     }

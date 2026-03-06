@@ -1,9 +1,8 @@
-# src/gui/app.py
-
 import customtkinter as ctk
 from tkinter import filedialog, messagebox
 import os
 import threading
+import queue
 from PIL import Image
 from src.core.migrator_engine import DelphiMigratorEngine
 from src.core.analyzer import ProjectAnalyzer
@@ -77,6 +76,11 @@ class DelphiMigratorApp(ctk.CTk):
         
         self.migrator_thread = None
         self.analyzer_thread = None
+        
+        # Thread-safe UI Queue
+        self.ui_queue = queue.Queue()
+        self._process_ui_queue()
+        
         self.show_step(1)
 
     def change_language(self, choice):
@@ -994,8 +998,18 @@ class DelphiMigratorApp(ctk.CTk):
         if folder:
             self.dest_dir.set(folder)
 
+    def _process_ui_queue(self):
+        try:
+            while True:
+                task = self.ui_queue.get_nowait()
+                task()
+        except queue.Empty:
+            pass
+        finally:
+            self.after(100, self._process_ui_queue)
+
     def log_thread_safe(self, message):
-        self.after(0, lambda m=message: self._insert_log(m))
+        self.ui_queue.put(lambda m=message: self._insert_log(m))
 
     def _insert_log(self, message):
         self.log_textbox.configure(state="normal")
@@ -1052,8 +1066,11 @@ class DelphiMigratorApp(ctk.CTk):
         def update_progress(current, total, filename):
             if total > 0:
                 pct = int((current / total) * 100)
-                self.progress_bar.set(current / total)
-                self.lbl_progress.configure(text=f"{pct}% - {filename}")
+                # Thread-safe UI update
+                self.ui_queue.put(lambda c=current, t=total, p=pct, f=filename: [
+                    self.progress_bar.set(c / t),
+                    self.lbl_progress.configure(text=f"{p}% - {(f[:40] + '...') if len(f) > 40 else f}")
+                ])
         
         self.migrator_thread = threading.Thread(target=self._run_engine, args=(src, dst, config, update_progress), daemon=True)
         self.migrator_thread.start()
@@ -1065,7 +1082,7 @@ class DelphiMigratorApp(ctk.CTk):
         except Exception as e:
             self.log_thread_safe(f"Erro ao iniciar motor:\n{e}")
         finally:
-            self.after(0, self._enable_btn)
+            self.ui_queue.put(self._enable_btn)
 
     def _load_settings(self):
         import json
