@@ -182,7 +182,8 @@ class DelphiMigratorEngine:
             code, num_subs = re.subn(old_comp, new_comp, code)
             if num_subs > 0:
                 self.count_bde_fixes += num_subs
-                changes.append({'rule': 'Migração BDE para FireDAC', 'details': f'{old_comp.strip(r"\\b")} -> {new_comp} ({num_subs} ocorrências)'})
+                strip_comp = old_comp.replace(r"\b", "")
+                changes.append({'rule': 'Migração BDE para FireDAC', 'details': f'{strip_comp} -> {new_comp} ({num_subs} ocorrências)'})
                 
         if ext in ['.pas', '.dpr']:
             code, num_subs = re.subn(r'\bDBTables\b', DBTABLES_REPLACEMENT, code, flags=re.IGNORECASE)
