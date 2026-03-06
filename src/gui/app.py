@@ -1046,22 +1046,27 @@ class DelphiMigratorApp(ctk.CTk):
         self.btn_start.configure(state="disabled", text=self._("btn_start_busy"))
         self.log_thread_safe("\n=== BOOTING MIGRATION ENGINE ===")
         
-        config = {
-            'utf8': self.var_utf8.get(),
-            'bpe': False,
-            'advanced': self.var_advanced.get(),
-            'precompile': self.var_precompile.get(),
-            'scopes': self.var_scopes.get(),
-            'include_filters': self.app_settings.get("filters", []),
-            'banned_files': self.app_settings.get("exceptions", []),
-            'clean_dir': self.var_clean_dir.get(),
-            'db_main': self.var_db_main.get(),
-            'bde': self.var_db_bde.get(),
-            'dbx': self.var_db_dbx.get(),
-            'ibx': self.var_db_ibx.get(),
-            'ado': self.var_db_ado.get(),
-            'cds': self.var_db_cds.get()
-        }
+        try:
+            config = {
+                'utf8': getattr(self, "var_utf8", ctk.BooleanVar(value=True)).get(),
+                'bpe': False,
+                'advanced': getattr(self, "var_advanced", ctk.BooleanVar(value=True)).get(),
+                'precompile': getattr(self, "var_precompile", ctk.BooleanVar(value=False)).get(),
+                'scopes': getattr(self, "var_scopes", ctk.BooleanVar(value=True)).get(),
+                'include_filters': self.app_settings.get("filters", []),
+                'banned_files': self.app_settings.get("exceptions", []),
+                'clean_dir': getattr(self, "var_clean_dir", ctk.BooleanVar(value=False)).get(),
+                'db_main': getattr(self, "var_db_main", ctk.BooleanVar(value=True)).get(),
+                'bde': getattr(self, "var_bde", ctk.BooleanVar(value=True)).get(),
+                'dbx': getattr(self, "var_dbx", ctk.BooleanVar(value=False)).get(),
+                'ibx': getattr(self, "var_ibx", ctk.BooleanVar(value=False)).get(),
+                'ado': getattr(self, "var_ado", ctk.BooleanVar(value=False)).get(),
+                'cds': getattr(self, "var_cds", ctk.BooleanVar(value=False)).get()
+            }
+        except Exception as e:
+            self.log_thread_safe(f"Erro Crítico de Tela ao ler configurações:\n{e}")
+            self._enable_btn()
+            return
         
         def update_progress(current, total, filename):
             if total > 0:
