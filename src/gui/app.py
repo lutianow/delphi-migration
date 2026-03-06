@@ -1000,13 +1000,15 @@ class DelphiMigratorApp(ctk.CTk):
 
     def _process_ui_queue(self):
         try:
-            while True:
+            processed_count = 0
+            while processed_count < 50:
                 task = self.ui_queue.get_nowait()
                 task()
+                processed_count += 1
         except queue.Empty:
             pass
         finally:
-            self.after(100, self._process_ui_queue)
+            self.after(20, self._process_ui_queue)
 
     def log_thread_safe(self, message):
         self.ui_queue.put(lambda m=message: self._insert_log(m))
