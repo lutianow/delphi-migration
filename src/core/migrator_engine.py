@@ -173,28 +173,32 @@ class DelphiMigratorEngine:
             # We explicitly invoke cmd.exe to prevent native shell=True hooking the UI thread console
             # And use CREATE_NO_WINDOW to ensure MSBuild doesn't try to invoke a hidden frozen terminal
             import subprocess
+            import tempfile
             CREATE_NO_WINDOW = 0x08000000
             
-            result = subprocess.run(
-                ['cmd.exe', '/c', f'"{rsvars_path}" && MSBuild "{target_file}" /t:Build /p:Config=Debug'],
-                cwd=self.src,
-                capture_output=True,
-                text=True,
-                encoding='windows-1252',
-                errors='replace',
-                creationflags=CREATE_NO_WINDOW
-            )
+            temp_log_path = os.path.join(tempfile.gettempdir(), "migrador_msbuild.log")
+            
+            with open(temp_log_path, 'w', encoding='windows-1252') as temp_log_file:
+                result = subprocess.run(
+                    ['cmd.exe', '/c', f'"{rsvars_path}" && MSBuild "{target_file}" /t:Build /p:Config=Debug'],
+                    cwd=self.src,
+                    stdout=temp_log_file,
+                    stderr=subprocess.STDOUT,
+                    creationflags=CREATE_NO_WINDOW
+                )
 
-            for line in result.stdout.splitlines():
-                clean_line = line.strip()
-                if clean_line:
-                    self.log_callback(f"| {clean_line}")
-
-            if result.stderr:
-                for line in result.stderr.splitlines():
-                    clean_line = line.strip()
-                    if clean_line:
-                        self.log_callback(f"| [ERRO MSBUILD] {clean_line}")
+            # Read the output back safely without pipe deadlocks
+            if os.path.exists(temp_log_path):
+                with open(temp_log_path, 'r', encoding='windows-1252', errors='replace') as f:
+                    for line in f:
+                        clean_line = line.strip()
+                        if clean_line:
+                            self.log_callback(f"| {clean_line}")
+                
+                try:
+                    os.remove(temp_log_path)
+                except:
+                    pass
 
             self.log_callback(f">> [PRE-COMPILE] Fim do teste de compilação. Código de Saída: {result.returncode}\n")
         except Exception as e:
