@@ -182,6 +182,7 @@ class DelphiMigratorEngine:
                 result = subprocess.run(
                     ['cmd.exe', '/c', f'"{rsvars_path}" && MSBuild "{target_file}" /t:Build /p:Config=Debug'],
                     cwd=self.src,
+                    stdin=subprocess.DEVNULL,
                     stdout=temp_log_file,
                     stderr=subprocess.STDOUT,
                     creationflags=CREATE_NO_WINDOW
