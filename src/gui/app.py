@@ -153,7 +153,7 @@ class DelphiMigratorApp(ctk.CTk):
         self.chk_precompile.configure(text=self._("chk_precompile"))
         
         try: # Failsafe during init
-            self.lbl_console.configure(text=self._("lbl_console"))
+            self.lbl_console.configure(text=self._("step_4_console", default="Execution Output (Verbose)"))
         except AttributeError:
             pass 
         
@@ -161,6 +161,13 @@ class DelphiMigratorApp(ctk.CTk):
             self.btn_start.configure(text=self._("btn_start_ready"))
         else:
             self.btn_start.configure(text=self._("btn_start_busy"))
+
+        if hasattr(self, 'btn_log_actions'):
+            self.btn_log_actions.configure(
+                values=[self._("log_action_copy", default="Copiar Log"), self._("log_action_save", default="Salvar Log..."), self._("log_action_clear", default="Limpar Log")]
+            )
+            # CTkOptionMenu string trace override hack to reset title
+            self.btn_log_actions.set(self._("log_action_options", default="⏬ Ações"))
             
         self.btn_prev4.configure(text=self._("btn_prev", default="Previous Step"))
         self.btn_next4.configure(text=self._("btn_next", default="Next Step"))
@@ -580,8 +587,22 @@ class DelphiMigratorApp(ctk.CTk):
         self.console_frame.grid_rowconfigure(1, weight=1)
         self.console_frame.grid_columnconfigure(0, weight=1)
 
-        self.lbl_console = ctk.CTkLabel(self.console_frame, text="Execution Output (Verbose)", font=ctk.CTkFont(family="Inter", size=16, weight="bold"), text_color=COLOR_SECONDARY)
-        self.lbl_console.grid(row=0, column=0, sticky="w", pady=(0, 10))
+        self.log_header_frame = ctk.CTkFrame(self.console_frame, fg_color="transparent")
+        self.log_header_frame.grid(row=0, column=0, sticky="ew", pady=(0, 10))
+
+        self.lbl_console = ctk.CTkLabel(self.log_header_frame, text=self._("step_4_console", default="Execution Output (Verbose)"), font=ctk.CTkFont(family="Inter", size=16, weight="bold"), text_color=COLOR_SECONDARY)
+        self.lbl_console.pack(side="left")
+
+        self.btn_log_actions = ctk.CTkOptionMenu(
+            self.log_header_frame, 
+            values=[self._("log_action_copy", default="Copiar Log"), self._("log_action_save", default="Salvar Log..."), self._("log_action_clear", default="Limpar Log")],
+            command=self._handle_log_action,
+            width=120, height=28,
+            fg_color="#101014", button_color="#2A2A35", button_hover_color="#4A4A55", text_color=COLOR_PRIMARY,
+            font=ctk.CTkFont(size=12, weight="bold")
+        )
+        self.btn_log_actions.pack(side="right")
+        self.btn_log_actions.set(self._("log_action_options", default="⏬ Ações"))
 
         self.log_textbox = ctk.CTkTextbox(self.console_frame, fg_color="#101014", text_color="#A4A4B5", corner_radius=12, font=ctk.CTkFont(family="Consolas", size=13), border_width=2, border_color="#2A2A35")
         self.log_textbox.grid(row=1, column=0, sticky="nsew")
@@ -600,6 +621,40 @@ class DelphiMigratorApp(ctk.CTk):
         
         # Save Triggers
         self.var_precompile.trace_add("write", lambda *_: self.save_settings())
+
+    def _handle_log_action(self, choice):
+        # Reset the menu title so it still says "Actions" instead of keeping the selection text
+        self.btn_log_actions.set(self._("log_action_options", default="⏬ Ações"))
+        if choice == self._("log_action_copy", default="Copiar Log"):
+            self._copy_log()
+        elif choice == self._("log_action_save", default="Salvar Log..."):
+            self._save_log()
+        elif choice == self._("log_action_clear", default="Limpar Log"):
+            self._clear_log()
+
+    def _copy_log(self):
+        self.clipboard_clear()
+        self.clipboard_append(self.log_textbox.get("1.0", "end"))
+        self.log(self._("msg_log_copied", default="✅ Log copiado para a área de transferência com sucesso."))
+
+    def _save_log(self):
+        filepath = ctk.filedialog.asksaveasfilename(
+            defaultextension=".txt",
+            filetypes=[("Text Files", "*.txt"), ("Log Files", "*.log"), ("All Files", "*.*")],
+            title="Salvar Log"
+        )
+        if filepath:
+            try:
+                with open(filepath, 'w', encoding='utf-8') as f:
+                    f.write(self.log_textbox.get("1.0", "end"))
+                self.log(f"✅ {self._('msg_log_saved', default='Log salvo em:')} {filepath}")
+            except Exception as e:
+                self.log(f"❌ Erro ao salvar log: {str(e)}")
+
+    def _clear_log(self):
+        self.log_textbox.configure(state="normal")
+        self.log_textbox.delete("1.0", "end")
+        self.log_textbox.configure(state="disabled")
 
     def _create_step5_comparison(self):
         self.frame_step5 = ctk.CTkFrame(self.container_frame, fg_color="transparent")
