@@ -73,13 +73,13 @@ class DelphiMigratorEngine:
 
             self.log(">> Conversão de texto finalizada.")
             if self.do_utf8:
-                self.log(f"   ✓ Arquivos recodificados (UTF-8): {self.count_utf8}")
+                self.log(f"   * Arquivos recodificados (UTF-8): {self.count_utf8}")
             if self.do_bde:
-                self.log(f"   ✓ Ocorrências BDE substituídas: {self.count_bde_fixes}")
+                self.log(f"   * Ocorrências BDE substituídas: {self.count_bde_fixes}")
             if self.do_scopes:
-                self.log(f"   ✓ Unit Scope Names atualizados: {self.count_scope_fixes}")
+                self.log(f"   * Unit Scope Names atualizados: {self.count_scope_fixes}")
             if self.do_advanced:
-                self.log(f"   ✓ Refatorações Avançadas (Unicode/Threads/.dfm): {self.count_advanced_fixes}")
+                self.log(f"   * Refatorações Avançadas (Unicode/Threads/.dfm): {self.count_advanced_fixes}")
 
             self.log("\n=== MIGRAÇÃO FINALIZADA COM SUCESSO! ===")
 

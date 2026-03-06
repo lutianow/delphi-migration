@@ -1,0 +1,2066 @@
+--- INICIANDO TESTE DO MIGRADOR NO ALM ---
+>> Iniciando motor de migração...
+>> Extração Segura Ativada. Copiando para: C:\Users\Luciano\Desktop\migrador\desen\progs\siap\fontes\alm_migrated
+Removendo diretório de destino existente: C:\Users\Luciano\Desktop\migrador\desen\progs\siap\fontes\alm_migrated
+Copiando arquivos de C:\Users\Luciano\Desktop\migrador\desen\progs\siap\fontes\alm para C:\Users\Luciano\Desktop\migrador\desen\progs\siap\fontes\alm_migrated ...
+>> Analisando e processando arquivos (.pas, .dfm, .dpr)...
+
+ Processando: AcesCad.pas
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: SysUtils -> System.SysUtils (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Classes -> System.Classes (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Forms -> Vcl.Forms (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Controls -> Vcl.Controls (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Graphics -> Vcl.Graphics (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Dialogs -> Vcl.Dialogs (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: StdCtrls -> Vcl.StdCtrls (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: ExtCtrls -> Vcl.ExtCtrls (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: ComCtrls -> Vcl.ComCtrls (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Buttons -> Vcl.Buttons (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Grids -> Vcl.Grids (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Windows -> Winapi.Windows (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Messages -> Winapi.Messages (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: DB -> Data.DB (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: DBClient -> Data.DBClient (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: SqlExpr -> Data.SqlExpr (1 ocorrências)
+  Status: arquivo modificado
+
+
+ Processando: AlmCfgD.pas
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: SysUtils -> System.SysUtils (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Classes -> System.Classes (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Variants -> System.Variants (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Forms -> Vcl.Forms (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Controls -> Vcl.Controls (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Graphics -> Vcl.Graphics (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Dialogs -> Vcl.Dialogs (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: StdCtrls -> Vcl.StdCtrls (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: ExtCtrls -> Vcl.ExtCtrls (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: ComCtrls -> Vcl.ComCtrls (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Buttons -> Vcl.Buttons (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Windows -> Winapi.Windows (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Messages -> Winapi.Messages (1 ocorrências)
+  Status: arquivo modificado
+
+
+ Processando: AlmSpla.pas
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: SysUtils -> System.SysUtils (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Classes -> System.Classes (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Variants -> System.Variants (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Forms -> Vcl.Forms (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Controls -> Vcl.Controls (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Graphics -> Vcl.Graphics (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Dialogs -> Vcl.Dialogs (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: StdCtrls -> Vcl.StdCtrls (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: ExtCtrls -> Vcl.ExtCtrls (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Windows -> Winapi.Windows (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Messages -> Winapi.Messages (1 ocorrências)
+  Status: arquivo modificado
+
+
+ Processando: DialCalculoMovimentacao.pas
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: SysUtils -> System.SysUtils (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Classes -> System.Classes (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Variants -> System.Variants (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Forms -> Vcl.Forms (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Controls -> Vcl.Controls (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Graphics -> Vcl.Graphics (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Dialogs -> Vcl.Dialogs (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: StdCtrls -> Vcl.StdCtrls (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: ExtCtrls -> Vcl.ExtCtrls (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: ComCtrls -> Vcl.ComCtrls (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Buttons -> Vcl.Buttons (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Grids -> Vcl.Grids (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Windows -> Winapi.Windows (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Messages -> Winapi.Messages (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: DB -> Data.DB (1 ocorrências)
+  Status: arquivo modificado
+
+
+ Processando: DialEnviaErro.pas
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: SysUtils -> System.SysUtils (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Classes -> System.Classes (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Variants -> System.Variants (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Forms -> Vcl.Forms (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Controls -> Vcl.Controls (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Graphics -> Vcl.Graphics (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Dialogs -> Vcl.Dialogs (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: StdCtrls -> Vcl.StdCtrls (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: ExtCtrls -> Vcl.ExtCtrls (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: ComCtrls -> Vcl.ComCtrls (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Buttons -> Vcl.Buttons (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Windows -> Winapi.Windows (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Messages -> Winapi.Messages (1 ocorrências)
+  Status: arquivo modificado
+
+
+ Processando: DialMat.pas
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: SysUtils -> System.SysUtils (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Classes -> System.Classes (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Variants -> System.Variants (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Forms -> Vcl.Forms (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Controls -> Vcl.Controls (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Graphics -> Vcl.Graphics (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Dialogs -> Vcl.Dialogs (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: StdCtrls -> Vcl.StdCtrls (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: ExtCtrls -> Vcl.ExtCtrls (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: ComCtrls -> Vcl.ComCtrls (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Buttons -> Vcl.Buttons (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Windows -> Winapi.Windows (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Messages -> Winapi.Messages (1 ocorrências)
+  Status: arquivo modificado
+
+
+ Processando: DialMnt.pas
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: SysUtils -> System.SysUtils (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Classes -> System.Classes (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Variants -> System.Variants (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Math -> System.Math (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Forms -> Vcl.Forms (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Controls -> Vcl.Controls (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Graphics -> Vcl.Graphics (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Dialogs -> Vcl.Dialogs (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: StdCtrls -> Vcl.StdCtrls (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: ExtCtrls -> Vcl.ExtCtrls (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: ComCtrls -> Vcl.ComCtrls (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Buttons -> Vcl.Buttons (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Grids -> Vcl.Grids (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Windows -> Winapi.Windows (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Messages -> Winapi.Messages (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: DB -> Data.DB (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: DBClient -> Data.DBClient (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: FMTBcd -> Data.FMTBcd (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: SqlExpr -> Data.SqlExpr (1 ocorrências)
+  Regra aplicada: Regra Avançada .PAS (Unicode/FormatSettings/Series)
+  Alteração: Padrão regex "\bDecimalSeparator\b" modificado (5 ocorrências)
+  Status: arquivo modificado
+
+
+ Processando: DialRequisitante.pas
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: SysUtils -> System.SysUtils (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Classes -> System.Classes (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Variants -> System.Variants (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Forms -> Vcl.Forms (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Controls -> Vcl.Controls (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Graphics -> Vcl.Graphics (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Dialogs -> Vcl.Dialogs (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: StdCtrls -> Vcl.StdCtrls (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: ExtCtrls -> Vcl.ExtCtrls (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: ComCtrls -> Vcl.ComCtrls (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Buttons -> Vcl.Buttons (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Windows -> Winapi.Windows (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Messages -> Winapi.Messages (1 ocorrências)
+  Status: arquivo modificado
+
+
+ Processando: DialSenha.pas
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: SysUtils -> System.SysUtils (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Classes -> System.Classes (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Variants -> System.Variants (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Forms -> Vcl.Forms (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Controls -> Vcl.Controls (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Graphics -> Vcl.Graphics (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Dialogs -> Vcl.Dialogs (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: StdCtrls -> Vcl.StdCtrls (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: ExtCtrls -> Vcl.ExtCtrls (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: ComCtrls -> Vcl.ComCtrls (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Buttons -> Vcl.Buttons (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Windows -> Winapi.Windows (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Messages -> Winapi.Messages (1 ocorrências)
+  Status: arquivo modificado
+
+
+ Processando: DialSenhaAlm.pas
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: SysUtils -> System.SysUtils (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Classes -> System.Classes (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Variants -> System.Variants (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Forms -> Vcl.Forms (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Controls -> Vcl.Controls (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Graphics -> Vcl.Graphics (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Dialogs -> Vcl.Dialogs (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: StdCtrls -> Vcl.StdCtrls (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: ExtCtrls -> Vcl.ExtCtrls (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: ComCtrls -> Vcl.ComCtrls (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Buttons -> Vcl.Buttons (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Windows -> Winapi.Windows (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Messages -> Winapi.Messages (1 ocorrências)
+  Status: arquivo modificado
+
+
+ Processando: DialUnidade.pas
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: SysUtils -> System.SysUtils (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Classes -> System.Classes (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Variants -> System.Variants (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Forms -> Vcl.Forms (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Controls -> Vcl.Controls (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Graphics -> Vcl.Graphics (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Dialogs -> Vcl.Dialogs (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: StdCtrls -> Vcl.StdCtrls (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: ExtCtrls -> Vcl.ExtCtrls (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: ComCtrls -> Vcl.ComCtrls (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Buttons -> Vcl.Buttons (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Grids -> Vcl.Grids (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Windows -> Winapi.Windows (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Messages -> Winapi.Messages (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: DB -> Data.DB (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: DBClient -> Data.DBClient (1 ocorrências)
+  Status: arquivo modificado
+
+
+ Processando: EmprDial.pas
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: SysUtils -> System.SysUtils (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Classes -> System.Classes (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Variants -> System.Variants (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Forms -> Vcl.Forms (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Controls -> Vcl.Controls (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Graphics -> Vcl.Graphics (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Dialogs -> Vcl.Dialogs (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: StdCtrls -> Vcl.StdCtrls (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: ExtCtrls -> Vcl.ExtCtrls (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: ComCtrls -> Vcl.ComCtrls (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Buttons -> Vcl.Buttons (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Windows -> Winapi.Windows (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Messages -> Winapi.Messages (1 ocorrências)
+  Status: arquivo modificado
+
+
+ Processando: entradaEmpenhoDial.pas
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: SysUtils -> System.SysUtils (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Classes -> System.Classes (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Variants -> System.Variants (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Forms -> Vcl.Forms (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Controls -> Vcl.Controls (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Graphics -> Vcl.Graphics (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Dialogs -> Vcl.Dialogs (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: StdCtrls -> Vcl.StdCtrls (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: ExtCtrls -> Vcl.ExtCtrls (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: ComCtrls -> Vcl.ComCtrls (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Buttons -> Vcl.Buttons (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Windows -> Winapi.Windows (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Messages -> Winapi.Messages (1 ocorrências)
+  Status: arquivo modificado
+
+
+ Processando: EscolherLoteDial.pas
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: SysUtils -> System.SysUtils (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Classes -> System.Classes (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Variants -> System.Variants (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Forms -> Vcl.Forms (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Controls -> Vcl.Controls (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Graphics -> Vcl.Graphics (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Dialogs -> Vcl.Dialogs (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: StdCtrls -> Vcl.StdCtrls (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: ExtCtrls -> Vcl.ExtCtrls (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: ComCtrls -> Vcl.ComCtrls (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Buttons -> Vcl.Buttons (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Grids -> Vcl.Grids (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Windows -> Winapi.Windows (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Messages -> Winapi.Messages (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: DB -> Data.DB (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: DBClient -> Data.DBClient (1 ocorrências)
+  Status: arquivo modificado
+
+
+ Processando: FechAnoDial.pas
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: SysUtils -> System.SysUtils (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Classes -> System.Classes (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Variants -> System.Variants (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Forms -> Vcl.Forms (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Controls -> Vcl.Controls (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Graphics -> Vcl.Graphics (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Dialogs -> Vcl.Dialogs (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: StdCtrls -> Vcl.StdCtrls (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: ExtCtrls -> Vcl.ExtCtrls (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: ComCtrls -> Vcl.ComCtrls (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Buttons -> Vcl.Buttons (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Windows -> Winapi.Windows (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Messages -> Winapi.Messages (1 ocorrências)
+  Status: arquivo modificado
+
+
+ Processando: FechDial.pas
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: SysUtils -> System.SysUtils (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Classes -> System.Classes (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Variants -> System.Variants (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Math -> System.Math (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Forms -> Vcl.Forms (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Controls -> Vcl.Controls (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Graphics -> Vcl.Graphics (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Dialogs -> Vcl.Dialogs (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: StdCtrls -> Vcl.StdCtrls (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: ExtCtrls -> Vcl.ExtCtrls (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: ComCtrls -> Vcl.ComCtrls (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Buttons -> Vcl.Buttons (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Windows -> Winapi.Windows (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Messages -> Winapi.Messages (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: DB -> Data.DB (1 ocorrências)
+  Status: arquivo modificado
+
+
+ Processando: RltDial.pas
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: SysUtils -> System.SysUtils (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Classes -> System.Classes (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Variants -> System.Variants (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Math -> System.Math (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: StrUtils -> System.StrUtils (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Forms -> Vcl.Forms (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Controls -> Vcl.Controls (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Graphics -> Vcl.Graphics (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Dialogs -> Vcl.Dialogs (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: StdCtrls -> Vcl.StdCtrls (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: ExtCtrls -> Vcl.ExtCtrls (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: ComCtrls -> Vcl.ComCtrls (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Buttons -> Vcl.Buttons (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Windows -> Winapi.Windows (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Messages -> Winapi.Messages (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: DB -> Data.DB (1 ocorrências)
+  Status: arquivo modificado
+
+
+ Processando: RltPCASPAlmDial.pas
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: SysUtils -> System.SysUtils (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Classes -> System.Classes (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Variants -> System.Variants (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Forms -> Vcl.Forms (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Controls -> Vcl.Controls (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Graphics -> Vcl.Graphics (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Dialogs -> Vcl.Dialogs (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: StdCtrls -> Vcl.StdCtrls (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: ExtCtrls -> Vcl.ExtCtrls (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: ComCtrls -> Vcl.ComCtrls (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Buttons -> Vcl.Buttons (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Windows -> Winapi.Windows (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Messages -> Winapi.Messages (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: DB -> Data.DB (1 ocorrências)
+  Status: arquivo modificado
+
+
+ Processando: uDialDeliberacao277Almox.pas
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: SysUtils -> System.SysUtils (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Classes -> System.Classes (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Variants -> System.Variants (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: StrUtils -> System.StrUtils (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Forms -> Vcl.Forms (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Controls -> Vcl.Controls (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Graphics -> Vcl.Graphics (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Dialogs -> Vcl.Dialogs (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: StdCtrls -> Vcl.StdCtrls (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: ExtCtrls -> Vcl.ExtCtrls (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: ComCtrls -> Vcl.ComCtrls (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Menus -> Vcl.Menus (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Buttons -> Vcl.Buttons (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Windows -> Winapi.Windows (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Messages -> Winapi.Messages (1 ocorrências)
+  Status: arquivo modificado
+
+
+ Processando: uFracionarItemRint.dfm
+  Regra aplicada: Limpeza Avançada de .DFM
+  Alteração: Propriedade ou bloco legado ignorado (1 ocorrências)
+  Status: arquivo modificado
+
+
+ Processando: uFracionarItemRint.pas
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: SysUtils -> System.SysUtils (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Classes -> System.Classes (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Variants -> System.Variants (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Forms -> Vcl.Forms (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Controls -> Vcl.Controls (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Graphics -> Vcl.Graphics (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Dialogs -> Vcl.Dialogs (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: StdCtrls -> Vcl.StdCtrls (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: ExtCtrls -> Vcl.ExtCtrls (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Buttons -> Vcl.Buttons (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Windows -> Winapi.Windows (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Messages -> Winapi.Messages (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: SqlExpr -> Data.SqlExpr (1 ocorrências)
+  Status: arquivo modificado
+
+
+ Processando: uIncorporarRint.dfm
+  Regra aplicada: Limpeza Avançada de .DFM
+  Alteração: Propriedade ou bloco legado ignorado (1 ocorrências)
+  Status: arquivo modificado
+
+
+ Processando: uIncorporarRint.pas
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: SysUtils -> System.SysUtils (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Classes -> System.Classes (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Variants -> System.Variants (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Forms -> Vcl.Forms (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Controls -> Vcl.Controls (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Graphics -> Vcl.Graphics (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Dialogs -> Vcl.Dialogs (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: StdCtrls -> Vcl.StdCtrls (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: ExtCtrls -> Vcl.ExtCtrls (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: ComCtrls -> Vcl.ComCtrls (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Buttons -> Vcl.Buttons (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Windows -> Winapi.Windows (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Messages -> Winapi.Messages (1 ocorrências)
+  Status: arquivo modificado
+
+
+ Processando: uSelecionarMaterialASerConsumido.dfm
+  Regra aplicada: Limpeza Avançada de .DFM
+  Alteração: Propriedade ou bloco legado ignorado (1 ocorrências)
+  Status: arquivo modificado
+
+
+ Processando: uSelecionarMaterialASerConsumido.pas
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: SysUtils -> System.SysUtils (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Classes -> System.Classes (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Variants -> System.Variants (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Forms -> Vcl.Forms (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Controls -> Vcl.Controls (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Graphics -> Vcl.Graphics (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Dialogs -> Vcl.Dialogs (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: StdCtrls -> Vcl.StdCtrls (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: ComCtrls -> Vcl.ComCtrls (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Buttons -> Vcl.Buttons (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Windows -> Winapi.Windows (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Messages -> Winapi.Messages (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: DB -> Data.DB (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: SqlExpr -> Data.SqlExpr (1 ocorrências)
+  Status: arquivo modificado
+
+
+ Processando: uTodosItensRequisicaoInterna.dfm
+  Regra aplicada: Limpeza Avançada de .DFM
+  Alteração: Propriedade ou bloco legado ignorado (1 ocorrências)
+  Status: arquivo modificado
+
+
+ Processando: uTodosItensRequisicaoInterna.pas
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: SysUtils -> System.SysUtils (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Classes -> System.Classes (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Variants -> System.Variants (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Forms -> Vcl.Forms (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Controls -> Vcl.Controls (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Graphics -> Vcl.Graphics (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Dialogs -> Vcl.Dialogs (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: StdCtrls -> Vcl.StdCtrls (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: ComCtrls -> Vcl.ComCtrls (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Buttons -> Vcl.Buttons (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Windows -> Winapi.Windows (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Messages -> Winapi.Messages (1 ocorrências)
+  Status: arquivo modificado
+
+
+ Processando: RltDial.pas
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: SysUtils -> System.SysUtils (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Classes -> System.Classes (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Variants -> System.Variants (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Math -> System.Math (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Forms -> Vcl.Forms (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Controls -> Vcl.Controls (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Graphics -> Vcl.Graphics (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Dialogs -> Vcl.Dialogs (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: StdCtrls -> Vcl.StdCtrls (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: ExtCtrls -> Vcl.ExtCtrls (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: ComCtrls -> Vcl.ComCtrls (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Buttons -> Vcl.Buttons (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Windows -> Winapi.Windows (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Messages -> Winapi.Messages (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: DB -> Data.DB (1 ocorrências)
+  Status: arquivo modificado
+
+
+ Processando: CadDpst.pas
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: SysUtils -> System.SysUtils (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Classes -> System.Classes (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Variants -> System.Variants (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Forms -> Vcl.Forms (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Controls -> Vcl.Controls (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Graphics -> Vcl.Graphics (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Dialogs -> Vcl.Dialogs (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: StdCtrls -> Vcl.StdCtrls (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: ExtCtrls -> Vcl.ExtCtrls (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: ComCtrls -> Vcl.ComCtrls (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Buttons -> Vcl.Buttons (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Windows -> Winapi.Windows (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Messages -> Winapi.Messages (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: DB -> Data.DB (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: DBClient -> Data.DBClient (1 ocorrências)
+  Status: arquivo modificado
+
+
+ Processando: CadEstt.pas
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: SysUtils -> System.SysUtils (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Classes -> System.Classes (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Variants -> System.Variants (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Forms -> Vcl.Forms (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Controls -> Vcl.Controls (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Graphics -> Vcl.Graphics (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Dialogs -> Vcl.Dialogs (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: StdCtrls -> Vcl.StdCtrls (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: ExtCtrls -> Vcl.ExtCtrls (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: ComCtrls -> Vcl.ComCtrls (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Buttons -> Vcl.Buttons (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Windows -> Winapi.Windows (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Messages -> Winapi.Messages (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: DB -> Data.DB (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: DBClient -> Data.DBClient (1 ocorrências)
+  Status: arquivo modificado
+
+
+ Processando: CadPtlr.pas
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: SysUtils -> System.SysUtils (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Classes -> System.Classes (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Variants -> System.Variants (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Forms -> Vcl.Forms (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Controls -> Vcl.Controls (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Graphics -> Vcl.Graphics (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Dialogs -> Vcl.Dialogs (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: StdCtrls -> Vcl.StdCtrls (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: ExtCtrls -> Vcl.ExtCtrls (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: ComCtrls -> Vcl.ComCtrls (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Buttons -> Vcl.Buttons (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Windows -> Winapi.Windows (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Messages -> Winapi.Messages (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: DB -> Data.DB (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: DBClient -> Data.DBClient (1 ocorrências)
+  Status: arquivo modificado
+
+
+ Processando: CadUnidadesProd.pas
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: SysUtils -> System.SysUtils (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Classes -> System.Classes (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Variants -> System.Variants (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Math -> System.Math (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Forms -> Vcl.Forms (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Controls -> Vcl.Controls (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Graphics -> Vcl.Graphics (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Dialogs -> Vcl.Dialogs (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: StdCtrls -> Vcl.StdCtrls (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: ExtCtrls -> Vcl.ExtCtrls (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: ComCtrls -> Vcl.ComCtrls (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Buttons -> Vcl.Buttons (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Windows -> Winapi.Windows (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Messages -> Winapi.Messages (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: DB -> Data.DB (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: DBClient -> Data.DBClient (1 ocorrências)
+  Status: arquivo modificado
+
+
+ Processando: CcCad.pas
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: SysUtils -> System.SysUtils (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Classes -> System.Classes (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Variants -> System.Variants (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Forms -> Vcl.Forms (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Controls -> Vcl.Controls (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Graphics -> Vcl.Graphics (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Dialogs -> Vcl.Dialogs (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: StdCtrls -> Vcl.StdCtrls (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: ExtCtrls -> Vcl.ExtCtrls (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: ComCtrls -> Vcl.ComCtrls (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Buttons -> Vcl.Buttons (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Windows -> Winapi.Windows (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Messages -> Winapi.Messages (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: DB -> Data.DB (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: DBClient -> Data.DBClient (1 ocorrências)
+  Status: arquivo modificado
+
+
+ Processando: CdrCad.pas
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: SysUtils -> System.SysUtils (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Classes -> System.Classes (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Variants -> System.Variants (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Forms -> Vcl.Forms (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Controls -> Vcl.Controls (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Graphics -> Vcl.Graphics (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Dialogs -> Vcl.Dialogs (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: StdCtrls -> Vcl.StdCtrls (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: ExtCtrls -> Vcl.ExtCtrls (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: ComCtrls -> Vcl.ComCtrls (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Buttons -> Vcl.Buttons (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Grids -> Vcl.Grids (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Windows -> Winapi.Windows (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Messages -> Winapi.Messages (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: DB -> Data.DB (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: DBClient -> Data.DBClient (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: SqlExpr -> Data.SqlExpr (1 ocorrências)
+  Status: arquivo modificado
+
+
+ Processando: frmCadCargaAlmoxarifado.pas
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: SysUtils -> System.SysUtils (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Classes -> System.Classes (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Variants -> System.Variants (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Forms -> Vcl.Forms (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Controls -> Vcl.Controls (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Graphics -> Vcl.Graphics (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Dialogs -> Vcl.Dialogs (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: StdCtrls -> Vcl.StdCtrls (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: ExtCtrls -> Vcl.ExtCtrls (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: ComCtrls -> Vcl.ComCtrls (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Menus -> Vcl.Menus (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Buttons -> Vcl.Buttons (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Windows -> Winapi.Windows (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Messages -> Winapi.Messages (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: DB -> Data.DB (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: DBClient -> Data.DBClient (1 ocorrências)
+  Status: arquivo modificado
+
+
+ Processando: GrCad.pas
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: SysUtils -> System.SysUtils (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Classes -> System.Classes (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Variants -> System.Variants (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Forms -> Vcl.Forms (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Controls -> Vcl.Controls (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Graphics -> Vcl.Graphics (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Dialogs -> Vcl.Dialogs (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: StdCtrls -> Vcl.StdCtrls (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: ExtCtrls -> Vcl.ExtCtrls (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: ComCtrls -> Vcl.ComCtrls (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Buttons -> Vcl.Buttons (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Windows -> Winapi.Windows (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: DB -> Data.DB (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: DBClient -> Data.DBClient (1 ocorrências)
+  Status: arquivo modificado
+
+
+ Processando: IMvtoCad.pas
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: SysUtils -> System.SysUtils (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Classes -> System.Classes (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Variants -> System.Variants (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Math -> System.Math (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: StrUtils -> System.StrUtils (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Forms -> Vcl.Forms (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Controls -> Vcl.Controls (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Graphics -> Vcl.Graphics (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Dialogs -> Vcl.Dialogs (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: StdCtrls -> Vcl.StdCtrls (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: ExtCtrls -> Vcl.ExtCtrls (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: ComCtrls -> Vcl.ComCtrls (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Buttons -> Vcl.Buttons (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Windows -> Winapi.Windows (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Messages -> Winapi.Messages (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: DB -> Data.DB (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: DBClient -> Data.DBClient (1 ocorrências)
+  Regra aplicada: Regra Avançada .PAS (Unicode/FormatSettings/Series)
+  Alteração: Padrão regex "\bDecimalSeparator\b" modificado (3 ocorrências)
+  Status: arquivo modificado
+
+
+ Processando: IProdCad.pas
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: SysUtils -> System.SysUtils (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Classes -> System.Classes (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Variants -> System.Variants (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Forms -> Vcl.Forms (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Controls -> Vcl.Controls (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Graphics -> Vcl.Graphics (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Dialogs -> Vcl.Dialogs (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: StdCtrls -> Vcl.StdCtrls (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: ExtCtrls -> Vcl.ExtCtrls (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: ComCtrls -> Vcl.ComCtrls (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Buttons -> Vcl.Buttons (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Windows -> Winapi.Windows (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Messages -> Winapi.Messages (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: DB -> Data.DB (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: DBClient -> Data.DBClient (1 ocorrências)
+  Status: arquivo modificado
+
+
+ Processando: MatCad.pas
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: SysUtils -> System.SysUtils (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Classes -> System.Classes (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Variants -> System.Variants (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: StrUtils -> System.StrUtils (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Forms -> Vcl.Forms (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Controls -> Vcl.Controls (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Graphics -> Vcl.Graphics (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Dialogs -> Vcl.Dialogs (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: StdCtrls -> Vcl.StdCtrls (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: ExtCtrls -> Vcl.ExtCtrls (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: ComCtrls -> Vcl.ComCtrls (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Buttons -> Vcl.Buttons (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Windows -> Winapi.Windows (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Messages -> Winapi.Messages (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: DB -> Data.DB (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: DBClient -> Data.DBClient (1 ocorrências)
+  Status: arquivo modificado
+
+
+ Processando: MvtoCad.pas
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: SysUtils -> System.SysUtils (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Classes -> System.Classes (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Variants -> System.Variants (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Math -> System.Math (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: StrUtils -> System.StrUtils (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Forms -> Vcl.Forms (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Controls -> Vcl.Controls (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Graphics -> Vcl.Graphics (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Dialogs -> Vcl.Dialogs (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: StdCtrls -> Vcl.StdCtrls (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: ExtCtrls -> Vcl.ExtCtrls (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: ComCtrls -> Vcl.ComCtrls (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Menus -> Vcl.Menus (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Buttons -> Vcl.Buttons (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Windows -> Winapi.Windows (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Messages -> Winapi.Messages (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: DB -> Data.DB (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: DBClient -> Data.DBClient (1 ocorrências)
+  Status: arquivo modificado
+
+
+ Processando: ProdCad.pas
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: SysUtils -> System.SysUtils (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Classes -> System.Classes (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Variants -> System.Variants (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Forms -> Vcl.Forms (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Controls -> Vcl.Controls (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Graphics -> Vcl.Graphics (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Dialogs -> Vcl.Dialogs (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: StdCtrls -> Vcl.StdCtrls (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: ExtCtrls -> Vcl.ExtCtrls (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: ComCtrls -> Vcl.ComCtrls (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Buttons -> Vcl.Buttons (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Windows -> Winapi.Windows (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Messages -> Winapi.Messages (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: DB -> Data.DB (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: DBClient -> Data.DBClient (1 ocorrências)
+  Status: arquivo modificado
+
+
+ Processando: RqtCad.pas
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: SysUtils -> System.SysUtils (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Classes -> System.Classes (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Variants -> System.Variants (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Forms -> Vcl.Forms (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Controls -> Vcl.Controls (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Graphics -> Vcl.Graphics (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Dialogs -> Vcl.Dialogs (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: StdCtrls -> Vcl.StdCtrls (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: ExtCtrls -> Vcl.ExtCtrls (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: ComCtrls -> Vcl.ComCtrls (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Buttons -> Vcl.Buttons (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Grids -> Vcl.Grids (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Windows -> Winapi.Windows (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Messages -> Winapi.Messages (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: DB -> Data.DB (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: DBClient -> Data.DBClient (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: SqlExpr -> Data.SqlExpr (1 ocorrências)
+  Status: arquivo modificado
+
+
+ Processando: SgrCad.pas
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: SysUtils -> System.SysUtils (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Classes -> System.Classes (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Variants -> System.Variants (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Forms -> Vcl.Forms (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Controls -> Vcl.Controls (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Graphics -> Vcl.Graphics (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Dialogs -> Vcl.Dialogs (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: StdCtrls -> Vcl.StdCtrls (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: ExtCtrls -> Vcl.ExtCtrls (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: ComCtrls -> Vcl.ComCtrls (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Buttons -> Vcl.Buttons (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Windows -> Winapi.Windows (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Messages -> Winapi.Messages (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: DB -> Data.DB (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: DBClient -> Data.DBClient (1 ocorrências)
+  Status: arquivo modificado
+
+
+ Processando: TCad.pas
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: SysUtils -> System.SysUtils (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Classes -> System.Classes (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Variants -> System.Variants (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Forms -> Vcl.Forms (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Controls -> Vcl.Controls (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Graphics -> Vcl.Graphics (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Dialogs -> Vcl.Dialogs (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: StdCtrls -> Vcl.StdCtrls (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: ExtCtrls -> Vcl.ExtCtrls (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: ComCtrls -> Vcl.ComCtrls (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Buttons -> Vcl.Buttons (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Windows -> Winapi.Windows (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Messages -> Winapi.Messages (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: DB -> Data.DB (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: DBClient -> Data.DBClient (1 ocorrências)
+  Status: arquivo modificado
+
+
+ Processando: UCadConta.pas
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: SysUtils -> System.SysUtils (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Classes -> System.Classes (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Variants -> System.Variants (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Forms -> Vcl.Forms (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Controls -> Vcl.Controls (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Graphics -> Vcl.Graphics (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Dialogs -> Vcl.Dialogs (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: StdCtrls -> Vcl.StdCtrls (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: ExtCtrls -> Vcl.ExtCtrls (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: ComCtrls -> Vcl.ComCtrls (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Buttons -> Vcl.Buttons (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Windows -> Winapi.Windows (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Messages -> Winapi.Messages (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: DB -> Data.DB (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: DBClient -> Data.DBClient (1 ocorrências)
+  Status: arquivo modificado
+
+
+ Processando: UCadEntradaAut.pas
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: SysUtils -> System.SysUtils (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Classes -> System.Classes (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Variants -> System.Variants (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Math -> System.Math (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Forms -> Vcl.Forms (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Controls -> Vcl.Controls (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Graphics -> Vcl.Graphics (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Dialogs -> Vcl.Dialogs (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: StdCtrls -> Vcl.StdCtrls (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: ExtCtrls -> Vcl.ExtCtrls (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: ComCtrls -> Vcl.ComCtrls (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Buttons -> Vcl.Buttons (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Grids -> Vcl.Grids (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Windows -> Winapi.Windows (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Messages -> Winapi.Messages (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: DB -> Data.DB (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: DBClient -> Data.DBClient (1 ocorrências)
+  Regra aplicada: Regra Avançada .PAS (Unicode/FormatSettings/Series)
+  Alteração: Padrão regex "\bDecimalSeparator\b" modificado (5 ocorrências)
+  Status: arquivo modificado
+
+
+ Processando: UCadFornecimentoCusto.pas
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: SysUtils -> System.SysUtils (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Classes -> System.Classes (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Variants -> System.Variants (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Forms -> Vcl.Forms (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Controls -> Vcl.Controls (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Graphics -> Vcl.Graphics (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Dialogs -> Vcl.Dialogs (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: StdCtrls -> Vcl.StdCtrls (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: ExtCtrls -> Vcl.ExtCtrls (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: ComCtrls -> Vcl.ComCtrls (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Buttons -> Vcl.Buttons (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Windows -> Winapi.Windows (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Messages -> Winapi.Messages (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: DB -> Data.DB (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: DBClient -> Data.DBClient (1 ocorrências)
+  Status: arquivo modificado
+
+
+ Processando: UCadItemItemMvto.pas
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: SysUtils -> System.SysUtils (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Classes -> System.Classes (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Forms -> Vcl.Forms (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Controls -> Vcl.Controls (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: StdCtrls -> Vcl.StdCtrls (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: ExtCtrls -> Vcl.ExtCtrls (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: ComCtrls -> Vcl.ComCtrls (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Buttons -> Vcl.Buttons (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: DB -> Data.DB (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: DBClient -> Data.DBClient (1 ocorrências)
+  Status: arquivo modificado
+
+
+ Processando: UCadMovimentoEmpenho.pas
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: SysUtils -> System.SysUtils (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Classes -> System.Classes (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Variants -> System.Variants (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Forms -> Vcl.Forms (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Controls -> Vcl.Controls (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Graphics -> Vcl.Graphics (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Dialogs -> Vcl.Dialogs (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: StdCtrls -> Vcl.StdCtrls (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: ExtCtrls -> Vcl.ExtCtrls (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: ComCtrls -> Vcl.ComCtrls (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Buttons -> Vcl.Buttons (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Windows -> Winapi.Windows (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Messages -> Winapi.Messages (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: DB -> Data.DB (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: DBClient -> Data.DBClient (1 ocorrências)
+  Status: arquivo modificado
+
+
+ Processando: uCadMovimentoEmpenhoNf.pas
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: SysUtils -> System.SysUtils (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Classes -> System.Classes (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Variants -> System.Variants (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Forms -> Vcl.Forms (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Controls -> Vcl.Controls (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Graphics -> Vcl.Graphics (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Dialogs -> Vcl.Dialogs (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: StdCtrls -> Vcl.StdCtrls (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: ExtCtrls -> Vcl.ExtCtrls (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: ComCtrls -> Vcl.ComCtrls (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Buttons -> Vcl.Buttons (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Windows -> Winapi.Windows (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Messages -> Winapi.Messages (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: DB -> Data.DB (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: DBClient -> Data.DBClient (1 ocorrências)
+  Status: arquivo modificado
+
+
+ Processando: UCadRequisicaoAut.pas
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: SysUtils -> System.SysUtils (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Classes -> System.Classes (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Variants -> System.Variants (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Forms -> Vcl.Forms (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Controls -> Vcl.Controls (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Graphics -> Vcl.Graphics (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Dialogs -> Vcl.Dialogs (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: StdCtrls -> Vcl.StdCtrls (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: ExtCtrls -> Vcl.ExtCtrls (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: ComCtrls -> Vcl.ComCtrls (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Buttons -> Vcl.Buttons (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Grids -> Vcl.Grids (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Windows -> Winapi.Windows (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Messages -> Winapi.Messages (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: DB -> Data.DB (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: DBClient -> Data.DBClient (1 ocorrências)
+  Status: arquivo modificado
+
+
+ Processando: UndCad.pas
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: SysUtils -> System.SysUtils (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Classes -> System.Classes (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Variants -> System.Variants (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Forms -> Vcl.Forms (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Controls -> Vcl.Controls (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Graphics -> Vcl.Graphics (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Dialogs -> Vcl.Dialogs (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: StdCtrls -> Vcl.StdCtrls (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: ExtCtrls -> Vcl.ExtCtrls (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: ComCtrls -> Vcl.ComCtrls (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Buttons -> Vcl.Buttons (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Windows -> Winapi.Windows (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Messages -> Winapi.Messages (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: DB -> Data.DB (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: DBClient -> Data.DBClient (1 ocorrências)
+  Status: arquivo modificado
+
+
+ Processando: uAnuaisAlmoxarifadoConsulta.pas
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: SysUtils -> System.SysUtils (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: StrUtils -> System.StrUtils (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: DB -> Data.DB (1 ocorrências)
+  Status: arquivo modificado
+
+
+ Processando: uCargaAlmoxarifadoConsulta.pas
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: DB -> Data.DB (1 ocorrências)
+  Status: arquivo modificado
+
+
+ Processando: uEntradaConsulta.pas
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: SysUtils -> System.SysUtils (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Math -> System.Math (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: StrUtils -> System.StrUtils (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: DB -> Data.DB (1 ocorrências)
+  Status: arquivo modificado
+
+
+ Processando: uEstoquePorDataConsulta.pas
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: SysUtils -> System.SysUtils (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: DB -> Data.DB (1 ocorrências)
+  Status: arquivo modificado
+
+
+ Processando: uUnidadeFornecimentoConsulta.pas
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: SysUtils -> System.SysUtils (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Classes -> System.Classes (1 ocorrências)
+  Status: arquivo modificado
+
+
+ Processando: Dm.dfm
+  Regra aplicada: Limpeza Avançada de .DFM
+  Alteração: Propriedade ou bloco legado ignorado (1 ocorrências)
+  Status: arquivo modificado
+
+
+ Processando: Dm.pas
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: SysUtils -> System.SysUtils (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Classes -> System.Classes (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Math -> System.Math (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Forms -> Vcl.Forms (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: DB -> Data.DB (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: DBClient -> Data.DBClient (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: SqlExpr -> Data.SqlExpr (1 ocorrências)
+  Status: arquivo modificado
+
+
+ Processando: UExporta.pas
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: SysUtils -> System.SysUtils (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Classes -> System.Classes (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Variants -> System.Variants (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Forms -> Vcl.Forms (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Controls -> Vcl.Controls (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Graphics -> Vcl.Graphics (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Dialogs -> Vcl.Dialogs (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: StdCtrls -> Vcl.StdCtrls (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: ExtCtrls -> Vcl.ExtCtrls (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: ComCtrls -> Vcl.ComCtrls (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Menus -> Vcl.Menus (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Buttons -> Vcl.Buttons (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Windows -> Winapi.Windows (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Messages -> Winapi.Messages (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: DB -> Data.DB (1 ocorrências)
+  Regra aplicada: Regra Avançada .PAS (Unicode/FormatSettings/Series)
+  Alteração: Padrão regex "\bPChar\(" modificado (2 ocorrências)
+  Status: arquivo modificado
+
+
+ Processando: Uimporta.dfm
+  Regra aplicada: Limpeza Avançada de .DFM
+  Alteração: Propriedade ou bloco legado ignorado (1 ocorrências)
+  Status: arquivo modificado
+
+
+ Processando: Uimporta.pas
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: SysUtils -> System.SysUtils (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Classes -> System.Classes (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Variants -> System.Variants (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Forms -> Vcl.Forms (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Controls -> Vcl.Controls (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Graphics -> Vcl.Graphics (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Dialogs -> Vcl.Dialogs (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: StdCtrls -> Vcl.StdCtrls (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Windows -> Winapi.Windows (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Messages -> Winapi.Messages (1 ocorrências)
+  Status: arquivo modificado
+
+
+ Processando: UAlmoxarifado.pas
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: SysUtils -> System.SysUtils (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Variants -> System.Variants (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Math -> System.Math (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: StrUtils -> System.StrUtils (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Forms -> Vcl.Forms (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: StdCtrls -> Vcl.StdCtrls (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Buttons -> Vcl.Buttons (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: DB -> Data.DB (1 ocorrências)
+  Regra aplicada: Regra Avançada .PAS (Unicode/FormatSettings/Series)
+  Alteração: Padrão regex "\bDecimalSeparator\b" modificado (5 ocorrências)
+  Status: arquivo modificado
+
+
+ Processando: uProdutoConsulta.pas
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: SysUtils -> System.SysUtils (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: StrUtils -> System.StrUtils (1 ocorrências)
+  Status: arquivo modificado
+
+
+ Processando: URel.pas
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: SysUtils -> System.SysUtils (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Math -> System.Math (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Forms -> Vcl.Forms (1 ocorrências)
+  Status: arquivo modificado
+
+
+ Processando: uSystemNotifyAlm.pas
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: SysUtils -> System.SysUtils (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Classes -> System.Classes (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: StrUtils -> System.StrUtils (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Forms -> Vcl.Forms (1 ocorrências)
+  Status: arquivo modificado
+
+
+ Processando: UAlmox.dfm
+  Regra aplicada: Limpeza Avançada de .DFM
+  Alteração: Propriedade ou bloco legado ignorado (1 ocorrências)
+  Status: arquivo modificado
+
+
+ Processando: UAlmox.pas
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: SysUtils -> System.SysUtils (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Classes -> System.Classes (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Variants -> System.Variants (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: StrUtils -> System.StrUtils (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Forms -> Vcl.Forms (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Controls -> Vcl.Controls (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Graphics -> Vcl.Graphics (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Dialogs -> Vcl.Dialogs (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: ExtCtrls -> Vcl.ExtCtrls (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: ComCtrls -> Vcl.ComCtrls (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Menus -> Vcl.Menus (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Buttons -> Vcl.Buttons (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: ActnList -> Vcl.ActnList (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Windows -> Winapi.Windows (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Messages -> Winapi.Messages (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: DB -> Data.DB (1 ocorrências)
+  Regra aplicada: Regra Avançada .PAS (Unicode/FormatSettings/Series)
+  Alteração: Padrão regex "\bDecimalSeparator\b" modificado (3 ocorrências)
+  Regra aplicada: Regra Avançada .PAS (Unicode/FormatSettings/Series)
+  Alteração: Padrão regex "\bShortDateFormat\b" modificado (1 ocorrências)
+  Regra aplicada: Métodos Restritos de Thread
+  Alteração: Adicionado aviso de TODO na chamada de \.Resume\b (1 ocorrências)
+  Status: arquivo modificado
+
+
+ Processando: Alm.dpr
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Classes -> System.Classes (4 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Forms -> Vcl.Forms (1 ocorrências)
+  Status: arquivo modificado
+
+
+ Processando: uAnuaisAlmoxarifadoRelatorio.pas
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: SysUtils -> System.SysUtils (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: StrUtils -> System.StrUtils (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Forms -> Vcl.Forms (1 ocorrências)
+  Status: arquivo modificado
+
+
+ Processando: uEntradaRelatorio.pas
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: SysUtils -> System.SysUtils (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: StrUtils -> System.StrUtils (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Forms -> Vcl.Forms (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: DB -> Data.DB (1 ocorrências)
+  Status: arquivo modificado
+
+
+ Processando: uEstoquePorDataRel.pas
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: SysUtils -> System.SysUtils (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Forms -> Vcl.Forms (1 ocorrências)
+  Status: arquivo modificado
+
+
+ Processando: uVersaoAlm.pas
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: SysUtils -> System.SysUtils (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Forms -> Vcl.Forms (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Controls -> Vcl.Controls (1 ocorrências)
+  Status: arquivo modificado
+
+
+ Processando: uVersaoAlm2020.pas
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: SysUtils -> System.SysUtils (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Classes -> System.Classes (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Forms -> Vcl.Forms (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Controls -> Vcl.Controls (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: StdCtrls -> Vcl.StdCtrls (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Windows -> Winapi.Windows (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: ShellAPI -> Winapi.ShellAPI (1 ocorrências)
+  Status: arquivo modificado
+
+
+ Processando: uVersaoAlm2021.pas
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: SysUtils -> System.SysUtils (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Classes -> System.Classes (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Forms -> Vcl.Forms (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Controls -> Vcl.Controls (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: StdCtrls -> Vcl.StdCtrls (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Windows -> Winapi.Windows (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: ShellAPI -> Winapi.ShellAPI (1 ocorrências)
+  Status: arquivo modificado
+
+
+ Processando: uVersaoAlm2022.pas
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: SysUtils -> System.SysUtils (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Classes -> System.Classes (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Forms -> Vcl.Forms (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Controls -> Vcl.Controls (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: StdCtrls -> Vcl.StdCtrls (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Windows -> Winapi.Windows (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: ShellAPI -> Winapi.ShellAPI (1 ocorrências)
+  Status: arquivo modificado
+
+
+ Processando: uVersaoAlm2023.pas
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: SysUtils -> System.SysUtils (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Classes -> System.Classes (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Forms -> Vcl.Forms (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Controls -> Vcl.Controls (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: StdCtrls -> Vcl.StdCtrls (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Windows -> Winapi.Windows (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: ShellAPI -> Winapi.ShellAPI (1 ocorrências)
+  Status: arquivo modificado
+
+
+ Processando: uVersaoAlm2024.pas
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: SysUtils -> System.SysUtils (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Classes -> System.Classes (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Forms -> Vcl.Forms (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Controls -> Vcl.Controls (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: StdCtrls -> Vcl.StdCtrls (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Windows -> Winapi.Windows (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: ShellAPI -> Winapi.ShellAPI (1 ocorrências)
+  Status: arquivo modificado
+
+
+ Processando: uVersaoAlm2025.pas
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: SysUtils -> System.SysUtils (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Classes -> System.Classes (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Forms -> Vcl.Forms (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Controls -> Vcl.Controls (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: StdCtrls -> Vcl.StdCtrls (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Windows -> Winapi.Windows (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: ShellAPI -> Winapi.ShellAPI (1 ocorrências)
+  Status: arquivo modificado
+
+
+ Processando: uVersaoAlm2026.pas
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: SysUtils -> System.SysUtils (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Classes -> System.Classes (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Forms -> Vcl.Forms (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Controls -> Vcl.Controls (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Windows -> Winapi.Windows (1 ocorrências)
+  Status: arquivo modificado
+
+
+ Processando: uVersaoAlmUtils.pas
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: SysUtils -> System.SysUtils (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Classes -> System.Classes (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Forms -> Vcl.Forms (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Controls -> Vcl.Controls (1 ocorrências)
+  Regra aplicada: Adicionar Unit Scopes Modernos
+  Alteração: Windows -> Winapi.Windows (1 ocorrências)
+  Status: arquivo modificado
+
+>> Conversão de texto finalizada.
+   * Arquivos recodificados (UTF-8): 60
+   * Ocorrências BDE substituídas: 0
+   * Unit Scope Names atualizados: 852
+   * Refatorações Avançadas (Unicode/Threads/.dfm): 32
+
+=== MIGRAÇÃO FINALIZADA COM SUCESSO! ===
+--- TESTE CONCLUIDO COM SUCESSO ---
