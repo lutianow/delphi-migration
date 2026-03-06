@@ -170,15 +170,19 @@ class DelphiMigratorEngine:
         full_command = f'"{rsvars_path}" && MSBuild "{target_file}" /t:Build /p:Config=Debug'
         
         try:
-            # Prevent UI thread freeze by using subprocess.run to capture the whole block
+            # We explicitly invoke cmd.exe to prevent native shell=True hooking the UI thread console
+            # And use CREATE_NO_WINDOW to ensure MSBuild doesn't try to invoke a hidden frozen terminal
+            import subprocess
+            CREATE_NO_WINDOW = 0x08000000
+            
             result = subprocess.run(
-                full_command,
+                ['cmd.exe', '/c', f'"{rsvars_path}" && MSBuild "{target_file}" /t:Build /p:Config=Debug'],
                 cwd=self.src,
-                shell=True,
                 capture_output=True,
                 text=True,
                 encoding='windows-1252',
-                errors='replace'
+                errors='replace',
+                creationflags=CREATE_NO_WINDOW
             )
 
             for line in result.stdout.splitlines():
