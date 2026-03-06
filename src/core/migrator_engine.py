@@ -23,6 +23,7 @@ class DelphiMigratorEngine:
         self.dst = dst
         # Feature Flags
         self.do_utf8 = config.get('utf8', True)
+        self.do_clean_dir = config.get('clean_dir', False)
         
         self.do_db_main = config.get('db_main', True)
         self.db_flags = {
@@ -74,7 +75,7 @@ class DelphiMigratorEngine:
             
             if self.src != self.dst:
                 self.log(f">> Extração Segura Ativada. Copiando para: {self.dst}")
-                safe_copy_tree(self.src, self.dst, self.log, self._is_allowed)
+                safe_copy_tree(self.src, self.dst, self.log, self._is_allowed, clean_dst=self.do_clean_dir)
             else:
                 self.log(f">> Modo In-Place Ativado. Analisando e modificando DIRETAMENTE em: {self.src}")
             

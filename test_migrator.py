@@ -15,6 +15,7 @@ if __name__ == "__main__":
     
     config = {
         'utf8': True,
+        'clean_dir': True,
         'db_main': True,
         'bde': True,
         'dbx': True,

@@ -8,9 +8,9 @@ def _remove_readonly(func, path, _):
     os.chmod(path, stat.S_IWRITE)
     func(path)
 
-def safe_copy_tree(src: str, dst: str, log_callback=None, is_allowed_callback=None):
+def safe_copy_tree(src: str, dst: str, log_callback=None, is_allowed_callback=None, clean_dst=True):
     """Copia a estrutura de diretórios avaliando o callback de allow-list antes de transferir o arquivo."""
-    if os.path.exists(dst):
+    if clean_dst and os.path.exists(dst):
         if log_callback:
             log_callback(f"Removendo diretório de destino existente: {dst}")
         shutil.rmtree(dst, onerror=_remove_readonly)
@@ -18,7 +18,7 @@ def safe_copy_tree(src: str, dst: str, log_callback=None, is_allowed_callback=No
     if log_callback:
         log_callback(f"Copiando arquivos de {src} para {dst} ...")
         
-    os.makedirs(dst)
+    os.makedirs(dst, exist_ok=True)
     for root, dirs, files in os.walk(src):
         # Allow filtering dirs? Here we focus heavily on files but ignoring a dir early saves time
         if is_allowed_callback:

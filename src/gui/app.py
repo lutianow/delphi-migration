@@ -134,6 +134,8 @@ class DelphiMigratorApp(ctk.CTk):
         self.chk_utf8.configure(text=self._("chk_utf8"))
         self.chk_scopes.configure(text=self._("chk_scopes"))
         self.chk_advanced.configure(text=self._("chk_advanced"))
+        if hasattr(self, 'chk_clean_dir'):
+            self.chk_clean_dir.configure(text=self._("chk_clean_dir", default="Limpar diretório de destino antes de executar"))
         
         # Update New Database Option & Sub-options
         self.chk_db_main.configure(text=self._("chk_db_main"))
@@ -303,7 +305,7 @@ class DelphiMigratorApp(ctk.CTk):
         ent_source.grid(row=2, column=0, sticky="ew", padx=(20, 10), pady=(0, 15))
         self.card_source.grid_columnconfigure(0, weight=1)
 
-        self.btn_source = ctk.CTkButton(self.card_source, text=self._("btn_browse"), command=self.browse_source, fg_color="#FFFFFF", text_color=CARD_1, hover_color="#E0E0FF", font=ctk.CTkFont(weight="bold", size=13), corner_radius=8, height=36, width=100)
+        self.btn_source = ctk.CTkButton(self.card_source, text=self._("btn_browse"), command=self.browse_source, fg_color="#FFFFFF", text_color=CARD_1, hover_color="#E0E0FF", font=ctk.CTkFont(weight="bold", size=13), corner_radius=8, height=36, width=40)
         self.btn_source.grid(row=2, column=1, sticky="w", padx=(0, 20), pady=(0, 15))
 
         self.card_dest = ctk.CTkFrame(self.frame_step1, fg_color=CARD_2, corner_radius=16, height=130)
@@ -320,11 +322,15 @@ class DelphiMigratorApp(ctk.CTk):
         ent_dest.grid(row=2, column=0, sticky="ew", padx=(20, 10), pady=(0, 15))
         self.card_dest.grid_columnconfigure(0, weight=1)
 
-        self.btn_dest = ctk.CTkButton(self.card_dest, text=self._("btn_browse"), command=self.browse_dest, fg_color="#FFFFFF", text_color=CARD_2, hover_color="#FFE0D0", font=ctk.CTkFont(weight="bold", size=13), corner_radius=8, height=36, width=100)
+        self.btn_dest = ctk.CTkButton(self.card_dest, text=self._("btn_browse"), command=self.browse_dest, fg_color="#FFFFFF", text_color=CARD_2, hover_color="#FFE0D0", font=ctk.CTkFont(weight="bold", size=13), corner_radius=8, height=36, width=40)
         self.btn_dest.grid(row=2, column=1, sticky="w", padx=(0, 20), pady=(0, 15))
 
         # Operation Mode
-        self.var_mode = ctk.StringVar(value=self.app_settings.get("op_mode", "extract"))
+        default_mode = self.app_settings.get("op_mode", self._("mode_extract"))
+        if default_mode == "extract": default_mode = self._("mode_extract")
+        if default_mode == "inplace": default_mode = self._("mode_inplace")
+        
+        self.var_mode = ctk.StringVar(value=default_mode)
         self.var_mode.trace_add("write", lambda *_: self._toggle_destination_card())
 
         mode_frame = ctk.CTkFrame(self.frame_step1, fg_color="transparent")
@@ -484,9 +490,13 @@ class DelphiMigratorApp(ctk.CTk):
         
         self.var_scopes = ctk.BooleanVar(value=self.app_settings.get("scopes", True))
         self.var_advanced = ctk.BooleanVar(value=self.app_settings.get("advanced", True))
+        self.var_clean_dir = ctk.BooleanVar(value=self.app_settings.get("clean_dir", False))
 
         chk_font = ctk.CTkFont(size=14)
         kwargs = {"text_color": COLOR_SECONDARY, "fg_color": "#101014", "font": chk_font, "border_width": 2, "border_color": "#2A2A35", "checkbox_width": 24, "checkbox_height": 24, "hover_color": "#2A2A35"}
+        
+        self.chk_clean_dir = ctk.CTkCheckBox(self.options_frame, text=self._("chk_clean_dir", default="Limpar diretório de destino antes de executar"), variable=self.var_clean_dir, **kwargs)
+        self.chk_clean_dir.pack(anchor="w", pady=(0, 15))
         
         self.chk_utf8 = ctk.CTkCheckBox(self.options_frame, text=self._("chk_utf8"), variable=self.var_utf8, **kwargs)
         self.chk_utf8.pack(anchor="w", pady=(0, 15))
@@ -873,6 +883,7 @@ class DelphiMigratorApp(ctk.CTk):
         
         config = {
             'utf8': getattr(self, 'var_utf8', ctk.BooleanVar(value=True)).get(),
+            'clean_dir': getattr(self, 'var_clean_dir', ctk.BooleanVar(value=False)).get(),
             'db_main': getattr(self, 'var_db_main', ctk.BooleanVar(value=True)).get(),
             'bde': getattr(self, 'var_bde', ctk.BooleanVar(value=True)).get(),
             'dbx': getattr(self, 'var_dbx', ctk.BooleanVar(value=False)).get(),
@@ -923,6 +934,7 @@ class DelphiMigratorApp(ctk.CTk):
                 'op_mode': safe_mode,
                 'source_dir': self.source_dir.get(),
                 'dest_dir': self.dest_dir.get(),
+                "clean_dir": getattr(self, "var_clean_dir", ctk.BooleanVar(value=False)).get(),
                 "utf8": getattr(self, "var_utf8", ctk.BooleanVar(value=True)).get(),
                 "db_main": getattr(self, "var_db_main", ctk.BooleanVar(value=True)).get(),
                 "bde": getattr(self, "var_bde", ctk.BooleanVar(value=True)).get(),
