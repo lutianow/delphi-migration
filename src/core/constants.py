@@ -107,5 +107,6 @@ LEGACY_DFM_PROPERTIES = [
     r'^\s*object\s+[a-zA-Z0-9_]+\s*:\s*T\w*Series\b.*?\r?\n', # TeeChart series objects that often corrupt 
     r'^\s*GetDriverFunc\s*=\s*\'.*?\'\r?\n', # DBExpress legacy property
     r'^\s*LibraryName\s*=\s*\'.*?\'\r?\n',     # DBExpress legacy property
-    r'^\s*VendorLib\s*=\s*\'.*?\'\r?\n'       # DBExpress legacy property
+    r'^\s*VendorLib\s*=\s*\'.*?\'\r?\n',       # DBExpress legacy property
+    r'^\s*DataSet\.MaxBlobSize\s*=\s*[-0-9]+\r?\n' # DBExpress TSimpleDataSet legacy property
 ]
