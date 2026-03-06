@@ -43,14 +43,15 @@
     "step_3": "3. Regras de Migra\u00e7\u00e3o",
     "btn_next": "Pr\u00f3ximo Passo",
     "btn_prev": "Passo Anterior",
-    "step_4": "4. Execu\u00e7\u00e3o e Output",
+    "step_4": "4. Analisar Projeto",
+    "step_5": "5. Execução e Output",
+    "step_6": "6. Comparação Visual",
     "lbl_include_only": "Incluir SOMENTE estes arquivos",
     "lbl_ignore": "Ignorar (Excluir) estes arquivos",
     "btn_add": "Adicionar",
     "btn_edit": "Editar",
     "btn_remove": "Remover",
-    "msg_add_filter": "Digite o padr\u00e3o wildcard (ex: *.dcu ou pasta/):",
+    "msg_add_filter": "Digite o padrão wildcard (ex: *.dcu ou pasta/):",
     "title_add_filter": "Adicionar Filtro",
-    "title_edit_filter": "Editar Filtro",
-    "step_5": "5. Comparação Visual"
+    "title_edit_filter": "Editar Filtro"
 }
