@@ -29,7 +29,7 @@ class DelphiMigratorApp(ctk.CTk):
         self._ = self.i18n._
 
         self.title(self._("app_title"))
-        self.geometry("1180x880")
+        self.geometry("1440x900")
         self.resizable(False, False)
         self.configure(fg_color=BG_MAIN)
         
@@ -220,7 +220,7 @@ class DelphiMigratorApp(ctk.CTk):
     def _create_sidebar(self):
         self.sidebar_frame = ctk.CTkFrame(self, width=280, corner_radius=0, fg_color=BG_SIDEBAR)
         self.sidebar_frame.grid(row=0, column=0, rowspan=2, sticky="nsew")
-        self.sidebar_frame.grid_rowconfigure(6, weight=1)
+        self.sidebar_frame.grid_rowconfigure(7, weight=1)
         self.sidebar_frame.grid_propagate(False)
 
         # Brand Logo (Image + Text)
