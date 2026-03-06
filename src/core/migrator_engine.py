@@ -18,7 +18,9 @@ from src.core.constants import (
 from src.utils.file_utils import safe_copy_tree, read_file_content, write_file_content
 
 class DelphiMigratorEngine:
-    def __init__(self, src: str, dst: str, config: dict, log_callback):
+    """Core logic para migração do código Delphi. Totalmente passivo. Não possui interface gráfica."""
+    
+    def __init__(self, src: str, dst: str, config: dict, log_callback=None, progress_callback=None):
         self.src = src
         self.dst = dst
         # Feature Flags
@@ -38,10 +40,15 @@ class DelphiMigratorEngine:
         self.do_advanced = config.get('advanced', True)
         self.do_precompile = config.get('precompile', False)
         self.include_filters = config.get('include_filters', [])
-        self.ignore_filters = config.get('ignore_filters', [])
-        self.delphi_bin = config.get('delphi_bin', r"C:\Program Files (x86)\Embarcadero\Studio\23.0\bin")
-        self.log = log_callback
+        self.banned_files = config.get('banned_files', [])
+        self.allowed_exts = config.get('allowed_exts', ['.pas', '.dpr', '.dfm', '.dpk', '.dproj'])
+        self.log_callback = log_callback
+        self.progress_callback = progress_callback
 
+        self.total_files = 0
+        self.processed_files = 0
+        
+        # Statistics
         self.count_utf8 = 0
         self.count_bde_fixes = 0
         self.count_scope_fixes = 0
@@ -49,8 +56,8 @@ class DelphiMigratorEngine:
 
     def _is_allowed(self, filename: str) -> bool:
         # Check Exclusions (Blacklist) First
-        if self.ignore_filters:
-            for pattern in self.ignore_filters:
+        if self.banned_files:
+            for pattern in self.banned_files:
                 if fnmatch.fnmatch(filename, pattern):
                     return False
         
@@ -68,44 +75,60 @@ class DelphiMigratorEngine:
 
     def start_migration(self):
         try:
-            self.log(">> Iniciando motor de migração...")
+            self.log_callback(">> Iniciando motor de migração...")
 
             if self.do_precompile:
                 self._run_precompilation_hook()
             
             if self.src != self.dst:
-                self.log(f">> Extração Segura Ativada. Copiando para: {self.dst}")
-                safe_copy_tree(self.src, self.dst, self.log, self._is_allowed, clean_dst=self.do_clean_dir)
+                self.log_callback(f">> Extração Segura Ativada. Copiando para: {self.dst}")
+                safe_copy_tree(self.src, self.dst, self.log_callback, self._is_allowed, clean_dst=self.do_clean_dir)
             else:
-                self.log(f">> Modo In-Place Ativado. Analisando e modificando DIRETAMENTE em: {self.src}")
+                self.log_callback(f">> Modo In-Place Ativado. Analisando e modificando DIRETAMENTE em: {self.src}")
             
             if self.do_db_main:
                 active_techs = [k.upper() for k, v in self.db_flags.items() if v]
                 if active_techs:
-                    self.log(f">> Migração de Acesso a Dados (FireDAC) Ativa para: {', '.join(active_techs)}")
+                    self.log_callback(f">> Migração de Acesso a Dados (FireDAC) Ativa para: {', '.join(active_techs)}")
 
-            self.log(">> Analisando e processando arquivos (.pas, .dfm, .dpr)...")
+            # Count total allowed files first for exact progress
+            self.total_files = 0
+            for root, _, files in os.walk(self.dst):
+                for file in files:
+                    ext = os.path.splitext(file)[1].lower()
+                    if ext in self.allowed_exts and self._is_allowed(file):
+                        self.total_files += 1
+
+            self.processed_files = 0
+            self.log_callback(f"Iniciando varredura em {self.total_files} arquivos qualificados...\n")
             
+            # Processing Phase
             for root, dirs, files in os.walk(self.dst):
                 # Optionally filter dirs here too if In-Place was used since copy_tree was bypassed
                 dirs[:] = [d for d in dirs if self._is_allowed(d)]
                 for file in files:
-                    if not self._is_allowed(file):
-                        continue
                     ext = os.path.splitext(file)[1].lower()
-                    if ext in ['.pas', '.dfm', '.dpr']:
+                    if ext in self.allowed_exts and self._is_allowed(file):
+                        self.processed_files += 1
+                        if self.progress_callback:
+                            self.progress_callback(self.processed_files, self.total_files, file)
+                        
                         filepath = os.path.join(root, file)
                         self._process_file(filepath, ext)
+                        
+            # Force 100% on completion
+            if self.progress_callback and self.total_files > 0:
+                self.progress_callback(self.total_files, self.total_files, "Finalizado")
 
-            self.log(">> Conversão de texto finalizada.")
+            self.log_callback("\n--- MIGRAÇÃO CONCLUÍDA ---")
+            self.log_callback(f"Arquivos processados: {self.processed_files}")
             if self.do_utf8:
-                self.log(f"   * Arquivos recodificados (UTF-8): {self.count_utf8}")
+                self.log_callback(f"   * Arquivos recodificados (UTF-8): {self.count_utf8}")
             if self.do_db_main:
-                self.log(f"   * Ocorrências BDE/DBX/IBX/ADO/CDS substituídas: {self.count_bde_fixes}")
+                self.log_callback(f"   * Ocorrências BDE/DBX/IBX/ADO/CDS substituídas: {self.count_bde_fixes}")
             if self.do_scopes:
-                self.log(f"   * Unit Scope Names atualizados: {self.count_scope_fixes}")
+                self.log_callback(f"   * Unit Scope Names atualizados: {self.count_scope_fixes}")
             if self.do_advanced:
-                self.log(f"   * Refatorações Avançadas (Unicode/Threads/.dfm): {self.count_advanced_fixes}")
 
             self.log("\n=== MIGRAÇÃO FINALIZADA COM SUCESSO! ===")
 
