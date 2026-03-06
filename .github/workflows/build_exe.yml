@@ -1,0 +1,40 @@
+name: Build Executable
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch: # Allows manual triggering from the Actions tab
+
+jobs:
+  build-windows:
+    runs-on: windows-latest
+    
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v4
+      
+    - name: Set up Python 3.11
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.11'
+        cache: 'pip' # Cache pip dependencies
+        
+    - name: Install Dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install customtkinter pillow pyinstaller
+        
+    - name: Build with PyInstaller
+      run: |
+        python -m PyInstaller --noconsole --onefile --icon "src\assets\icon.ico" --add-data "src\locales\*.json;src\locales" --add-data "src\assets\*.ico;src\assets" --add-data "src\assets\*.png;src\assets" src\main.py --name "Migrador_Delphi_Studio"
+        
+    - name: Upload Executable Artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: Migrador_Delphi_Studio_Windows
+        path: dist/Migrador_Delphi_Studio.exe
+        retention-days: 90
