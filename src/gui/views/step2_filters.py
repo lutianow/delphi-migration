@@ -18,11 +18,11 @@ class Step2FiltersView(ctk.CTkFrame):
 
         # --- INCLUDE LIST ---
         if not self.controller.app_settings.get("ignore_filters"):
-            self.controller.ignore_filters_list = ["*.~pas", "*.~dfm", "*.dcu", "*.identcache", "*.local", "*.stat", "__history/"]
+            self.ignore_filters_list = ["*.~pas", "*.~dfm", "*.~ddp", "*.dcu", "*.identcache", "*.local", "*.stat", "__history/"]
         else:
-            self.controller.ignore_filters_list = list(self.controller.app_settings.get("ignore_filters", []))
+            self.ignore_filters_list = list(self.controller.app_settings.get("ignore_filters", []))
             
-        self.controller.include_filters_list = list(self.controller.app_settings.get("include_filters", []))
+        self.include_filters_list = list(self.controller.app_settings.get("include_filters", []))
 
         self.lbl_inc = SectionHeader(self, text=self._("lbl_include_only", default="Include ONLY these files"), size="small", text_color=COLOR_PRIMARY, font=ctk.CTkFont(weight="bold", size=15))
         self.lbl_inc.grid(row=1, column=0, sticky="w", pady=(0, 5))
@@ -33,7 +33,7 @@ class Step2FiltersView(ctk.CTkFrame):
         inc_toolbar = ctk.CTkFrame(self, fg_color="transparent")
         inc_toolbar.grid(row=3, column=0, sticky="ew", pady=(5, 20))
         
-        self.btn_add_inc = StyledButton(inc_toolbar, text=self._("btn_add", default="Add"), width=80, command=lambda: self._add_filter_gui(self.controller.include_filters_list, self.scroll_include))
+        self.btn_add_inc = StyledButton(inc_toolbar, text=self._("btn_add", default="Add"), width=80, command=lambda: self._add_filter_gui(self.include_filters_list, self.scroll_include))
         self.btn_add_inc.pack(side="left", padx=(0, 5))
 
         # --- IGNORE LIST ---
@@ -46,11 +46,11 @@ class Step2FiltersView(ctk.CTkFrame):
         exc_toolbar = ctk.CTkFrame(self, fg_color="transparent")
         exc_toolbar.grid(row=3, column=1, sticky="ew", pady=(5, 20), padx=(10, 0))
         
-        self.btn_add_exc = StyledButton(exc_toolbar, text=self._("btn_add", default="Add"), width=80, command=lambda: self._add_filter_gui(self.controller.ignore_filters_list, self.scroll_ignore))
+        self.btn_add_exc = StyledButton(exc_toolbar, text=self._("btn_add", default="Add"), width=80, command=lambda: self._add_filter_gui(self.ignore_filters_list, self.scroll_ignore))
         self.btn_add_exc.pack(side="left", padx=(0, 5))
         
-        self._render_filter_list(self.controller.include_filters_list, self.scroll_include)
-        self._render_filter_list(self.controller.ignore_filters_list, self.scroll_ignore)
+        self._render_filter_list(self.include_filters_list, self.scroll_include)
+        self._render_filter_list(self.ignore_filters_list, self.scroll_ignore)
 
         # Step Navigation Row (Bottom)
         self.step_nav2 = ctk.CTkFrame(self, fg_color="transparent")
