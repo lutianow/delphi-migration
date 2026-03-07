@@ -430,20 +430,20 @@ class DelphiMigratorApp(ctk.CTk):
         
         try:
             config = {
-                'utf8': getattr(self, "var_utf8", ctk.BooleanVar(value=True)).get(),
+                'utf8': getattr(self.frame_step3, "var_utf8", ctk.BooleanVar(value=True)).get(),
                 'bpe': False,
-                'advanced': getattr(self, "var_advanced", ctk.BooleanVar(value=True)).get(),
-                'precompile': getattr(self, "var_precompile", ctk.BooleanVar(value=False)).get(),
-                'scopes': getattr(self, "var_scopes", ctk.BooleanVar(value=True)).get(),
-                'include_filters': self.app_settings.get("filters", []),
-                'banned_files': self.app_settings.get("exceptions", []),
-                'clean_dir': getattr(self, "var_clean_dir", ctk.BooleanVar(value=False)).get(),
-                'db_main': getattr(self, "var_db_main", ctk.BooleanVar(value=True)).get(),
-                'bde': getattr(self, "var_bde", ctk.BooleanVar(value=True)).get(),
-                'dbx': getattr(self, "var_dbx", ctk.BooleanVar(value=False)).get(),
-                'ibx': getattr(self, "var_ibx", ctk.BooleanVar(value=False)).get(),
-                'ado': getattr(self, "var_ado", ctk.BooleanVar(value=False)).get(),
-                'cds': getattr(self, "var_cds", ctk.BooleanVar(value=False)).get()
+                'advanced': getattr(self.frame_step3, "var_advanced", ctk.BooleanVar(value=True)).get(),
+                'precompile': getattr(self.frame_step3, "var_precompile", ctk.BooleanVar(value=False)).get(),
+                'scopes': getattr(self.frame_step3, "var_scopes", ctk.BooleanVar(value=True)).get(),
+                'include_filters': getattr(self.frame_step2, "include_filters_list", []),
+                'banned_files': getattr(self.frame_step2, "ignore_filters_list", []),
+                'clean_dir': getattr(self.frame_step3, "var_clean_dir", ctk.BooleanVar(value=False)).get(),
+                'db_main': getattr(self.frame_step3, "var_db_main", ctk.BooleanVar(value=True)).get(),
+                'bde': getattr(self.frame_step3, "var_bde", ctk.BooleanVar(value=True)).get(),
+                'dbx': getattr(self.frame_step3, "var_dbx", ctk.BooleanVar(value=False)).get(),
+                'ibx': getattr(self.frame_step3, "var_ibx", ctk.BooleanVar(value=False)).get(),
+                'ado': getattr(self.frame_step3, "var_ado", ctk.BooleanVar(value=False)).get(),
+                'cds': getattr(self.frame_step3, "var_cds", ctk.BooleanVar(value=False)).get()
             }
         except Exception as e:
             self.log_thread_safe(f"Erro Crítico de Tela ao ler configurações:\n{e}")
@@ -500,19 +500,19 @@ class DelphiMigratorApp(ctk.CTk):
                 'op_mode': safe_mode,
                 'source_dir': self.source_dir.get(),
                 'dest_dir': self.dest_dir.get(),
-                "clean_dir": getattr(self, "var_clean_dir", ctk.BooleanVar(value=False)).get(),
-                "utf8": getattr(self, "var_utf8", ctk.BooleanVar(value=True)).get(),
-                "db_main": getattr(self, "var_db_main", ctk.BooleanVar(value=True)).get(),
-                "bde": getattr(self, "var_bde", ctk.BooleanVar(value=True)).get(),
-                "dbx": getattr(self, "var_dbx", ctk.BooleanVar(value=False)).get(),
-                "ibx": getattr(self, "var_ibx", ctk.BooleanVar(value=False)).get(),
-                "ado": getattr(self, "var_ado", ctk.BooleanVar(value=False)).get(),
-                "cds": getattr(self, "var_cds", ctk.BooleanVar(value=False)).get(),
-                "scopes": getattr(self, "var_scopes", ctk.BooleanVar(value=True)).get(),
-                "advanced": getattr(self, "var_advanced", ctk.BooleanVar(value=True)).get(),
-                "precompile": getattr(self, "var_precompile", ctk.BooleanVar(value=False)).get(),
-                "include_filters": getattr(self, "include_filters_list", []),
-                "ignore_filters": getattr(self, "ignore_filters_list", ["*.~pas", "*.~dfm", "*.dcu", "*.identcache", "*.local", "*.stat", "__history/", "*.ddp"])
+                "clean_dir": getattr(self.frame_step3, "var_clean_dir", ctk.BooleanVar(value=False)).get(),
+                "utf8": getattr(self.frame_step3, "var_utf8", ctk.BooleanVar(value=True)).get(),
+                "db_main": getattr(self.frame_step3, "var_db_main", ctk.BooleanVar(value=True)).get(),
+                "bde": getattr(self.frame_step3, "var_bde", ctk.BooleanVar(value=True)).get(),
+                "dbx": getattr(self.frame_step3, "var_dbx", ctk.BooleanVar(value=False)).get(),
+                "ibx": getattr(self.frame_step3, "var_ibx", ctk.BooleanVar(value=False)).get(),
+                "ado": getattr(self.frame_step3, "var_ado", ctk.BooleanVar(value=False)).get(),
+                "cds": getattr(self.frame_step3, "var_cds", ctk.BooleanVar(value=False)).get(),
+                "scopes": getattr(self.frame_step3, "var_scopes", ctk.BooleanVar(value=True)).get(),
+                "advanced": getattr(self.frame_step3, "var_advanced", ctk.BooleanVar(value=True)).get(),
+                "precompile": getattr(self.frame_step3, "var_precompile", ctk.BooleanVar(value=False)).get(),
+                "include_filters": getattr(self.frame_step2, "include_filters_list", []),
+                "ignore_filters": getattr(self.frame_step2, "ignore_filters_list", ["*.~pas", "*.~dfm", "*.dcu", "*.identcache", "*.local", "*.stat", "__history/", "*.ddp"])
             }
             with open(self.config_file, 'w', encoding='utf-8') as f:
                 json.dump(config, f, indent=4)
