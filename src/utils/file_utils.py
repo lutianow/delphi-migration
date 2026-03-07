@@ -30,7 +30,15 @@ def safe_copy_tree(src: str, dst: str, log_callback=None, is_allowed_callback=No
                 rel_path = os.path.relpath(root, src)
                 dst_dir = os.path.join(dst, rel_path)
                 os.makedirs(dst_dir, exist_ok=True)
-                shutil.copy2(src_file, os.path.join(dst_dir, file))
+                
+                dst_file = os.path.join(dst_dir, file)
+                if os.path.exists(dst_file):
+                    try:
+                        os.chmod(dst_file, stat.S_IWRITE)
+                    except Exception:
+                        pass
+                
+                shutil.copy2(src_file, dst_file)
 
 def read_file_content(filepath: str) -> tuple[str, bool]:
     """Tenta ler um arquivo em utf-8, cai para windows-1252 em caso de erro. Retorna (conteudo, era_ansi)"""
